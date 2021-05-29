@@ -1,0 +1,99 @@
+* {
+     font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.navbar {
+     font-size: 20px;
+     z-index: 999;
+     border-bottom: solid;
+     background-color: #e0740e;
+     position: fixed;
+     /* La barra de navegación se queda fijada en su posición*/
+     top: 0;
+     /* La posiciona al inicio de la página*/
+     width: 100%;
+     /* El ancho entero de la pantalla */
+}
+
+.logopag{
+     height: 50px;
+     width: 70px;
+     border-radius: 15px;
+}
+
+.navbar .navbar-brand:hover {
+     color: red;
+}
+
+.navbar .navbar-nav .nav-link {
+     color: black;
+}
+
+.navbar .navbar-nav .nav-link:hover {
+     color: blue;
+}
+
+
+.tituloañadir{
+     color: #e0740e;
+     transition: color 1s linear;
+     margin-top: 95px;
+     margin-left: 100px;
+     font-size: 30px;
+}
+
+.formulario_pregunta{
+    
+     background-color: sandybrown;
+     border-style: groove;
+     border-color: #e0740e;
+     padding: 1.57rem;
+     width: 70%;
+     margin: auto;
+   
+     /* padding: 25px; */
+}
+
+.formulario_pregunta .PreguntaS{
+     width: 115%;
+     padding-top: 5px;
+     padding-bottom: 5px;
+}
+.formulario_pregunta .CategoriaS{
+     margin-top: 15px;
+     margin-bottom: 10px;
+     width: 115%;
+}
+.formulario_pregunta .DescripcionS{
+     resize: none;
+     width: 115%;
+     
+}
+.Seleccionimagen{
+     color: transparent;
+}
+
+
+html{
+     height: 100%;
+}
+
+body{
+     background-image: url("https://img.freepik.com/foto-gratis/fondo-acuarela-pintada-mano-forma-cielo-nubes_24972-1095.jpg?size=626&ext=jpg");
+     background-repeat: no-repeat;
+     background-attachment: fixed;
+     background-size: 100% 100%;
+     display: flex;
+     flex-direction: column;
+     height: 100%;
+}
+
+footer{
+     font-size: 18px;
+ margin-top: 50px;
+ position: relative;
+ left: 0;
+ bottom: 0;
+ width: 100%;
+
+}

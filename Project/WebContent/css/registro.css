@@ -1,0 +1,92 @@
+*{
+     font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.BarraTopRegistro{
+     padding-top: 15px;
+     padding-bottom: 15px;
+     width: 100%;
+     background: #e0740e;
+     width: 100%;
+}
+
+.Formulario_registro{
+     width: 85%;
+     background:sandybrown;
+     transition: background-color 1s linear;
+     padding: 20px;
+     margin-left: auto;
+     margin-right: 50px;
+     margin-top: 25px;
+    
+     
+}
+
+.Formulario_registro:hover{
+     background-color: transparent;
+     border-style: solid;
+     border-color: #e0740e;
+}
+
+.seleccionimagen{
+     width: 85%;
+     margin-top: 75px;
+     background-color: sandybrown;
+     transition: background-color 1s linear;
+
+}
+
+.seleccionimagen:hover{
+     background-color: transparent;
+     border-style: solid;
+     border-color: #e0740e;
+}
+
+.inputdeimagen{
+     color: transparent;
+}
+
+.campos {
+     margin-bottom: 10px;
+     width: 240px;
+     border-color: #e0740e;
+     
+}
+
+.botones{
+     background-color: #f28825;
+     width: 150px;
+     border: none;
+     
+
+    
+}
+
+.botones:hover {
+     background-color:#e0740e;
+     color: white;
+
+}
+
+html {
+     height: 100%;
+}
+
+body {
+     background-image: url("https://img.freepik.com/foto-gratis/fondo-acuarela-pintada-mano-forma-cielo-nubes_24972-1095.jpg?size=626&ext=jpg");
+     background-repeat: no-repeat;
+     background-attachment: fixed;
+     background-size: 100% 100%;
+     display: flex;
+     flex-direction: column;
+     height: 100%;
+}
+
+footer {
+     width: 100%;
+     font-size: 18px;
+     margin-top: 25px;
+}
+
+
+

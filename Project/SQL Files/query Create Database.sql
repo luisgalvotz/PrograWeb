@@ -1,0 +1,7 @@
+CREATE DATABASE semana10;
+
+CREATE TABLE `user` ( `idUser` INT NOT NULL AUTO_INCREMENT, `nameUser`
+VARCHAR(45) NULL, `password` VARCHAR(45) NULL, `urlImage` VARCHAR(255)
+NULL, PRIMARY KEY (`idUser`));
+
+SELECT * FROM user;

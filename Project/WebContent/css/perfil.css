@@ -1,0 +1,175 @@
+*{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.navbar {
+    font-size: 20px;
+    z-index: 999;
+    border-bottom: solid;
+    background-color: #e0740e;
+    position: fixed;
+    /* La barra de navegación se queda fijada en su posición*/
+    top: 0;
+    /* La posiciona al inicio de la página*/
+    width: 100%;
+    /* El ancho entero de la pantalla */
+}
+
+.navbar .navbar-brand:hover {
+    color:red;
+}
+
+.navbar .navbar-nav .nav-link{
+    color:black;
+}
+
+.navbar .navbar-nav .nav-link:hover{
+    color: blue;
+}
+
+.logopag {
+    height: 50px;
+    width: 70px;
+    border-radius: 15px;
+}
+
+.dropdown{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.BuscarLupa:hover{
+    background-color: #afafaf;
+}
+
+.TituloBusquedaA{
+    margin-top: 10px;
+    border-top: solid;
+    border-bottom: solid;
+    border-color: #bbbec2;
+    padding-top: 5px;
+}
+
+.categoriasbusca{
+    margin-left: auto;
+}
+
+.main{
+    margin-top: 80px;
+}
+
+.barra_perfil{
+    width: 100%;
+}
+
+
+
+.img_perfil{
+    width: 150px;
+    height: 150px;
+    margin-top: 80px;
+    margin-left: 40px;
+    margin-right: 30px;
+    padding: 25px 0;
+    float: left;
+}
+
+.info_perfil{
+    background:sandybrown;
+    
+}
+
+.opc_perfil{
+    background:sandybrown;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.opc_perfil:hover{
+   background: rgb(231, 147, 73);
+
+}
+
+.opc_perfil .opc{
+    color:black;
+}
+
+.opc_perfil .opc:hover{
+    color: blue;
+    text-decoration: none;
+}
+
+.botones_perfil:hover{
+    background-color: #afafaf;
+}
+
+.formulario_perfil{
+    width: 90%;
+    background:sandybrown;
+    transition: background-color 1s linear;
+    padding: 20px;
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.formulario_perfil .botones{
+    border-style: none;
+    border-color: transparent;
+    transition: border-style 1s linear;
+    transition: border-color 1s linear;
+}
+
+.formulario_perfil:hover{
+    background-color: #f08f3a;
+    border-style: solid;
+    border-color: #e0740e;
+    
+}
+
+.formulario_perfil:hover .botones{
+    border-style: solid;
+    border-color: #ac5a0d;
+}
+
+.campos{
+    margin-bottom: 10px;
+    width: 255px;
+    border-color: #e0740e;
+}
+
+.botones{
+    width: 150px;
+    background-color: #f28825;
+    border: none;
+}
+
+.botones:hover{
+    background-color: #e0740e;
+    color: white;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    background-image: url("https://img.freepik.com/foto-gratis/fondo-acuarela-pintada-mano-forma-cielo-nubes_24972-1095.jpg?size=626&ext=jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    
+}
+
+
+
+footer{
+    /* margin-top: 50px; */
+    font-size: 18px;
+    position: relative;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
