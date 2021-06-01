@@ -3,7 +3,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-<title>Inicio de sesión</title>
+<title>Inicio de sesiï¿½n</title>
 <!-- Required meta tags -->
 <meta charset="utf-8">
 <meta name="viewport"
@@ -25,10 +25,11 @@
 			style="height: 50px; width: 70px; border-radius: 15px; margin-left: 20px;"
 			src="Imagenes/que.png" alt="Logo">
 		</a>
-		<h1 style="text-align: center; font-size: 30px;">Iniciar sesión</h1>
+		<h1 style="text-align: center; font-size: 30px;">Iniciar sesiï¿½n</h1>
 	</div>
 
 	<section class="Formulario_Inicio_sesion">
+		<form id=form_inicio_sesion action="" method="post"> 
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-5 col-md-12">
@@ -41,11 +42,11 @@
 			</div>
 			<div class="row">
 				<div class="col-lg-5 col-md-12">
-					<p>Contraseña</p>
+					<p>Contraseï¿½a</p>
 				</div>
 				<div class="col-lg-7 col-md-12">
 					<input class="campos" type="password" name="Contra_Usuario"
-						id="Contra_Usu" placeholder="Contraseña">
+						id="Contra_Usu" placeholder="Contraseï¿½a">
 				</div>
 			</div>
 			<br>
@@ -58,6 +59,8 @@
 			</div>
 
 		</div>
+		
+		</form>
 
 	</section>
 
@@ -67,7 +70,7 @@
 
 			<div class="col-12 text-center">
 				<p>
-					¿Aún no tienes cuenta? <a href="Registro.jsp">Regístrate</a>
+					ï¿½Aï¿½n no tienes cuenta? <a href="Registro.jsp">Regï¿½strate</a>
 				</p>
 			</div>
 		</div>
@@ -123,7 +126,7 @@
 		</div>
 
 		<div class="row">
-			<p class="col-12 text-center">© 2021 Copyright</p>
+			<p class="col-12 text-center">ï¿½ 2021 Copyright</p>
 		</div>
 	</div>
 

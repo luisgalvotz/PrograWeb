@@ -21,14 +21,15 @@
 </head>
 <body>
 
-	<!-- BARRA DE NAVEGACIÓN -->
+<%-- ojsdfksdljj --%>
+	<!-- BARRA DE NAVEGACIï¿½N -->
 
 	<nav class="navbar navbar-expand-md  navbar-light">
 		<ul class="navbar-nav mr-auto">
 			<img class="logopag" src="Imagenes/que.png" alt="Logo">
 		</ul>
 
-		<!-- Boton que aparece cuando colapsas la navbar en tamaño md es la "palanca" (toggle) que expande los elementos en el div con id:navbarmenu -->
+		<!-- Boton que aparece cuando colapsas la navbar en tamaï¿½o md es la "palanca" (toggle) que expande los elementos en el div con id:navbarmenu -->
 		<button class="navbar-toggler" data-toggle="collapse"
 			data-target="#navbarmenu" aria-controls="navbarmenu"
 			aria-expanded="false" aria-label="Toggle navigation">
@@ -46,7 +47,7 @@
 				<li class="nav-item dropdown"><a href="#"
 					class="nav-link dropdown-toggle" id="Categoriasnavbar"
 					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						Categorías </a>
+						Categorï¿½as </a>
 					<div class="dropdown-menu" aria-labelledby="Categoriasnavbar">
 						<a class="dropdown-item" href="#">Todas</a> <a
 							class="dropdown-item" href="#">Comida</a> <a
@@ -59,8 +60,8 @@
 				<!-- Busqueda dropdown -->
 				<li class="nav-item dropdown"><a href="#"
 					class="nav-link dropdown-toggle" id="Busquedanavbar"
-					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Búsqueda</a>
-					<!-- dropdown del link Búsqueda -->
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Bï¿½squeda</a>
+					<!-- dropdown del link Bï¿½squeda -->
 					<div class="dropdown-menu" aria-labelledby="Busquedanavbar"
 						style="width: 370px;">
 						<div class="container">
@@ -90,7 +91,7 @@
 
 						<!-- Filtro categoria -->
 						<form style="margin-left: 10px;" action="">
-							<label for="categoriasbusca">Categoría:</label> <select
+							<label for="categoriasbusca">Categorï¿½a:</label> <select
 								disabled="disabled" id="categoriasbusca" class="combo dropdown">
 								<option value="Ninguna">Ninguna</option>
 								<option value="Comida">Comida</option>
@@ -117,21 +118,21 @@
 							disabled="disabled" style="width: 150px;" type="date"
 							name="FechaFin" id="FechaFin">
 
-						<!-- Filtro personas que marcaron útil -->
-						<label style="margin-left: 10px;" for="NutilBusca"> Número
-							de personas que les pareció útil </label> <input type="checkbox"
+						<!-- Filtro personas que marcaron ï¿½til -->
+						<label style="margin-left: 10px;" for="NutilBusca"> Nï¿½mero
+							de personas que les pareciï¿½ ï¿½til </label> <input type="checkbox"
 							disabled="disabled" name="NutilBusca" id="NutilBusca">
 
 						<!-- Filtro personas que marcaron favorita -->
 						<label style="margin-left: 10px;" for="NfavoritaBusca">
-							Número de personas que marcaron favoritas </label> <input type="checkbox"
+							Nï¿½mero de personas que marcaron favoritas </label> <input type="checkbox"
 							disabled="disabled" name="NfavoritaBusca" id="NfavoritaBusca">
 
 
 					</div></li>
 
-				<!--Añade pregunta  -->
-				<li class="nav-item"><a href="Pregunta.jsp" class="nav-link">Añadir
+				<!--Aï¿½ade pregunta  -->
+				<li class="nav-item"><a href="Pregunta.jsp" class="nav-link">Aï¿½adir
 						Pregunta</a></li>
 			</ul>
 		</div>
@@ -139,14 +140,14 @@
 		<ul class="navbar-nav ml-auto">
 			<li class="nav-item"><a href="Inicia_sesion.jsp"
 				class="nav-link"> <img style="height: 40px; width: 40px;"
-					src="Imagenes/Perfil.png" alt=""> Iniciar sesión
+					src="Imagenes/Perfil.png" alt=""> Iniciar sesiï¿½n
 			</a></li>
 		</ul>
 	</nav>
-	<!-- TERMINA BARRA DE NAVEGACIÓN -->
+	<!-- TERMINA BARRA DE NAVEGACIï¿½N -->
 
 
-	<!-- CUERPO DE LA PÁGINA -->
+	<!-- CUERPO DE LA Pï¿½GINA -->
 
 	<div class="container main">
 		<div class="row">
@@ -157,10 +158,10 @@
 						<p style="border-bottom: solid; margin: 0;">Usuario_1</p>
 
 						<p class="pregunta"
-							style="margin-bottom: 0; border-bottom: solid;">¿Cuántos
+							style="margin-bottom: 0; border-bottom: solid;">ï¿½Cuï¿½ntos
 							huevos ocupa un omelette?</p>
 						<form style="margin-top: 8px;" action="">
-							<label for="categoriapreg">Categoría:</label> <select
+							<label for="categoriapreg">Categorï¿½a:</label> <select
 								name="categoriapreg" id="categoriapreg">
 								<option value="Comida">Comida</option>
 								<option value="Deportes">Deportes</option>
@@ -190,10 +191,10 @@
 						<p style="border-bottom: solid; margin: 0;">Usuario_1</p>
 
 						<p class="pregunta"
-							style="margin-bottom: 0; border-bottom: solid;">¿Cuántos
+							style="margin-bottom: 0; border-bottom: solid;">ï¿½Cuï¿½ntos
 							huevos ocupa un omelette?</p>
 						<form style="margin-top: 8px;" action="">
-							<label for="categoriapreg">Categoría:</label> <select
+							<label for="categoriapreg">Categorï¿½a:</label> <select
 								name="categoriapreg" id="categoriapreg">
 								<option value="Comida">Comida</option>
 								<option value="Deportes">Deportes</option>
@@ -232,7 +233,7 @@
 	<script src="js/inicio_.js"></script>
 </body>
 
-<!-- FOOTER DE LA PÁGINA -->
+<!-- FOOTER DE LA Pï¿½GINA -->
 <footer class=" text-lg-start" style="background-color: #f28825;">
 	<!-- Grid container -->
 	<div class="container p-4">
@@ -269,7 +270,7 @@
 		</div>
 		<!--Grid row-->
 		<div class="row">
-			<p class="col-12 text-center">© 2021 Copyright</p>
+			<p class="col-12 text-center">ï¿½ 2021 Copyright</p>
 
 		</div>
 	</div>
@@ -279,5 +280,5 @@
 </footer>
 
 
-<!-- TERMINA FOOTER DE LA PÁGINA -->
+<!-- TERMINA FOOTER DE LA Pï¿½GINA -->
 </html>
