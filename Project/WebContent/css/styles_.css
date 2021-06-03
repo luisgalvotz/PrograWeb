@@ -75,6 +75,30 @@
      font-size: 22px;
 }
 
+#adelante{
+     background-color: white;
+}
+
+.page-item.active .page-link{
+     background-color: sandybrown;
+     border-color: #e0740e;
+}
+
+#numeropagina{
+     color: black;
+}
+
+.page-link{
+     background-color: transparent;
+}
+
+
+.paginacionimg{
+
+     width: 30px;
+     height: 30px;
+}
+
 html {
      height: 100%;
 }

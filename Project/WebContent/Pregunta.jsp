@@ -1,9 +1,23 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@page import="com.dbconnection.models.*"%>
+<%@page import="java.util.*"%>
+<%@page import="com.dbconnection.controllers.GeneralServlet"%>
+
+<%
+UsuarioModel usuarioElegido = GeneralServlet.getUsuario(request, response);
+pageContext.setAttribute("usuarioElegido", usuarioElegido);
+
+List<CategoriaModel> listaCategorias = GeneralServlet.getCategorias();
+pageContext.setAttribute("listaCategorias", listaCategorias);
+%>
+
 <!doctype html>
 <html lang="en">
 <head>
-<title>Añadir Pregunta</title>
+<title>AÃ±adir Pregunta</title>
 <!-- Required meta tags -->
 <meta charset="utf-8">
 <meta name="viewport"
@@ -20,7 +34,7 @@
 
 <body>
 
-	<!-- BARRA DE NAVEGACIÓN -->
+	<!-- BARRA DE NAVEGACIÃ“N -->
 	<nav class="navbar navbar-expand-md navbar-light">
 
 		<ul class="navbar-nav mr-auto">
@@ -29,7 +43,7 @@
 
 		</ul>
 
-		<!-- Boton que aparece cuando colapsas la navbar en tamaño md es la "palanca" (toggle) que expande los elementos en el div con id:navbarmenu -->
+		<!-- Boton que aparece cuando colapsas la navbar en tamaÃ±o md es la "palanca" (toggle) que expande los elementos en el div con id:navbarmenu -->
 		<button class="navbar-toggler" data-toggle="collapse"
 			data-target="#navbarmenu" aria-controls="navbarmenu"
 			aria-expanded="false" aria-label="Toggle navigation">
@@ -45,21 +59,19 @@
 
 				<li class="nav-item dropdown"><a href="#"
 					class="nav-link dropdown-toggle" id="Categoriasnavbar"
-					data-toggle="dropdown">Categoría</a>
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						CategorÃ­as </a>
 					<div class="dropdown-menu" aria-labelledby="Categoriasnavbar">
-						<a href="#" class="dropdown-item">Todas</a> <a href="#"
-							class="dropdown-item">Comida</a> <a href="#"
-							class="dropdown-item">Deportes</a> <a href="#"
-							class="dropdown-item">Juegos</a> <a href="#"
-							class="dropdown-item">Amor</a> <a href="#" class="dropdown-item">Trabajo</a>
+						<c:forEach var="iCategoria" items="${listaCategorias}">
+							<a class="dropdown-item" href="#"> ${iCategoria.getNombre()} </a>
+						</c:forEach>
 					</div></li>
-
 
 				<!-- Busqueda dropdown -->
 				<li class="nav-item dropdown"><a href="#"
 					class="nav-link dropdown-toggle" id="Busquedanavbar"
-					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Búsqueda</a>
-					<!-- dropdown del link Búsqueda -->
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">BÃºsqueda</a>
+					<!-- dropdown del link BÃºsqueda -->
 					<div class="dropdown-menu" aria-labelledby="Busquedanavbar"
 						style="width: 370px;">
 						<div class="container">
@@ -89,7 +101,7 @@
 
 						<!-- Filtro categoria -->
 						<form style="margin-left: 10px;" action="">
-							<label for="categoriasbusca">Categoría:</label> <select
+							<label for="categoriasbusca">CategorÃ­a:</label> <select
 								disabled="disabled" id="categoriasbusca" class="combo dropdown">
 								<option value="Ninguna">Ninguna</option>
 								<option value="Comida">Comida</option>
@@ -116,33 +128,43 @@
 							disabled="disabled" style="width: 150px;" type="date"
 							name="FechaFin" id="FechaFin">
 
-						<!-- Filtro personas que marcaron útil -->
-						<label style="margin-left: 10px;" for="NutilBusca"> Número
-							de personas que les pareció útil </label> <input type="checkbox"
+						<!-- Filtro personas que marcaron Ãºtil -->
+						<label style="margin-left: 10px;" for="NutilBusca"> NÃºmero
+							de personas que les pareciÃ³ Ãºtil </label> <input type="checkbox"
 							disabled="disabled" name="NutilBusca" id="NutilBusca">
 
 						<!-- Filtro personas que marcaron favorita -->
 						<label style="margin-left: 10px;" for="NfavoritaBusca">
-							Número de personas que marcaron favoritas </label> <input type="checkbox"
+							NÃºmero de personas que marcaron favoritas </label> <input type="checkbox"
 							disabled="disabled" name="NfavoritaBusca" id="NfavoritaBusca">
 					</div></li>
 
-				<li class="nav-item"><a class="nav-link" href="Pregunta.jsp">Añadir
+				<li class="nav-item"><a class="nav-link" href="Pregunta.jsp">AÃ±adir
 						Pregunta</a></li>
 			</ul>
 		</div>
 
-		<!-- Inicio sesión (der) -->
+		<!-- Inicio sesiÃ³n (der) -->
 		<ul class="navbar-nav ml-auto">
-			<li class="nav-item"><a href="Inicia_sesion.jsp"
-				class="nav-link"> <img style="width: 40px; height: 40px"
-					src="Imagenes/Perfil.png" alt=""> Iniciar sesión
-			</a></li>
+			<c:if test="${empty usuarioElegido}">
+				<li class="nav-item"><a href="Inicia_sesion.jsp"
+					class="nav-link"> <img style="height: 40px; width: 40px;"
+						src="Imagenes/Perfil.png" alt=""> Iniciar sesiÃ³n
+				</a></li>
+			</c:if>
+			
+			<c:if test="${not empty usuarioElegido}">
+				<li class="nav-item"><a href="Perfil.jsp"
+					class="nav-link"> <img style="height: 40px; width: 40px;"
+						src="GeneralServlet?Imagen=Usuario&Id=${usuarioElegido.getId()}"> 
+						<c:out value="${usuarioElegido.getNomUsuario()}"></c:out>
+				</a></li>
+			</c:if>
 		</ul>
 
 	</nav>
 
-	<p class="tituloañadir">Haz tu pregunta</p>
+	<p class="tituloaÃ±adir">Haz tu pregunta</p>
 
 
 	<!-- FORMULARIO DE PREGUNTA -->
@@ -151,20 +173,18 @@
 			<div class="row">
 				<div class="col-7">
 					<input class="PreguntaS" id="Pregunta" type="text"
-						placeholder="Escribe aquí tu pregunta">
+						placeholder="Escribe aquÃ­ tu pregunta">
 
 					<form class="CategoriaS" action="">
-						<label for="SelCategoria">Categoría:</label> <select
+						<label for="SelCategoria">CategorÃ­a:</label> <select
 							name="SelCategoria" id="SelCategoria">
-							<option value="Comida">Comida</option>
-							<option value="Deportes">Deportes</option>
-							<option value="Juegos">Juegos</option>
-							<option value="Amor">Amor</option>
-							<option value="Trabajo">Trabajo</option>
+							<c:forEach var="iCategoria" items="${listaCategorias}">
+								<option value="${iCategoria.getNombre()}"> ${iCategoria.getNombre()} </option>
+							</c:forEach>
 						</select>
 					</form>
 
-					<textarea class="DescripcionS" rows="5" placeholder="Descripción"
+					<textarea class="DescripcionS" rows="5" placeholder="DescripciÃ³n"
 						name="" id=""></textarea>
 
 				</div>
@@ -231,7 +251,7 @@
 		</div>
 
 		<div class="row">
-			<p class="col-12 text-center">© 2021 Copyright</p>
+			<p class="col-12 text-center">Â© 2021 Copyright</p>
 		</div>
 	</div>
 </footer>

@@ -1,9 +1,23 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@page import="com.dbconnection.models.*"%>
+<%@page import="java.util.*"%>
+<%@page import="com.dbconnection.controllers.GeneralServlet"%>
+
+<%
+UsuarioModel usuarioElegido = GeneralServlet.getUsuario(request, response);
+pageContext.setAttribute("usuarioElegido", usuarioElegido);
+
+List<CategoriaModel> listaCategorias = GeneralServlet.getCategorias();
+pageContext.setAttribute("listaCategorias", listaCategorias);
+%>
+
 <!doctype html>
 <html lang="en">
 <head>
-<title>Perfil de usuario</title>
+<title>Perfil de Usuario</title>
 <!-- Required meta tags -->
 <meta charset="utf-8">
 <meta name="viewport"
@@ -21,14 +35,14 @@
 </head>
 <body>
 
-	<!-- BARRA DE NAVEGACIÓN -->
+	<!-- BARRA DE NAVEGACIÃ“N -->
 
 	<nav class="navbar navbar-expand-md  navbar-light">
 		<ul class="navbar-nav mr-auto">
 			<img class="logopag" src="Imagenes/que.png" alt="Logo">
 		</ul>
 
-		<!-- Boton que aparece cuando colapsas la navbar en tamaño md es la "palanca" (toggle) que expande los elementos en el div con id:navbarmenu -->
+		<!-- Boton que aparece cuando colapsas la navbar en tamaÃ±o md es la "palanca" (toggle) que expande los elementos en el div con id:navbarmenu -->
 		<button class="navbar-toggler" data-toggle="collapse"
 			data-target="#navbarmenu" aria-controls="navbarmenu"
 			aria-expanded="false" aria-label="Toggle navigation">
@@ -46,21 +60,18 @@
 				<li class="nav-item dropdown"><a href="#"
 					class="nav-link dropdown-toggle" id="Categoriasnavbar"
 					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						Categorías </a>
+						CategorÃ­as </a>
 					<div class="dropdown-menu" aria-labelledby="Categoriasnavbar">
-						<a class="dropdown-item" href="#">Todas</a> <a
-							class="dropdown-item" href="#">Comida</a> <a
-							class="dropdown-item" href="#">Deportes</a> <a
-							class="dropdown-item" href="#">Juegos</a> <a
-							class="dropdown-item" href="#">Amor</a> <a class="dropdown-item"
-							href="#">Trabajo</a>
+						<c:forEach var="iCategoria" items="${listaCategorias}">
+							<a class="dropdown-item" href="#"> ${iCategoria.getNombre()} </a>
+						</c:forEach>
 					</div></li>
 
 				<!-- Busqueda dropdown -->
 				<li class="nav-item dropdown"><a href="#"
 					class="nav-link dropdown-toggle" id="Busquedanavbar"
-					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Búsqueda</a>
-					<!-- dropdown del link Búsqueda -->
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">BÃºsqueda</a>
+					<!-- dropdown del link BÃºsqueda -->
 					<div class="dropdown-menu" aria-labelledby="Busquedanavbar"
 						style="width: 370px;">
 						<div class="container">
@@ -90,7 +101,7 @@
 
 						<!-- Filtro categoria -->
 						<form style="margin-left: 10px;" action="">
-							<label for="categoriasbusca">Categoría:</label> <select
+							<label for="categoriasbusca">CategorÃ­a:</label> <select
 								disabled="disabled" id="categoriasbusca" class="combo dropdown">
 								<option value="Ninguna">Ninguna</option>
 								<option value="Comida">Comida</option>
@@ -117,33 +128,43 @@
 							disabled="disabled" style="width: 150px;" type="date"
 							name="FechaFin" id="FechaFin">
 
-						<!-- Filtro personas que marcaron útil -->
-						<label style="margin-left: 10px;" for="NutilBusca"> Número
-							de personas que les pareció útil </label> <input type="checkbox"
+						<!-- Filtro personas que marcaron Ãºtil -->
+						<label style="margin-left: 10px;" for="NutilBusca"> NÃºmero
+							de personas que les pareciÃ³ Ãºtil </label> <input type="checkbox"
 							disabled="disabled" name="NutilBusca" id="NutilBusca">
 
 						<!-- Filtro personas que marcaron favorita -->
 						<label style="margin-left: 10px;" for="NfavoritaBusca">
-							Número de personas que marcaron favoritas </label> <input type="checkbox"
+							NÃºmero de personas que marcaron favoritas </label> <input type="checkbox"
 							disabled="disabled" name="NfavoritaBusca" id="NfavoritaBusca">
 
 
 					</div></li>
 
-				<!--Añade pregunta  -->
-				<li class="nav-item"><a href="Pregunta.jsp" class="nav-link">Añadir
+				<!--AÃ±ade pregunta  -->
+				<li class="nav-item"><a href="Pregunta.jsp" class="nav-link">AÃ±adir
 						Pregunta</a></li>
 			</ul>
 		</div>
 
 		<ul class="navbar-nav ml-auto">
-			<li class="nav-item"><a href="Inicia_sesion.jsp"
-				class="nav-link"> <img style="height: 40px; width: 40px;"
-					src="Imagenes/Perfil.png" alt=""> Iniciar sesión
-			</a></li>
+			<c:if test="${empty usuarioElegido}">
+				<li class="nav-item"><a href="Inicia_sesion.jsp"
+					class="nav-link"> <img style="height: 40px; width: 40px;"
+						src="Imagenes/Perfil.png" alt=""> Iniciar sesiÃ³n
+				</a></li>
+			</c:if>
+
+			<c:if test="${not empty usuarioElegido}">
+				<li class="nav-item"><a href="Perfil.jsp" class="nav-link">
+						<img style="height: 40px; width: 40px;"
+						src="GeneralServlet?Imagen=Usuario&Id=${usuarioElegido.getId()}">
+						<c:out value="${usuarioElegido.getNomUsuario()}"></c:out>
+				</a></li>
+			</c:if>
 		</ul>
 	</nav>
-	<!-- TERMINA BARRA DE NAVEGACIÓN -->
+	<!-- TERMINA BARRA DE NAVEGACIÃ“N -->
 
 
 	<div class="container" style="margin-top: 100px;">
@@ -152,8 +173,7 @@
 				<img src="Imagenes/Perfil.png" alt="">
 			</div>
 			<div class="col-lg-5 col-md-5 col-sm-5 info_perfil">
-				<p style="margin-top: 8px;" class="mr-auto">Datos del usuario
-					ingresado</p>
+				<p style="margin-top: 8px;" class="mr-auto"> <c:out value="${usuarioElegido.getNomUsuario()}"></c:out> </p>
 			</div>
 			<div class="col-lg-5 col-md-4 col-sm-4 info_perfil">
 				<div style="text-align: right; padding-bottom: 8px;">
@@ -163,9 +183,8 @@
 					</button>
 					<br>
 					<button style="margin-top: 8px;" class="botones_perfil">
-						<a href="Inicia_sesion.jsp"><img
-							style="width: 20px; height: 20px;" src="Imagenes/Salir.png"
-							alt="PuertaSalir"></a>
+						<a href="Login"><img style="width: 20px; height: 20px;"
+							src="Imagenes/Salir.png" alt="PuertaSalir"></a>
 					</button>
 				</div>
 			</div>
@@ -181,7 +200,7 @@
 
 			</div>
 			<div style="text-align: center;" class="col-lg-2 col-sm-3 opc_perfil">
-				<a href="#" class="opc">Útiles</a>
+				<a href="#" class="opc">Ãštiles</a>
 
 			</div>
 			<div style="text-align: center;" class="col-lg-3 col-sm-3 opc_perfil">
@@ -222,7 +241,7 @@
                 <a href="#" class="opc">Respuestas</a>
             </div>
             <div style="text-align: center;" class="col-lg-3">
-                <a href="#" class="opc">Útiles</a>
+                <a href="#" class="opc">Ãštiles</a>
             </div>
             <div style="text-align: center;" class="col-lg-3">
                 <a href="#" class="opc">Favoritos</a>
@@ -246,7 +265,7 @@
 						</div>
 						<div class="col-lg-3">
 							<input class="campos" type="text" name="Nombres" id="Nombres"
-								placeholder="Nombre(s)">
+								placeholder="Nombre(s)" value="${usuarioElegido.getNombre()}">
 						</div>
 					</div>
 					<!-- apellidos -->
@@ -256,7 +275,7 @@
 						</div>
 						<div class="col-lg-3 ">
 							<input class="campos" type="text" name="Apellidos" id="Apellidos"
-								placeholder="Apellidos">
+								placeholder="Apellidos" value="${usuarioElegido.getApellidos()}">
 						</div>
 					</div>
 					<!-- fecha nacimiento -->
@@ -265,18 +284,19 @@
 							<p>Fecha de nacimiento</p>
 						</div>
 						<div class="col-lg-3">
-							<input class="campos" type="date" name="FechaNac" id="FechaNac">
+							<input class="campos" type="date" name="FechaNac" id="FechaNac"
+								value="${usuarioElegido.getFechaNac()}">
 
 						</div>
 					</div>
 					<!-- correo -->
 					<div class="row">
 						<div class="col-lg-3">
-							<p>Correo electrónico</p>
+							<p>Correo electrÃ³nico</p>
 						</div>
 						<div class="col-lg-3">
 							<input class="campos" type="text" name="Correo" id="Correo"
-								placeholder="Correo electrónico">
+								placeholder="Correo electrÃ³nico" value="${usuarioElegido.getCorreo()}">
 						</div>
 					</div>
 					<div class="row">
@@ -285,21 +305,21 @@
 						</div>
 						<div class="col-lg-3">
 							<input class="campos" type="text" name="NombreUs" id="NombreUs"
-								placeholder="Nombre de usuario">
+								placeholder="Nombre de usuario" value="${usuarioElegido.getNomUsuario()}">
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-lg-3">
-							<p>Contraseña</p>
+							<p>ContraseÃ±a</p>
 						</div>
 						<div class="col-lg-3">
-							<input class="campos" type="text" name="Contraseña"
-								id="Contraseña" placeholder="********">
+							<input class="campos" type="text" name="ContraseÃ±a"
+								id="ContraseÃ±a" placeholder="********">
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-lg-3">
-							<p>Confirmar contraseña</p>
+							<p>Confirmar contraseÃ±a</p>
 						</div>
 						<div class="col-lg-3">
 							<input class="campos" type="text" name="ConfirmarCon"
@@ -350,7 +370,7 @@
 </body>
 
 
-<!-- FOOTER DE LA PÁGINA -->
+<!-- FOOTER DE LA PÃGINA -->
 <footer class=" text-lg-start" style="background-color: #f28825;">
 	<!-- Grid container -->
 	<div class="container p-4">
@@ -383,7 +403,7 @@
 		</div>
 		<!--Grid row-->
 		<div class="row">
-			<p class="col-12 text-center">© 2021 Copyright</p>
+			<p class="col-12 text-center">Â© 2021 Copyright</p>
 
 		</div>
 	</div>
@@ -391,5 +411,5 @@
 
 
 </footer>
-<!-- TERMINA FOOTER DE LA PÁGINA -->
+<!-- TERMINA FOOTER DE LA PÃGINA -->
 </html>
