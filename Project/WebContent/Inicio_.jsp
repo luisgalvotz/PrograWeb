@@ -71,7 +71,7 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 				<!-- Busqueda dropdown -->
 				<li class="nav-item dropdown"><a href="#"
 					class="nav-link dropdown-toggle" id="Busquedanavbar"
-					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Bï¿½squeda</a>
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Búsqueda</a>
 					<!-- dropdown del link Bï¿½squeda -->
 					<div class="dropdown-menu" aria-labelledby="Busquedanavbar"
 						style="width: 370px;">
@@ -95,14 +95,14 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 						<header>
 							<div class="text-center TituloBusquedaA">
 								<input type="checkbox" name="ConfirmaBusquedaA"
-									id="ConfirmaBusquedaA"> <label for="ConfirmaBusquedaA">Busqueda
+									id="ConfirmaBusquedaA"> <label for="ConfirmaBusquedaA">Búsqueda
 									Avanzada</label>
 							</div>
 						</header>
 
 						<!-- Filtro categoria -->
 						<form style="margin-left: 10px;" action="">
-							<label for="categoriasbusca">Categorï¿½a:</label> <select
+							<label for="categoriasbusca">Categoría:</label> <select
 								disabled="disabled" id="categoriasbusca" class="combo dropdown">
 								<option value="Ninguna">Ninguna</option>
 								<option value="Comida">Comida</option>
@@ -131,13 +131,13 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 
 						<!-- Filtro personas que marcaron ï¿½til -->
 						<label style="margin-left: 10px;" for="NutilBusca">
-							Nï¿½mero de personas que les pareciï¿½ ï¿½til </label> <input
+							Número de personas que les pareció útil </label> <input
 							type="checkbox" disabled="disabled" name="NutilBusca"
 							id="NutilBusca">
 
 						<!-- Filtro personas que marcaron favorita -->
 						<label style="margin-left: 10px;" for="NfavoritaBusca">
-							Nï¿½mero de personas que marcaron favoritas </label> <input
+							Número de personas que marcaron favoritas </label> <input
 							type="checkbox" disabled="disabled" name="NfavoritaBusca"
 							id="NfavoritaBusca">
 
@@ -145,7 +145,7 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 					</div></li>
 
 				<!--Aï¿½ade pregunta  -->
-				<li class="nav-item"><a href="Pregunta.jsp" class="nav-link">Aï¿½adir
+				<li class="nav-item"><a href="Pregunta.jsp" class="nav-link">Añadir
 						Pregunta</a></li>
 			</ul>
 		</div>
@@ -181,10 +181,10 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 						<p style="border-bottom: solid; margin: 0;">Usuario_1</p>
 
 						<p class="pregunta"
-							style="margin-bottom: 0; border-bottom: solid;">ï¿½Cuï¿½ntos
+							style="margin-bottom: 0; border-bottom: solid;">¿Cuántos
 							huevos ocupa un omelette?</p>
 						<form style="margin-top: 8px;" action="">
-							<label for="categoriapreg">Categorï¿½a:</label> <select
+							<label for="categoriapreg">Categoría:</label> <select
 								name="categoriapreg" id="categoriapreg">
 								<option value="Comida">Comida</option>
 								<option value="Deportes">Deportes</option>
@@ -214,10 +214,10 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 						<p style="border-bottom: solid; margin: 0;">Usuario_1</p>
 
 						<p class="pregunta"
-							style="margin-bottom: 0; border-bottom: solid;">ï¿½Cuï¿½ntos
+							style="margin-bottom: 0; border-bottom: solid;">¿Cuántos
 							huevos ocupa un omelette?</p>
 						<form style="margin-top: 8px;" action="">
-							<label for="categoriapreg">Categorï¿½a:</label> <select
+							<label for="categoriapreg">Categoría:</label> <select
 								name="categoriapreg" id="categoriapreg">
 								<option value="Comida">Comida</option>
 								<option value="Deportes">Deportes</option>
@@ -323,7 +323,7 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 		</div>
 		<!--Grid row-->
 		<div class="row">
-			<p class="col-12 text-center">ï¿½ 2021 Copyright</p>
+			<p class="col-12 text-center">© 2021 Copyright</p>
 
 		</div>
 	</div>

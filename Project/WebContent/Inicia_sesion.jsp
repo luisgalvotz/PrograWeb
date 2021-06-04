@@ -1,9 +1,17 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%-- <%@page import="java.util.*"%> --%>
+
+<%
+	String usuarioEncontrado = (String) request.getAttribute("usuarioIncorrecto");
+	pageContext.setAttribute("usuarioencontrado", usuarioEncontrado);
+%>
+
 <!doctype html>
 <html lang="en">
 <head>
-<title>Inicio de sesi�n</title>
+<title>Inicio de sesión</title>
 <!-- Required meta tags -->
 <meta charset="utf-8">
 <meta name="viewport"
@@ -15,7 +23,16 @@
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
 <link rel="stylesheet" href="css/iniciosesion.css">
+<link rel="stylesheet" href="css/validacion.css">
+<link rel="stylesheet" href="css/jquery.sweet-modal.min.css">
+
+<script src="js/jquery-3.5.1.min.js"></script>
+<script src="js/jquery.validate.min.js"></script>
+<script src="js/jquery.sweet-modal.min.js"></script>
+<script src="js/validaciones.js"></script>
+
 </head>
+
 <body>
 
 
@@ -25,36 +42,41 @@
 			style="height: 50px; width: 70px; border-radius: 15px; margin-left: 20px;"
 			src="Imagenes/que.png" alt="Logo">
 		</a>
-		<h1 style="text-align: center; font-size: 30px;">Iniciar sesi�n</h1>
+		<h1 style="text-align: center; font-size: 30px;">Iniciar sesión</h1>
 	</div>
 
 	<section class="Formulario_Inicio_sesion">
-		<form id=form_inicio_sesion action="./Login" method="post"> 
+		<form id="form_inicio_sesion" action="./Login" method="post"> 
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-5 col-md-12">
 					<p>Nombre de usuario</p>
 				</div>
 				<div class="col-lg-7 col-md-12">
-					<input class="campos" type="text" name="Nombre_Usuario"
+					<input class="campos" type="text" name="Nombre_Usu"
 						id="Nombre_Usu" placeholder="Nombre de usuario">
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-lg-5 col-md-12">
-					<p>Contrase�a</p>
+					<p>Contraseña</p>
 				</div>
 				<div class="col-lg-7 col-md-12">
-					<input class="campos" type="password" name="Contra_Usuario"
-						id="Contra_Usu" placeholder="Contrase�a">
+					<input class="campos" type="password" name="Contra_Usu"
+						id="Contra_Usu" placeholder="Contraseña">
 				</div>
 			</div>
 			<br>
 			<div class="row">
 				<div class="col-4"></div>
 				<div class="col-4">
-					<input onclick="window.location='Perfil.jsp'" class="botones"
-						type="submit" value="Ingresar">
+					<input id="idIngresarUsuario" class="botones" type="submit" value="Ingresar">
+					<%-- <% if(usuarioEncontrado != null){ %>
+					<% } %> --%>
+
+					<c:if test="${usuarioEncontrado != null}"> 
+					<label for="idIngresarUsuario" class="error">No se encontró el usuario ingresado</label>
+					</c:if> 
 				</div>
 			</div>
 
@@ -70,7 +92,7 @@
 
 			<div class="col-12 text-center">
 				<p>
-					�A�n no tienes cuenta? <a href="Registro.jsp">Reg�strate</a>
+					¿Aún no tienes cuenta? <a href="Registro.jsp">Regístrate</a>
 				</p>
 			</div>
 		</div>
@@ -82,9 +104,9 @@
 
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+	<%-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-		crossorigin="anonymous"></script>
+		crossorigin="anonymous"></script> --%>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
 		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
@@ -126,7 +148,7 @@
 		</div>
 
 		<div class="row">
-			<p class="col-12 text-center">� 2021 Copyright</p>
+			<p class="col-12 text-center">© 2021 Copyright</p>
 		</div>
 	</div>
 

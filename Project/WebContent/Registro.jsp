@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!doctype html>
 <html lang="en">
 <head>
@@ -15,6 +15,12 @@
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
 <link rel="stylesheet" href="css/registro.css">
+<link rel="stylesheet" href="css/validacion.css">
+<script src="js/jquery-3.5.1.min.js"></script>
+<script src="js/jquery.validate.min.js"></script>
+<script src="js/jquery.sweet-modal.min.js"></script>
+<script src="js/ImagenRegistro.js"></script>
+<script src="js/validaciones.js"></script>
 </head>
 <body>
 	<div class="BarraTopRegistro">
@@ -26,7 +32,7 @@
 	</div>
 
 	<div class="container" style="margin-bottom: auto;">
-	<form action="./RegistroUsuario" method="POST" enctype="multipart/form-data">
+	<form id="form_registro" action="./RegistroUsuario" method="POST" enctype="multipart/form-data">
 		<div class="row">
 			<div class="col-lg-7 col-sm-12">
 				<section class="Formulario_registro ">
@@ -48,7 +54,7 @@
 
 							</div>
 							<div class="col-lg-7 col-md-12">
-								<input class="campos" type="text" name="Apellidos_Usuario"
+								<input class="campos" type="text" name="Apellidos_Usu"
 									id="Apellidos_Usu" placeholder="Apellidos">
 
 							</div>
@@ -59,19 +65,19 @@
 
 							</div>
 							<div class="col-7">
-								<input class="campos" type="date" name="FechaNac_Usuario"
+								<input class="campos" type="date" name="FechaNac_Usu"
 									id="FechaNac_Usu">
 
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-lg-5 col-md-12">
-								<p class="etiquetas">Correo electrónico:</p>
+								<p class="etiquetas">Correo electrÃ³nico:</p>
 
 							</div>
 							<div class="col-7">
-								<input class="campos" type="email" name="Correo_Usuario"
-									id="Correo_Usu" placeholder="Correo electrónico">
+								<input class="campos" type="email" name="Correo_Usu"
+									id="Correo_Usu" placeholder="Correo electrÃ³nico">
 
 							</div>
 						</div>
@@ -81,30 +87,30 @@
 
 							</div>
 							<div class="col-7">
-								<input class="campos" type="text" name="Nombre_Usuario"
+								<input class="campos" type="text" name="Nombre_Usu"
 									id="Nombre_Usu" placeholder="Nombre de usuario">
 
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-lg-5 col-md-12">
-								<p class="etiquetas">Contraseña:</p>
+								<p class="etiquetas">ContraseÃ±a:</p>
 
 							</div>
 							<div class="col-7">
-								<input class="campos" type="password" name="Contra_Usuario"
-									id="Contra_Usu" placeholder="Contraseña">
+								<input class="campos" type="password" name="Contra_Usu"
+									id="Contra_Usu" placeholder="ContraseÃ±a">
 
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-lg-5 col-md-12">
-								<p class="etiquetas">Confirmar contraseña:</p>
+								<p class="etiquetas">Confirmar contraseÃ±a:</p>
 
 							</div>
 							<div class="col-7">
-								<input class="campos" type="password" name="ContraC_Usuario"
-									id="ContraC_Usu" placeholder="Contraseña">
+								<input class="campos" type="password" name="ContraC_Usu"
+									id="ContraC_Usu" placeholder="ContraseÃ±a">
 
 							</div>
 						</div>
@@ -129,7 +135,7 @@
 							<div class="col-lg-3 col-sm-1"></div>
 							<div class="col-lg-7 col-sm-11">
 								<p style="padding-left: 5px;">
-									¿Ya tiene cuenta? <a href="Inicia_sesion.jsp">Click aquí</a>
+									Â¿Ya tiene cuenta? <a href="Inicia_sesion.jsp">Click aquÃ­</a>
 								</p>
 
 							</div>
@@ -153,7 +159,7 @@
 					<div class="row">
 						<div class="col-lg-3 col-sm-4"></div>
 						<div class="col-lg-6 col-sm-6">
-							<input class="inputdeimagen" type="file" name="Imag_Usuario"
+							<input class="inputdeimagen" type="file" name="Imag_Usu"
 								id="Imag_Usu" onchange="readURL(this);"> <img
 								id="Imagen_Usu" src="#" alt=""
 								style="margin-top: 10px; margin-bottom: 10px;">
@@ -177,9 +183,9 @@
 
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+	<%-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-		crossorigin="anonymous"></script>
+		crossorigin="anonymous"></script> --%>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
 		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
@@ -188,7 +194,6 @@
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 		crossorigin="anonymous"></script>
-	<script src="js/ImagenRegistro.js"></script>
 </body>
 
 <footer class="text-lg-start" style="background-color: #f28825;">
@@ -218,7 +223,7 @@
 
 		</div>
 		<div class="row">
-			<p class="col-12 text-center">© 2021 Copyright</p>
+			<p class="col-12 text-center">Â© 2021 Copyright</p>
 		</div>
 
 	</div>
