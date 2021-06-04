@@ -69,8 +69,8 @@ public class Login extends HttpServlet {
 		
 		UsuarioModel usuarioElegido = null;
 		
-		String usuario = request.getParameter("Nombre_Usuario");
-		String contra = request.getParameter("Contra_Usuario");
+		String usuario = request.getParameter("Nombre_Usu");
+		String contra = request.getParameter("Contra_Usu");
 		
 		usuarioElegido = new UsuarioModel();
 		

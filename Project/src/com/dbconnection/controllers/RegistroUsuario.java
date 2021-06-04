@@ -45,24 +45,24 @@ public class RegistroUsuario extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String nombre = request.getParameter("Nombre_");
-		String apellidos = request.getParameter("Apellidos_Usuario");
+		String apellidos = request.getParameter("Apellidos_Usu");
 
 		SimpleDateFormat formatoFechaNac = new SimpleDateFormat("yyyy-MM-dd");
 		Date FechaNacUsuario = null;
 		try {
-			FechaNacUsuario = formatoFechaNac.parse(request.getParameter("FechaNac_Usuario"));
+			FechaNacUsuario = formatoFechaNac.parse(request.getParameter("FechaNac_Usu"));
 		} catch (ParseException e2) {
 			e2.printStackTrace();
 		}
 
-		String correo = request.getParameter("Correo_Usuario");
-		String nUsuario = request.getParameter("Nombre_Usuario");
-		String contra = request.getParameter("Contra_Usuario");
-		// String contraC = request.getParameter("ContraC_Usuario");
+		String correo = request.getParameter("Correo_Usu");
+		String nUsuario = request.getParameter("Nombre_Usu");
+		String contra = request.getParameter("Contra_Usu");
+		// String contraC = request.getParameter("ContraC_Usu");
 
 		InputStream ImagenPerfilUsuario = null;
 		// obtains the upload file part in this multipart request
-		Part filePart = request.getPart("Imag_Usuario");
+		Part filePart = request.getPart("Imag_Usu");
 		if (filePart != null) {
 			// prints out some information for debugging
 			System.out.println(filePart.getName());

@@ -170,7 +170,7 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 	<div class="container" style="margin-top: 100px;">
 		<div class="row">
 			<div class="col-lg-2 col-md-3 col-sm-3 imagendeperfil">
-				<img src="Imagenes/Perfil.png" style="width: 60px; height: 60px;" alt="">
+				<img src="GeneralServlet?Imagen=Usuario&Id=${usuarioElegido.getId()}" style="width: 80px; height: 80px;" alt="">
 			</div>
 			<div class="col-lg-5 col-md-5 col-sm-5 info_perfil">
 				<p style="margin-top: 8px;" class="mr-auto"> <c:out value="${usuarioElegido.getNomUsuario()}"></c:out> </p>

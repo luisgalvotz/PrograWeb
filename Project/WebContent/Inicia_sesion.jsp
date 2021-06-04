@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%-- <%@page import="java.util.*"%> --%>
+<%@page import="java.util.*"%>
 
 <%
-	String usuarioEncontrado = (String) request.getAttribute("usuarioIncorrecto");
-	pageContext.setAttribute("usuarioencontrado", usuarioEncontrado);
+String usuarioIncorrecto = (String) request.getAttribute("usuarioIncorrecto");
+pageContext.setAttribute("usuarioIncorrecto", usuarioIncorrecto);
 %>
 
 <!doctype html>
@@ -70,11 +70,11 @@
 			<div class="row">
 				<div class="col-4"></div>
 				<div class="col-4">
-					<input id="idIngresarUsuario" class="botones" type="submit" value="Ingresar">
+					<button id="idIngresarUsuario" form="form_inicio_sesion" class="botones" type="submit">Ingresar</button>
 					<%-- <% if(usuarioEncontrado != null){ %>
 					<% } %> --%>
 
-					<c:if test="${usuarioEncontrado != null}"> 
+					<c:if test="${usuarioIncorrecto != null}"> 
 					<label for="idIngresarUsuario" class="error">No se encontró el usuario ingresado</label>
 					</c:if> 
 				</div>
