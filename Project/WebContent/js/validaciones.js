@@ -41,6 +41,25 @@ jQuery.validator.addMethod(
 $(document).ready(function(){
     
 
+
+     $("#eliminar_pregunta").click(function(){
+          $.sweetModal({
+               content: '¿Desea eliminar la pregunta?',
+               theme: $.sweetModal.THEME_MIXED,
+               buttons: {
+                    Conservar:{
+                        label:'No eliminar',
+                        classes: 'greenB ' 
+                    },
+                    Eliminar:{
+                         label: 'Eliminar',
+                         classes: 'redB '
+                    }
+               }
+          })
+     });
+
+
      $("#form_inicio_sesion").validate({
           rules: {
                Nombre_Usu: {
@@ -130,6 +149,96 @@ $(document).ready(function(){
                }
 
 
+          }
+     });
+
+
+     $("#form_editar_perfil").validate({
+          rules: {
+               Nombres:{
+                    required: true,
+                    sololetra: true
+               },
+               Apellidos:{
+                    required: true,
+                    sololetra: true
+               },
+               FechaNac:{
+                    required: true,  
+               },
+               Correo:{
+                    required: true,
+                    email: true
+               },
+               NombreUs:{
+                    required: true
+               },
+               Contraseña:{
+                    required: true,
+                    formatocontrasenia: true
+               },
+               ConfirmarCon:{
+                    required: true,
+                    equalTo: "#Contra_Usu"
+               },
+               ImagenUs:{
+                    required: true
+               }
+
+
+          },
+          messages: {
+               Nombres:{
+                    required: "Ingrese su(s) nombre(s)",
+                    sololetra: "Ingrese únicamente letras"
+               },
+               Apellidos:{
+                    required: "Ingrese su(s) apellido(s)",
+                    sololetra: "Ingrese únicamente letras"
+               },
+               FechaNac:{
+                    required: "Ingrese su fecha de nacimiento"
+               },
+               Correo:{
+                    required: "Ingrese su correo electrónico",
+                    email: "Ingrese un formato de correo"
+               },
+               NombreUs:{
+                    required: "Ingrese su nombre de usuario"
+               },
+               Contraseña:{
+                    required: "Ingrese su contraseña",
+                    formatocontrasenia: "La contraseña debe tener al menos: 8 caracteres, mayúscula, minúscula, signo"
+               },
+               ConfirmarCon:{
+                    required: "Porfavor confirme su contraseña",
+                    equalTo: "La contraseña no coincide"
+               },
+               ImagenUs:{
+                    required: "Seleccione una imagen de perfil"
+               }
+          }
+     });
+
+     $("#form_hacer_pregunta").validate({
+          rules: {
+               Titulo_pregunta: {
+                    required: true,
+                
+               },
+               Descripcion_pregunta:{
+                    required: true,
+               }
+          },
+
+          messages: {
+               Titulo_pregunta:{
+                    required: "Ingrese un título a la pregunta",
+                    
+               },
+               Descripcion_pregunta:{
+                    required: "Ingrese una descripción a la pregunta"
+               }
           }
      });
 

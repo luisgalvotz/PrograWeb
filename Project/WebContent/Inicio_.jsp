@@ -172,72 +172,70 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 
 	<!-- CUERPO DE LA Pï¿½GINA -->
 
-	<div class="container main">
+<%-- PREGUNTA 1 --%>
+	<a href="DetallePregunta.jsp" class="pregunta_inicio"> 
+	<div class="container main text-center">
 		<div class="row">
-			<div class="col-9">
+			<div class="col-12">
 				<!-- Pregunta 1 -->
 				<section>
 					<div class="container">
-						<p style="border-bottom: solid; margin: 0;">Usuario_1</p>
+						<p style="border-bottom: solid; margin: 0;"><img class="imagen_usu_inicio" src="Imagenes/advertencia.png" alt="">Usuario_1</p>
 
 						<p class="pregunta"
 							style="margin-bottom: 0; border-bottom: solid;">¿Cuántos
 							huevos ocupa un omelette?</p>
-						<form style="margin-top: 8px;" action="">
-							<label for="categoriapreg">Categoría:</label> <select
-								name="categoriapreg" id="categoriapreg">
-								<option value="Comida">Comida</option>
-								<option value="Deportes">Deportes</option>
-								<option value="Juegos">Juegos</option>
-								<option value="Amor">Amor</option>
-								<option value="Trabajo">Trabajo</option>
-							</select>
-						</form>
-						<p class="descripcion">Lo necesito para una receta, gracias.</p>
-
 					</div>
 				</section>
 			</div>
-			<div class="col-3 text-center">
-				<img class="imagenpregunta" src="Imagenes/omelette.jpg" alt="">
-			</div>
+			
 		</div>
 	</div>
-
-
-	<div class="container main">
+	</a>
+	
+<%-- PREGUNTA 2 --%>
+	<a href="DetallePregunta.jsp" class="pregunta_inicio"> 
+	<div class="container main text-center">
 		<div class="row">
-			<div class="col-9">
-				<!-- pregunta 2 -->
+			<div class="col-12">
+				<!-- Pregunta 1 -->
 				<section>
 					<div class="container">
-						<p style="border-bottom: solid; margin: 0;">Usuario_1</p>
+						<p style="border-bottom: solid; margin: 0;"><img class="imagen_usu_inicio" src="Imagenes/advertencia.png" alt="">Usuario_1</p>
 
 						<p class="pregunta"
 							style="margin-bottom: 0; border-bottom: solid;">¿Cuántos
 							huevos ocupa un omelette?</p>
-						<form style="margin-top: 8px;" action="">
-							<label for="categoriapreg">Categoría:</label> <select
-								name="categoriapreg" id="categoriapreg">
-								<option value="Comida">Comida</option>
-								<option value="Deportes">Deportes</option>
-								<option value="Juegos">Juegos</option>
-								<option value="Amor">Amor</option>
-								<option value="Trabajo">Trabajo</option>
-							</select>
-						</form>
-						<p class="descripcion">Lo necesito para una receta, gracias.</p>
-
 					</div>
-
-
 				</section>
 			</div>
-			<div class="col-3 text-center">
-				<img class="imagenpregunta" src="Imagenes/omelette.jpg" alt="">
-			</div>
+			
 		</div>
 	</div>
+	</a>
+
+<%-- PREGUNTA 3 --%>
+	<a href="DetallePregunta.jsp" class="pregunta_inicio"> 
+	<div class="container main text-center">
+		<div class="row">
+			<div class="col-12">
+				<!-- Pregunta 1 -->
+				<section>
+					<div class="container">
+						<p style="border-bottom: solid; margin: 0;"><img class="imagen_usu_inicio" src="Imagenes/advertencia.png" alt="">Usuario_1</p>
+
+						<p class="pregunta"
+							style="margin-bottom: 0; border-bottom: solid;">¿Cuántos
+							huevos ocupa un omelette?</p>
+					</div>
+				</section>
+			</div>
+			
+		</div>
+	</div>
+	</a>
+
+	
 
 	<!-- CONTAINER PARA LA PAGINACION -->
 	<div class="container">

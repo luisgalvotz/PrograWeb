@@ -1,27 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@page import="com.dbconnection.models.*"%>
-<%@page import="java.util.*"%>
-<%@page import="com.dbconnection.controllers.GeneralServlet"%>
-
-<%
-UsuarioModel usuarioElegido = GeneralServlet.getUsuario(request, response);
-pageContext.setAttribute("usuarioElegido", usuarioElegido);
-
-List<CategoriaModel> listaCategorias = GeneralServlet.getCategorias();
-pageContext.setAttribute("listaCategorias", listaCategorias);
-%>
-
 <!doctype html>
 <html lang="en">
 <head>
-<title>Añadir Pregunta</title>
+<title>Queuestions</title>
 <!-- Required meta tags -->
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
 
 <!-- Bootstrap CSS -->
 <link rel="stylesheet"
@@ -29,39 +17,40 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
 
-<link rel="stylesheet" href="css/pregunta.css">
-<link rel="stylesheet" href="css/validacion.css">
+<link rel="stylesheet" href="css/Detallepreg.css">
+<link rel="stylesheet" href="css/jquery.sweet-modal.min.css">
 <script src="js/jquery-3.5.1.min.js"></script>
 <script src="js/jquery.validate.min.js"></script>
 <script src="js/jquery.sweet-modal.min.js"></script>
+<script src="js/ImagenRegistro.js"></script>
 <script src="js/validaciones.js"></script>
-</head>
 
+</head>
 <body>
 
-	<!-- BARRA DE NAVEGACIÓN -->
-	<nav class="navbar navbar-expand-md navbar-light">
+	<%-- ojsdfksdljj --%>
+	<!-- BARRA DE NAVEGACIï¿½N -->
 
+	<nav class="navbar navbar-expand-md  navbar-light">
 		<ul class="navbar-nav mr-auto">
-
-			<img class="logopag " src="Imagenes/que.png" alt="Logo">
-
+			<img class="logopag" src="Imagenes/que.png" alt="Logo">
 		</ul>
 
-		<!-- Boton que aparece cuando colapsas la navbar en tamaño md es la "palanca" (toggle) que expande los elementos en el div con id:navbarmenu -->
+		<!-- Boton que aparece cuando colapsas la navbar en tamaï¿½o md es la "palanca" (toggle) que expande los elementos en el div con id:navbarmenu -->
 		<button class="navbar-toggler" data-toggle="collapse"
 			data-target="#navbarmenu" aria-controls="navbarmenu"
 			aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 
-		<!-- Opciones de en medio -->
+		<!--navbarmenu: div que es colapsable y dentro tiene un navegador que se ajusto al centro con mx-auto  -->
 		<div class="collapse navbar-collapse" id="navbarmenu">
-			<ul class="navbar-nav mx-auto">
+			<ul class="navbar-nav mx-auto ">
 
-				<li class="nav-item"><a href="Inicio_.jsp" class="nav-link">Inicio</a>
-				</li>
+				<!-- Boton de inicio -->
+				<li class="nav-item"><a href="Inicio_.jsp" class="nav-link">Inicio</a></li>
 
+				<!-- Dropdown de categorias -->
 				<li class="nav-item dropdown"><a href="#"
 					class="nav-link dropdown-toggle" id="Categoriasnavbar"
 					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -76,7 +65,7 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 				<li class="nav-item dropdown"><a href="#"
 					class="nav-link dropdown-toggle" id="Busquedanavbar"
 					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Búsqueda</a>
-					<!-- dropdown del link Búsqueda -->
+					<!-- dropdown del link Bï¿½squeda -->
 					<div class="dropdown-menu" aria-labelledby="Busquedanavbar"
 						style="width: 370px;">
 						<div class="container">
@@ -99,7 +88,7 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 						<header>
 							<div class="text-center TituloBusquedaA">
 								<input type="checkbox" name="ConfirmaBusquedaA"
-									id="ConfirmaBusquedaA"> <label for="ConfirmaBusquedaA">Busqueda
+									id="ConfirmaBusquedaA"> <label for="ConfirmaBusquedaA">Búsqueda
 									Avanzada</label>
 							</div>
 						</header>
@@ -133,23 +122,27 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 							disabled="disabled" style="width: 150px;" type="date"
 							name="FechaFin" id="FechaFin">
 
-						<!-- Filtro personas que marcaron útil -->
-						<label style="margin-left: 10px;" for="NutilBusca"> Número
-							de personas que les pareció útil </label> <input type="checkbox"
-							disabled="disabled" name="NutilBusca" id="NutilBusca">
+						<!-- Filtro personas que marcaron ï¿½til -->
+						<label style="margin-left: 10px;" for="NutilBusca">
+							Número de personas que les pareció útil </label> <input
+							type="checkbox" disabled="disabled" name="NutilBusca"
+							id="NutilBusca">
 
 						<!-- Filtro personas que marcaron favorita -->
 						<label style="margin-left: 10px;" for="NfavoritaBusca">
-							Número de personas que marcaron favoritas </label> <input type="checkbox"
-							disabled="disabled" name="NfavoritaBusca" id="NfavoritaBusca">
+							Número de personas que marcaron favoritas </label> <input
+							type="checkbox" disabled="disabled" name="NfavoritaBusca"
+							id="NfavoritaBusca">
+
+
 					</div></li>
 
-				<li class="nav-item"><a class="nav-link" href="Pregunta.jsp">Añadir
+				<!--Aï¿½ade pregunta  -->
+				<li class="nav-item"><a href="Pregunta.jsp" class="nav-link">Añadir
 						Pregunta</a></li>
 			</ul>
 		</div>
 
-		<!-- Inicio sesión (der) -->
 		<ul class="navbar-nav ml-auto">
 			<c:if test="${empty usuarioElegido}">
 				<li class="nav-item"><a href="Inicia_sesion.jsp"
@@ -157,63 +150,55 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 						src="Imagenes/Perfil.png" alt=""> Iniciar sesión
 				</a></li>
 			</c:if>
-			
+
 			<c:if test="${not empty usuarioElegido}">
-				<li class="nav-item"><a href="Perfil.jsp"
-					class="nav-link"> <img style="height: 40px; width: 40px;"
-						src="GeneralServlet?Imagen=Usuario&Id=${usuarioElegido.getId()}"> 
+				<li class="nav-item"><a href="Perfil.jsp" class="nav-link">
+						<img style="height: 40px; width: 40px;"
+						src="GeneralServlet?Imagen=Usuario&Id=${usuarioElegido.getId()}">
 						<c:out value="${usuarioElegido.getNomUsuario()}"></c:out>
 				</a></li>
 			</c:if>
 		</ul>
-
 	</nav>
+	<!-- TERMINA BARRA DE NAVEGACIï¿½N -->
 
-	<p class="tituloañadir">Haz tu pregunta</p>
 
+	<!-- CUERPO DE LA Pï¿½GINA -->
 
-	<!-- FORMULARIO DE PREGUNTA -->
-	<section class="formulario_pregunta">
-		<form id="form_hacer_pregunta" action="" method="POST"> 
-		<div class="container">
-			<div class="row">
-				<div class="col-7">
-					<input class="PreguntaS" id="Titulo_pregunta" name="Titulo_pregunta" type="text"
-						placeholder="Escribe aquí tu pregunta">
+	<div class="container main">
+		<div class="row">
+			<div class="col-sm-9 col-lg-9">
+				<!-- Pregunta 1 -->
+				<section>
+					<div class="container">
+						<p style="border-bottom: solid; margin: 0;"><img class="imagen_usu_inicio" src="Imagenes/advertencia.png" alt="">Usuario_1</p>
 
-					<form class="CategoriaS" action="">
-						<label for="SelCategoria">Categoría:</label> <select
-							name="SelCategoria" id="SelCategoria">
-							<c:forEach var="iCategoria" items="${listaCategorias}">
-								<option value="${iCategoria.getNombre()}"> ${iCategoria.getNombre()} </option>
-							</c:forEach>
-						</select>
-					</form>
+                              <p class="fecha_hora_pregunta">05 Junio 2021 02:48 AM</p>
 
-					<textarea class="DescripcionS" rows="5" placeholder="Descripción"
-						name="Descripcion_pregunta" id="Descripcion_pregunta"></textarea>
+						<p class="pregunta"
+							style="margin-bottom: 0; margin-top: 0px; border-bottom: solid;">¿Cuántos
+							huevos ocupa un omelette?</p>
+							<p id="categoriapreg"> Comida </p>
+						<p class="descripcion">Lo necesito para una receta, gracias.</p>
 
-				</div>
-				<div class="col-lg-2 col-sm-0"></div>
-				<div class="col-lg-2 col-sm-3">
-					<!-- <input type="image" src="" alt=""> -->
-
-					<input class="Seleccionimagen" type='file' name="Imagen_pregunta" id="Imagen_pregunta"
-						onchange="readURL(this);" /> <img id="Imagenseleccionada" src="#"
-						alt="" />
-				</div>
-
+					</div>
+				</section>
 			</div>
-			
-			
+			<div class="col-sm-2 col-lg-2 text-center">
+				<img class="imagenpregunta" src="Imagenes/omelette.jpg" alt="">
+			</div>
+               <div class="col-sm-1 col-lg-1">
+                    <button  class="boton_borrar" id="eliminar_pregunta" type="button"><img src="Imagenes/eliminar.png" class="imagen_borrar"> </button>
+
+                    <button class="boton_editar" type="button"><img class="imagen_editar" src="Imagenes/editar.png"> </button>
+               </div>
 		</div>
-	</section>
-	<input class="botones" type="submit" value="Publicar pregunta">
-		</form>
-
-
-	<div style="margin-top: 30px;"></div>
-
+          <div class="row" style="margin-left: 10px;">
+               <div class="col-1"> <p><button class="util_noutil_fav_btn"><img class="util_noutil_fav" src="Imagenes/Like.png"> </button> 0</p> </div>
+               <div class="col-1"> <p><button class="util_noutil_fav_btn"><img class="util_noutil_fav" src="Imagenes/Dislike.png"> </button> 0</p></div>
+               <div class="col-1"> <p><button class="util_noutil_fav_btn"><img class="util_noutil_fav" src="Imagenes/Favorita.png"> </button> 0</p></div>
+          </div>
+	</div>
 
 
 
@@ -231,36 +216,54 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 		crossorigin="anonymous"></script>
 	<script src="js/inicio_.js"></script>
-	<script src="js/SelecImg.js"></script>
-
 </body>
 
-<footer class="text-lg-start" style="background-color: #f28825;">
+<!-- FOOTER DE LA Pï¿½GINA -->
+<footer class=" text-lg-start" style="background-color: #f28825;">
+	<!-- Grid container -->
 	<div class="container p-4">
+		<!--Grid row-->
 		<div class="row">
+			<!--Grid column-->
 			<div class="col-lg-6 col-sm-6">
-				<h5 class="text-center">
-					<img src="Imagenes/que.png" class="logopag" alt="">
+				<h5 class=" text-center">
+					<img src="Imagenes/que.png"
+						style="width: 70px; height: 50px; border-radius: 15px;" alt="">
 					Queuestions
 				</h5>
-				<p class="text-center">Foro para conversar sobre temas variados.</p>
 
+				<p class="text-center">Foro para conversar sobre temas variados.
+				</p>
 			</div>
+			<!--Grid column-->
+
+
+			<!--Grid column-->
 			<div class="col-lg-6 col-sm-6 text-center">
-				<h5 class="mb-0">Estamos en:</h5>
+				<h5 class=" mb-0">Estamos en:</h5>
+
 				<ul class="list-unstyled">
-					<a target="_blank"
+					<li><a target="_blank"
 						href="https://www.facebook.com/Queuestions-101688152055852"
-						class="text-dark">Facebook</a>
+						class="text-dark">Facebook</a></li>
+
+
 
 				</ul>
 			</div>
-
+			<!--Grid column-->
 		</div>
-
+		<!--Grid row-->
 		<div class="row">
 			<p class="col-12 text-center">© 2021 Copyright</p>
+
 		</div>
 	</div>
+	<!-- Grid container -->
+
+
 </footer>
+
+
+<!-- TERMINA FOOTER DE LA Pï¿½GINA -->
 </html>

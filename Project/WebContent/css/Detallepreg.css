@@ -1,0 +1,171 @@
+* {
+     font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.navbar {
+     font-size: 20px;
+     z-index: 999;
+     border-bottom: solid;
+     background-color: #e0740e;
+     position: fixed;
+     /* La barra de navegación se queda fijada en su posición*/
+     top: 0;
+     /* La posiciona al inicio de la página*/
+     width: 100%;
+     /* El ancho entero de la pantalla */
+}
+
+.navbar .navbar-brand:hover {
+     color: red;
+}
+
+.navbar .navbar-nav .nav-link {
+     color: black;
+}
+
+.navbar .navbar-nav .nav-link:hover {
+     color: blue;
+}
+
+.logopag {
+     height: 50px;
+     width: 70px;
+     border-radius: 15px;
+}
+
+.dropdown {
+     font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.BuscarLupa:hover {
+     background-color: #afafaf;
+}
+
+.TituloBusquedaA {
+     margin-top: 10px;
+     border-top: solid;
+     border-bottom: solid;
+     border-color: #bbbec2;
+     padding-top: 5px;
+}
+
+.categoriasbusca {
+     margin-left: auto;
+}
+
+.main {
+     margin-top: 150px;
+     margin-bottom: auto;
+     border-style: solid;
+}
+
+.imagenpregunta {
+     margin-top: 15px;
+     margin-bottom: 15px;
+
+     width: 100px;
+     height: 110px;
+}
+
+.pregunta {
+     font-size: 28px;
+}
+
+.descripcion {
+     font-size: 22px;
+}
+
+#adelante {
+     background-color: white;
+}
+
+.page-item.active .page-link {
+     background-color: sandybrown;
+     border-color: #e0740e;
+}
+
+#numeropagina {
+     color: black;
+}
+
+.page-link {
+     background-color: transparent;
+}
+
+
+.paginacionimg {
+
+     width: 30px;
+     height: 30px;
+}
+
+.imagen_usu_inicio {
+     width: 50px;
+     height: 50px;
+}
+
+.imagen_borrar {
+     width: 15px;
+     height: 15px;
+     padding: 0%;
+}
+.boton_borrar{
+     padding-top: 0px;
+     margin-top: 8px;
+     border-radius: 5px;
+}
+.boton_borrar:hover{
+     background-color: #f38c2b;
+}
+
+.imagen_editar{
+     width: 15px;
+     height: 15px;
+}
+.boton_editar{
+     margin-top: 20px;
+}
+.boton_editar:hover{
+     background-color: #f38c2b;
+}
+
+.fecha_hora_pregunta{
+     font-size: 14px;
+}
+
+.util_noutil_fav{
+     width: 22px;
+     height: 22px;
+}
+
+.util_noutil_fav_btn:hover{
+     background-color: #f38c2b;
+}
+
+html {
+     height: 100%;
+}
+
+body {
+     /* background-image: url("https://img.freepik.com/foto-gratis/fondo-acuarela-pintada-mano-forma-cielo-nubes_24972-1095.jpg?size=626&ext=jpg");
+     background-repeat: no-repeat;
+     background-attachment: fixed;
+     background-size: 100% 100%; */
+     background: linear-gradient(90deg, rgb(255, 255, 255) 0%, rgb(252, 252, 252) 49%, rgb(255, 255, 255) 100%);
+     background-clip: border-box;
+     display: flex;
+     flex-direction: column;
+     height: 100%;
+}
+
+footer {
+     position: relative;
+     font-size: 18px;
+     margin-top: 50px;
+     left: 0;
+     bottom: 0;
+     width: 100%;
+}
+
+
+
