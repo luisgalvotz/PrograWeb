@@ -1,6 +1,36 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@page import="com.dbconnection.models.*"%>
+<%@page import="com.dbconnection.utils.userType"%>
+<%@page import="java.util.*"%>
+<%@page import="com.dbconnection.controllers.GeneralServlet"%>
+
+<%
+UsuarioModel usuarioElegido = GeneralServlet.getUsuario(request, response);
+pageContext.setAttribute("usuarioElegido", usuarioElegido);
+
+List<CategoriaModel> listaCategorias = GeneralServlet.getCategorias();
+pageContext.setAttribute("listaCategorias", listaCategorias);
+
+userType usuarioActivo = (userType)request.getAttribute("usuarioActivo");
+pageContext.setAttribute("usuarioActivo", usuarioActivo);
+
+int IdUsuarioActivo = (int)request.getAttribute("IdUsuarioActivo");
+pageContext.setAttribute("IdUsuarioActivo", IdUsuarioActivo);
+
+PreguntaModel preguntaElegida = (PreguntaModel)request.getAttribute("preguntaElegida");
+pageContext.setAttribute("preguntaElegida", preguntaElegida);
+
+int numeroPagina = 1;
+
+if (request.getAttribute("numeroPagina") != null){
+	numeroPagina = (int)request.getAttribute("numeroPagina");
+	pageContext.setAttribute("numeroPagina", numeroPagina);
+}
+%>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -48,7 +78,7 @@
 			<ul class="navbar-nav mx-auto ">
 
 				<!-- Boton de inicio -->
-				<li class="nav-item"><a href="Inicio_.jsp" class="nav-link">Inicio</a></li>
+				<li class="nav-item"><a href="IndexPreguntas" class="nav-link">Inicio</a></li>
 
 				<!-- Dropdown de categorias -->
 				<li class="nav-item dropdown"><a href="#"
@@ -137,9 +167,7 @@
 
 					</div></li>
 
-				<!--Aï¿½ade pregunta  -->
-				<li class="nav-item"><a href="Pregunta.jsp" class="nav-link">Añadir
-						Pregunta</a></li>
+				
 			</ul>
 		</div>
 
@@ -171,27 +199,33 @@
 				<!-- Pregunta 1 -->
 				<section>
 					<div class="container">
-						<p style="border-bottom: solid; margin: 0;"><img class="imagen_usu_inicio" src="Imagenes/advertencia.png" alt="">Usuario_1</p>
+						<p style="border-bottom: solid; margin: 0;"><img class="imagen_usu_inicio" 
+							src="GeneralServlet?Imagen=Usuario&Id=${preguntaElegida.getIdUsuario()}" 
+							alt="">${preguntaElegida.getNomUsuarioPregunta()}</p>
 
-                              <p class="fecha_hora_pregunta">05 Junio 2021 02:48 AM</p>
+                              <p class="fecha_hora_pregunta"> ${preguntaElegida.getFechaCreacionToString()} </p>
 
 						<p class="pregunta"
-							style="margin-bottom: 0; margin-top: 0px; border-bottom: solid;">¿Cuántos
-							huevos ocupa un omelette?</p>
-							<p id="categoriapreg"> Comida </p>
-						<p class="descripcion">Lo necesito para una receta, gracias.</p>
-
+							style="margin-bottom: 0; margin-top: 0px; border-bottom: solid;"> ${preguntaElegida.getTitulo()} </p>
+							<p id="categoriapreg"> ${preguntaElegida.getCategoriaPregunta()} </p>
+						<c:if test="${preguntaElegida.getDescripcion() != ''}">
+							<p class="descripcion"> ${preguntaElegida.getDescripcion()} </p>
+						</c:if>
 					</div>
 				</section>
 			</div>
-			<div class="col-sm-2 col-lg-2 text-center">
-				<img class="imagenpregunta" src="Imagenes/omelette.jpg" alt="">
-			</div>
+			<c:if test="${preguntaElegida.isImagen() != null}">
+				<div class="col-sm-2 col-lg-2 text-center">
+					<img class="imagenpregunta" src="GeneralServlet?Imagen=Pregunta&Id=${preguntaElegida.getId()}" alt="">
+				</div>
+			</c:if>
+			<c:if test="${usuarioActivo == userType.questionOwner}">
                <div class="col-sm-1 col-lg-1">
                     <button  class="boton_borrar" id="eliminar_pregunta" type="button"><img src="Imagenes/eliminar.png" class="imagen_borrar"> </button>
 
                     <button class="boton_editar" type="button"><img class="imagen_editar" src="Imagenes/editar.png"> </button>
                </div>
+            </c:if>
 		</div>
           <div class="row" style="margin-left: 10px;">
                <div class="col-1"> <p><button class="util_noutil_fav_btn"><img class="util_noutil_fav" src="Imagenes/Like.png"> </button> 0</p> </div>

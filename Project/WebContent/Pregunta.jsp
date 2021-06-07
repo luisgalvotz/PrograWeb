@@ -7,10 +7,13 @@
 <%@page import="com.dbconnection.controllers.GeneralServlet"%>
 
 <%
-UsuarioModel usuarioElegido = GeneralServlet.getUsuario(request, response);
+UsuarioModel usuarioElegido = (UsuarioModel) request.getAttribute("IdUsuarioActivo");
 pageContext.setAttribute("usuarioElegido", usuarioElegido);
 
-List<CategoriaModel> listaCategorias = GeneralServlet.getCategorias();
+PreguntaModel preguntaElegida = (PreguntaModel) request.getAttribute("preguntaElegida");
+pageContext.setAttribute("preguntaElegida", preguntaElegida);
+
+List<CategoriaModel> listaCategorias = (List<CategoriaModel>) request.getAttribute("listaCategorias");
 pageContext.setAttribute("listaCategorias", listaCategorias);
 %>
 
@@ -59,7 +62,7 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 		<div class="collapse navbar-collapse" id="navbarmenu">
 			<ul class="navbar-nav mx-auto">
 
-				<li class="nav-item"><a href="Inicio_.jsp" class="nav-link">Inicio</a>
+				<li class="nav-item"><a href="IndexPreguntas" class="nav-link">Inicio</a>
 				</li>
 
 				<li class="nav-item dropdown"><a href="#"
@@ -68,7 +71,8 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 						Categorías </a>
 					<div class="dropdown-menu" aria-labelledby="Categoriasnavbar">
 						<c:forEach var="iCategoria" items="${listaCategorias}">
-							<a class="dropdown-item" href="#"> ${iCategoria.getNombre()} </a>
+							<a class="dropdown-item" href="#"> ${iCategoria.getNombre()}
+							</a>
 						</c:forEach>
 					</div></li>
 
@@ -144,8 +148,7 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 							disabled="disabled" name="NfavoritaBusca" id="NfavoritaBusca">
 					</div></li>
 
-				<li class="nav-item"><a class="nav-link" href="Pregunta.jsp">Añadir
-						Pregunta</a></li>
+
 			</ul>
 		</div>
 
@@ -157,11 +160,11 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 						src="Imagenes/Perfil.png" alt=""> Iniciar sesión
 				</a></li>
 			</c:if>
-			
+
 			<c:if test="${not empty usuarioElegido}">
-				<li class="nav-item"><a href="Perfil.jsp"
-					class="nav-link"> <img style="height: 40px; width: 40px;"
-						src="GeneralServlet?Imagen=Usuario&Id=${usuarioElegido.getId()}"> 
+				<li class="nav-item"><a href="Perfil.jsp" class="nav-link">
+						<img style="height: 40px; width: 40px;"
+						src="GeneralServlet?Imagen=Usuario&Id=${usuarioElegido.getId()}">
 						<c:out value="${usuarioElegido.getNomUsuario()}"></c:out>
 				</a></li>
 			</c:if>
@@ -174,42 +177,49 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 
 	<!-- FORMULARIO DE PREGUNTA -->
 	<section class="formulario_pregunta">
-		<form id="form_hacer_pregunta" action="" method="POST"> 
-		<div class="container">
-			<div class="row">
-				<div class="col-7">
-					<input class="PreguntaS" id="Titulo_pregunta" name="Titulo_pregunta" type="text"
-						placeholder="Escribe aquí tu pregunta">
+		<form id="form_hacer_pregunta" action="SubirPregunta" method="post" enctype="multipart/form-data">
 
-					<form class="CategoriaS" action="">
-						<label for="SelCategoria">Categoría:</label> <select
-							name="SelCategoria" id="SelCategoria">
-							<c:forEach var="iCategoria" items="${listaCategorias}">
-								<option value="${iCategoria.getNombre()}"> ${iCategoria.getNombre()} </option>
-							</c:forEach>
-						</select>
-					</form>
+			<c:if test="${empty preguntaElegida}">
+				<div class="container">
+					<div class="row">
+						<div class="col-7">
+							<input class="PreguntaS" id="Titulo_pregunta"
+								name="Titulo_pregunta" type="text"
+								placeholder="Escribe aquí tu pregunta">
 
-					<textarea class="DescripcionS" rows="5" placeholder="Descripción"
-						name="Descripcion_pregunta" id="Descripcion_pregunta"></textarea>
+							<form class="CategoriaS" action="">
+								<label for="SelCategoria">Categoría:</label> 
+								<select name="SelCategoria" id="SelCategoria">
+									<c:forEach var="iCategoria" items="${listaCategorias}">
+										<option value="${iCategoria.getId()}">${iCategoria.getNombre()}</option>
+									</c:forEach>
+								</select>
+							</form>
 
+							<textarea class="DescripcionS" rows="5" placeholder="Descripción"
+								name="Descripcion_pregunta" id="Descripcion_pregunta"></textarea>
+
+						</div>
+						<div class="col-lg-2 col-sm-0"></div>
+						<div class="col-lg-2 col-sm-3">
+							<!-- <input type="image" src="" alt=""> -->
+
+							<input class="Seleccionimagen" type='file' name="Imagen_pregunta"
+								id="Imagen_pregunta" onchange="readURL(this);" /> <img
+								id="Imagenseleccionada" src="#" alt="" />
+						</div>
+					</div>
+					<input class="botones" type="submit" form="form_hacer_pregunta" value="Publicar pregunta"> 
+					<input name="preguntaNueva" type="hidden" value="true">
 				</div>
-				<div class="col-lg-2 col-sm-0"></div>
-				<div class="col-lg-2 col-sm-3">
-					<!-- <input type="image" src="" alt=""> -->
+			</c:if>
 
-					<input class="Seleccionimagen" type='file' name="Imagen_pregunta" id="Imagen_pregunta"
-						onchange="readURL(this);" /> <img id="Imagenseleccionada" src="#"
-						alt="" />
-				</div>
+			<c:if test="${not empty preguntaElegida}">
 
-			</div>
-			
-			
-		</div>
-	</section>
-	<input class="botones" type="submit" value="Publicar pregunta">
+			</c:if>
+
 		</form>
+	</section>
 
 
 	<div style="margin-top: 30px;"></div>

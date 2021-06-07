@@ -7,7 +7,7 @@
 <%@page import="com.dbconnection.controllers.GeneralServlet"%>
 
 <%
-UsuarioModel usuarioElegido = GeneralServlet.getUsuario(request, response);
+UsuarioModel usuarioElegido = GeneralServlet.getUsuario(request, response); //el usuario que hizo login
 pageContext.setAttribute("usuarioElegido", usuarioElegido);
 
 List<CategoriaModel> listaCategorias = GeneralServlet.getCategorias();
@@ -59,7 +59,7 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 			<ul class="navbar-nav mx-auto ">
 
 				<!-- Boton de inicio -->
-				<li class="nav-item"><a href="Inicio_.jsp" class="nav-link">Inicio</a></li>
+				<li class="nav-item"><a href="IndexPreguntas" class="nav-link">Inicio</a></li>
 
 				<!-- Dropdown de categorias -->
 				<li class="nav-item dropdown"><a href="#"
@@ -146,9 +146,7 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 
 					</div></li>
 
-				<!--Añade pregunta  -->
-				<li class="nav-item"><a href="Pregunta.jsp" class="nav-link">Añadir
-						Pregunta</a></li>
+				
 			</ul>
 		</div>
 

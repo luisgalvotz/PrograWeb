@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%
+String usernameEncontrado = "false";
+if(request.getAttribute("usernameEncontrado") != null)
+	usernameEncontrado = request.getAttribute("usernameEncontrado").toString();
+%>
+    
 <!doctype html>
 <html lang="en">
 <head>
@@ -24,7 +31,7 @@
 </head>
 <body>
 	<div class="BarraTopRegistro">
-		<a href="Inicio_.jsp"> <img align="left"
+		<a href="IndexPreguntas"> <img align="left"
 			style="height: 50px; width: 70px; border-radius: 15px; margin-left: 20px;"
 			src="Imagenes/que.png" alt="Logo">
 		</a>
@@ -32,7 +39,7 @@
 	</div>
 
 	<div class="container" style="margin-bottom: auto;">
-	<form id="form_registro" action="./RegistroUsuario" method="POST" enctype="multipart/form-data">
+	<form id="form_registro" action="RegistroUsuario" method="POST" enctype="multipart/form-data">
 		<div class="row">
 			<div class="col-lg-7 col-sm-12">
 				<section class="Formulario_registro ">

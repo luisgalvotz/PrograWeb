@@ -13,6 +13,8 @@ import com.dbconnection.dao.CategoriaDAO;
 import com.dbconnection.models.CategoriaModel;
 import com.dbconnection.dao.UsuarioDAO;
 import com.dbconnection.models.UsuarioModel;
+import com.dbconnection.dao.PreguntaDAO;
+import com.dbconnection.models.PreguntaModel;
 
 /**
  * Servlet implementation class GeneralServlet
@@ -42,7 +44,7 @@ public class GeneralServlet extends HttpServlet {
 			break;
 			
 		case "Pregunta":
-			//getPreguntaImagen(request, response);
+			getPreguntaImagen(request, response);
 			break;
 			
 		case "Respuesta":
@@ -74,6 +76,32 @@ public class GeneralServlet extends HttpServlet {
 				byte[] content = usuarioElegido.get(0).getImagen().readAllBytes();
 
 				response.setContentType(getServletContext().getMimeType(imageName));
+				response.setContentLength(content.length);
+				response.getOutputStream().write(content);
+			} 
+
+		}
+	}
+	
+	private void getPreguntaImagen(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String imageName = "pregunta.png"; // Returns "foo.png".
+		List<PreguntaModel> preguntaElegida = null;
+		
+		int IdPregunta = Integer.parseInt(request.getParameter("Id"));
+		PreguntaModel preguntaAux = new PreguntaModel(IdPregunta);
+		
+		try {
+			preguntaElegida = PreguntaDAO.getPregunta("SEL", preguntaAux);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		if (preguntaElegida.size() != 0) {
+			if (preguntaElegida.get(0).getImagen() != null) {
+
+				byte[] content = preguntaElegida.get(0).getImagen().readAllBytes();
+
+				response.setContentType(getServletContext().getMimeType(imageName)); // response.setContentType("image/jpeg");
 				response.setContentLength(content.length);
 				response.getOutputStream().write(content);
 			} 

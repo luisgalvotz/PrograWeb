@@ -51,10 +51,9 @@ public class Login extends HttpServlet {
 		if (listaUsuarios.isEmpty() == false) {
 			
 			request.getSession().setAttribute("IdUsuarioActivo", listaUsuarios.get(0).getId());
-			request.getSession().setAttribute("ActivoUsuario", listaUsuarios.get(0).getActivo());
+			request.getSession().setAttribute("EstadoUsuario", listaUsuarios.get(0).getActivo());
 			
-			response.sendRedirect("Inicio_.jsp");
-			//response.sendRedirect("IndexPreguntas?numeroPagina=0");
+			response.sendRedirect("IndexPreguntas?numeroPagina=1");
 		}
 		else {
 			request.setAttribute("usuarioIncorrecto", "true");

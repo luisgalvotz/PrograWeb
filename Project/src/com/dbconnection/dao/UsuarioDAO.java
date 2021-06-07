@@ -15,7 +15,7 @@ import java.util.List;
 public class UsuarioDAO {
 
 	// TODO: Es ideal incluir el "throws Exception" ?
-	public static int insertUser(String opc, UsuarioModel us) throws Exception {
+	public static int iudUser(String opc, UsuarioModel us) throws Exception {
 		Connection con = null;
 		CallableStatement statement = null;
 
@@ -136,22 +136,30 @@ public class UsuarioDAO {
 		return listaUsuarios;
 	}
 
-	/*
-	 * public static List<UsuarioModel> getUsers() throws Exception {
-	 * List<UsuarioModel> users = new ArrayList<>(); Connection con = null;
-	 * CallableStatement statement = null;
-	 * 
-	 * try { con = DbConnection.getConnection(); statement =
-	 * con.prepareCall("SELECT * FROM user"); ResultSet resultSet =
-	 * statement.executeQuery(); // Si el resultSet tiene resultados lo recorremos
-	 * while (resultSet.next()) { // Obtenemos el valor del result set en base al
-	 * nombre de la // columna String name = resultSet.getString("nameUser"); String
-	 * password = resultSet.getString("password"); String urlImage =
-	 * resultSet.getString("urlImage"); // Agregamos el usuario a la lista
-	 * users.add(new UsuarioModel(name, password, urlImage)); } } catch
-	 * (SQLException ex) { System.out.println(ex.getMessage()); } finally {
-	 * statement.close(); con.close(); }
-	 * 
-	 * return users; }
-	 */
+	public static int getUsuario(String UsernameUsuario) throws Exception  {
+		int usernameEncontrado = 0;
+        Connection con = null;
+        CallableStatement statement = null;
+        
+        try {
+            con = DbConnection.getConnection();
+            statement = con.prepareCall("CALL SP_Usuario('NOMUS', NULL, ?, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);");
+            statement.setString(1, UsernameUsuario);
+            
+            ResultSet resultSet = statement.executeQuery();
+            
+            if (resultSet.next())
+           	 usernameEncontrado = resultSet.getInt("UsernameEncontrado");
+            
+        } 
+        catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } 
+        finally {
+            statement.close();
+            con.close();
+        }
+
+        return usernameEncontrado;
+	}
 }

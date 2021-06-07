@@ -12,6 +12,27 @@ pageContext.setAttribute("usuarioElegido", usuarioElegido);
 
 List<CategoriaModel> listaCategorias = GeneralServlet.getCategorias();
 pageContext.setAttribute("listaCategorias", listaCategorias);
+
+List<PreguntaModel> lista10Preguntas = (List<PreguntaModel>) request.getAttribute("lista10Preguntas");
+pageContext.setAttribute("lista10Preguntas", lista10Preguntas);
+
+int IdUsuarioActivo = -1;
+if (request.getAttribute("IdUsuarioActivo") != null) {
+	IdUsuarioActivo = (int) request.getAttribute("IdUsuarioActivo");
+	pageContext.setAttribute("IdUsuarioActivo", IdUsuarioActivo);
+}
+
+byte EstadoUsuario = 0;
+if (request.getAttribute("EstadoUsuario") != null) {
+	EstadoUsuario = (byte) request.getAttribute("EstadoUsuario");
+	pageContext.setAttribute("EstadoUsuario", EstadoUsuario);
+}
+
+int numeroPagina = 1;
+if (request.getAttribute("numeroPagina") != null) {
+	numeroPagina = (int) request.getAttribute("numeroPagina");
+	pageContext.setAttribute("numeroPagina", numeroPagina);
+}
 %>
 
 <!doctype html>
@@ -55,7 +76,7 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 			<ul class="navbar-nav mx-auto ">
 
 				<!-- Boton de inicio -->
-				<li class="nav-item"><a href="Inicio_.jsp" class="nav-link">Inicio</a></li>
+				<li class="nav-item"><a href="IndexPreguntas?numeroPagina=1" class="nav-link">Inicio</a></li>
 
 				<!-- Dropdown de categorias -->
 				<li class="nav-item dropdown"><a href="#"
@@ -64,7 +85,8 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 						Categorías </a>
 					<div class="dropdown-menu" aria-labelledby="Categoriasnavbar">
 						<c:forEach var="iCategoria" items="${listaCategorias}">
-							<a class="dropdown-item" href="#"> ${iCategoria.getNombre()} </a>
+							<a class="dropdown-item" href="#"> ${iCategoria.getNombre()}
+							</a>
 						</c:forEach>
 					</div></li>
 
@@ -130,23 +152,23 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 							name="FechaFin" id="FechaFin">
 
 						<!-- Filtro personas que marcaron ï¿½til -->
-						<label style="margin-left: 10px;" for="NutilBusca">
-							Número de personas que les pareció útil </label> <input
-							type="checkbox" disabled="disabled" name="NutilBusca"
-							id="NutilBusca">
+						<label style="margin-left: 10px;" for="NutilBusca"> Número
+							de personas que les pareció útil </label> <input type="checkbox"
+							disabled="disabled" name="NutilBusca" id="NutilBusca">
 
 						<!-- Filtro personas que marcaron favorita -->
 						<label style="margin-left: 10px;" for="NfavoritaBusca">
-							Número de personas que marcaron favoritas </label> <input
-							type="checkbox" disabled="disabled" name="NfavoritaBusca"
-							id="NfavoritaBusca">
+							Número de personas que marcaron favoritas </label> <input type="checkbox"
+							disabled="disabled" name="NfavoritaBusca" id="NfavoritaBusca">
 
 
 					</div></li>
 
 				<!--Aï¿½ade pregunta  -->
-				<li class="nav-item"><a href="Pregunta.jsp" class="nav-link">Añadir
-						Pregunta</a></li>
+				<c:if test="${IdUsuarioActivo != -1 && EstadoUsuario != 0}">
+					<li class="nav-item"><a href="SubirPregunta" class="nav-link">Añadir
+							Pregunta</a></li>
+				</c:if>
 			</ul>
 		</div>
 
@@ -172,70 +194,32 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 
 	<!-- CUERPO DE LA Pï¿½GINA -->
 
-<%-- PREGUNTA 1 --%>
-	<a href="DetallePregunta.jsp" class="pregunta_inicio"> 
-	<div class="container main text-center">
-		<div class="row">
-			<div class="col-12">
-				<!-- Pregunta 1 -->
-				<section>
-					<div class="container">
-						<p style="border-bottom: solid; margin: 0;"><img class="imagen_usu_inicio" src="Imagenes/advertencia.png" alt="">Usuario_1</p>
+	<%-- PREGUNTA 1 --%>
+	<c:forEach var="iPregunta" items="${lista10Preguntas}">
+		<a href="PreguntaRespuesta?IdPregunta=${iPregunta.getId()}&numeroPagina=1" class="pregunta_inicio">
+			<div class="container main text-center">
+				<div class="row">
+					<div class="col-12">
+						<!-- Pregunta 1 -->
+						<section>
+							<div class="container">
+								<p style="border-bottom: solid; margin: 0;">
+									<img class="imagen_usu_inicio" src="GeneralServlet?Imagen=Usuario&Id=${iPregunta.getIdUsuario()}"
+										alt="">${iPregunta.getNomUsuarioPregunta()}
+								</p>
 
-						<p class="pregunta"
-							style="margin-bottom: 0; border-bottom: solid;">¿Cuántos
-							huevos ocupa un omelette?</p>
+								<p class="pregunta"
+									style="margin-bottom: 0; border-bottom: solid;">${iPregunta.getTitulo()}</p>
+							</div>
+						</section>
 					</div>
-				</section>
+
+				</div>
 			</div>
-			
-		</div>
-	</div>
-	</a>
-	
-<%-- PREGUNTA 2 --%>
-	<a href="DetallePregunta.jsp" class="pregunta_inicio"> 
-	<div class="container main text-center">
-		<div class="row">
-			<div class="col-12">
-				<!-- Pregunta 1 -->
-				<section>
-					<div class="container">
-						<p style="border-bottom: solid; margin: 0;"><img class="imagen_usu_inicio" src="Imagenes/advertencia.png" alt="">Usuario_1</p>
+		</a>
+	</c:forEach>
 
-						<p class="pregunta"
-							style="margin-bottom: 0; border-bottom: solid;">¿Cuántos
-							huevos ocupa un omelette?</p>
-					</div>
-				</section>
-			</div>
-			
-		</div>
-	</div>
-	</a>
 
-<%-- PREGUNTA 3 --%>
-	<a href="DetallePregunta.jsp" class="pregunta_inicio"> 
-	<div class="container main text-center">
-		<div class="row">
-			<div class="col-12">
-				<!-- Pregunta 1 -->
-				<section>
-					<div class="container">
-						<p style="border-bottom: solid; margin: 0;"><img class="imagen_usu_inicio" src="Imagenes/advertencia.png" alt="">Usuario_1</p>
-
-						<p class="pregunta"
-							style="margin-bottom: 0; border-bottom: solid;">¿Cuántos
-							huevos ocupa un omelette?</p>
-					</div>
-				</section>
-			</div>
-			
-		</div>
-	</div>
-	</a>
-
-	
 
 	<!-- CONTAINER PARA LA PAGINACION -->
 	<div class="container">

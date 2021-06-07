@@ -38,7 +38,7 @@ pageContext.setAttribute("usuarioIncorrecto", usuarioIncorrecto);
 
 	<div
 		style="padding-top: 15px; padding-bottom: 15px; width: 100%; background: #e0740e;">
-		<a href="Inicio_.jsp"> <img align="left"
+		<a href="IndexPreguntas"> <img align="left"
 			style="height: 50px; width: 70px; border-radius: 15px; margin-left: 20px;"
 			src="Imagenes/que.png" alt="Logo">
 		</a>
@@ -46,7 +46,7 @@ pageContext.setAttribute("usuarioIncorrecto", usuarioIncorrecto);
 	</div>
 
 	<section class="Formulario_Inicio_sesion">
-		<form id="form_inicio_sesion" action="./Login" method="post"> 
+		<form id="form_inicio_sesion" action="Login" method="post">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-5 col-md-12">

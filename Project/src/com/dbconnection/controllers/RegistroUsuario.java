@@ -12,6 +12,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -44,6 +46,34 @@ public class RegistroUsuario extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		int usernameEncontrado = verificarNombreUsuario(request,response);
+		if( usernameEncontrado == 1 ) {
+			request.setAttribute("usernameEncontrado", "true");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("Registro.jsp");
+        	dispatcher.forward(request, response);
+		}
+		else if( usernameEncontrado == 0 ){
+			insertarUsuario(request, response);
+	        response.sendRedirect("Inicia_sesion.jsp");
+		}
+	}
+	
+	private int verificarNombreUsuario(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		int usernameEncontrado = 0;
+		String UsernameUsuario = request.getParameter("Nombre_Usu");
+		try {
+			usernameEncontrado = UsuarioDAO.getUsuario(UsernameUsuario);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return usernameEncontrado;
+	}
+	
+	private void insertarUsuario(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		UsuarioModel us = null;
+		
 		String nombre = request.getParameter("Nombre_");
 		String apellidos = request.getParameter("Apellidos_Usu");
 
@@ -73,15 +103,14 @@ public class RegistroUsuario extends HttpServlet {
 			ImagenPerfilUsuario = filePart.getInputStream();
 		}
 		
-		UsuarioModel us = new UsuarioModel(nombre, apellidos, FechaNacUsuario, correo, nUsuario, contra, ImagenPerfilUsuario);
+		us = new UsuarioModel(nombre, apellidos, FechaNacUsuario, correo, nUsuario, contra, ImagenPerfilUsuario);
 
 		try {
-			UsuarioDAO.insertUser("AGREGAR", us);
+			UsuarioDAO.iudUser("AGREGAR", us);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		response.sendRedirect("Perfil.jsp");
 	}
 
 }
