@@ -76,7 +76,8 @@ if (request.getAttribute("numeroPagina") != null) {
 			<ul class="navbar-nav mx-auto ">
 
 				<!-- Boton de inicio -->
-				<li class="nav-item"><a href="IndexPreguntas?numeroPagina=1" class="nav-link">Inicio</a></li>
+				<li class="nav-item"><a href="IndexPreguntas?numeroPagina=1"
+					class="nav-link">Inicio</a></li>
 
 				<!-- Dropdown de categorias -->
 				<li class="nav-item dropdown"><a href="#"
@@ -195,24 +196,25 @@ if (request.getAttribute("numeroPagina") != null) {
 	<!-- CUERPO DE LA Pï¿½GINA -->
 
 	<%-- PREGUNTA 1 --%>
-	<c:forEach var="iPregunta" items="${lista10Preguntas}">
-		<a class="pregunta_inicio">
+	<a class="pregunta_inicio"> 
+		<c:forEach var="iPregunta" items="${lista10Preguntas}">
 			<div class="container main text-center">
 				<div class="row">
 					<div class="col-12">
 						<!-- Pregunta 1 -->
 						<section>
 							<div class="container">
-								<a href="Perfil.jsp" class="imagen_nombre_usuario"> 
-								<p style="border-bottom: solid; margin: 0;">
-									<img class="imagen_usu_inicio" src="GeneralServlet?Imagen=Usuario&Id=${iPregunta.getIdUsuario()}"
-										alt="">${iPregunta.getNomUsuarioPregunta()}
-								</p>
-								</a>
-
-								<a href="PreguntaRespuesta?IdPregunta=${iPregunta.getId()}&numeroPagina=1" class="titulo_pregunta"> 
-								<p class="pregunta"
-									style="margin-bottom: 0; border-bottom: solid;">${iPregunta.getTitulo()}</p>
+								<a href="Perfil.jsp" class="imagen_nombre_usuario">
+									<p style="border-bottom: solid; margin: 0;">
+										<img class="imagen_usu_inicio"
+											src="GeneralServlet?Imagen=Usuario&Id=${iPregunta.getIdUsuario()}"
+											alt="">${iPregunta.getNomUsuarioPregunta()}
+									</p>
+								</a> <a
+									href="PreguntaRespuesta?IdPregunta=${iPregunta.getId()}&numeroPagina=1"
+									class="titulo_pregunta">
+									<p class="pregunta"
+										style="margin-bottom: 0; border-bottom: solid;">${iPregunta.getTitulo()}</p>
 								</a>
 							</div>
 						</section>
@@ -220,8 +222,8 @@ if (request.getAttribute("numeroPagina") != null) {
 
 				</div>
 			</div>
-		</a>
-	</c:forEach>
+		</c:forEach>
+	</a>
 
 
 
