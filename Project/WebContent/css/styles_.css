@@ -1,4 +1,4 @@
-*{
+* {
      font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
@@ -16,32 +16,32 @@
 }
 
 .navbar .navbar-brand:hover {
-     color:red;
+     color: red;
 }
 
-.navbar .navbar-nav .nav-link{
-     color:black;
+.navbar .navbar-nav .nav-link {
+     color: black;
 }
 
-.navbar .navbar-nav .nav-link:hover{
+.navbar .navbar-nav .nav-link:hover {
      color: blue;
 }
 
-.logopag{
+.logopag {
      height: 50px;
      width: 70px;
      border-radius: 15px;
 }
 
-.dropdown{
+.dropdown {
      font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
-.BuscarLupa:hover{
+.BuscarLupa:hover {
      background-color: #afafaf;
 }
 
-.TituloBusquedaA{
+.TituloBusquedaA {
      margin-top: 10px;
      border-top: solid;
      border-bottom: solid;
@@ -49,14 +49,16 @@
      padding-top: 5px;
 }
 
-.categoriasbusca{
+.categoriasbusca {
      margin-left: auto;
 }
+
 
 
 /* CAMBIO */
 .pregunta_inicio {
      color: black;
+     margin-top: 90px;
      margin-bottom: auto;
 
 }
@@ -65,25 +67,54 @@
 .pregunta_inicio:hover {
      color: black;
      text-decoration: none;
-     font-size: 20px;
-     border-color: #e0740e;
      margin-bottom: auto;
 
 }
+
 .pregunta_inicio:hover .main {
      border-color: #c06611;
 }
+
+/* 
 .pregunta_inicio:hover .main .pregunta{
      font-size: 32px;
 
+} */
+
+.imagen_nombre_usuario {
+     color: black;
 }
 
-.main{
-     margin-top: 90px;
+.pregunta_inicio .main .imagen_nombre_usuario:hover {
+     color: black;
+     text-decoration: none;
+     font-size: 20px;
+
+}
+
+
+.titulo_pregunta {
+     color: black;
+}
+
+.pregunta {
+     font-size: 28px;
+}
+
+.pregunta_inicio .main .titulo_pregunta .pregunta:hover {
+     color: black;
+     text-decoration: none;
+     font-size: 32px;
+}
+
+
+.main {
+     margin-top: 135px;
      margin-bottom: auto;
      border-style: solid;
      padding-bottom: 20px;
 }
+
 /* .main:hover {
      border-color: #c06611;
 }
@@ -98,32 +129,31 @@
      height: 50px;
 }
 
-.pregunta{
-     font-size: 28px;
+
+
+.paginacion_inicio {
+     margin-top: auto;
 }
 
-
-
-
-#adelante{
+#adelante {
      background-color: white;
 }
 
-.page-item.active .page-link{
+.page-item.active .page-link {
      background-color: sandybrown;
      border-color: #e0740e;
 }
 
-#numeropagina{
+#numeropagina {
      color: black;
 }
 
-.page-link{
+.page-link {
      background-color: transparent;
 }
 
 
-.paginacionimg{
+.paginacionimg {
 
      width: 30px;
      height: 30px;
@@ -138,17 +168,17 @@ body {
      background-repeat: no-repeat;
      background-attachment: fixed;
      background-size: 100% 100%; */
-       background: linear-gradient(90deg, rgb(255, 255, 255) 0%, rgb(252, 252, 252) 49%, rgb(255, 255, 255) 100%);
-      background-clip: border-box;
+     background: linear-gradient(90deg, rgb(255, 255, 255) 0%, rgb(252, 252, 252) 49%, rgb(255, 255, 255) 100%);
+     background-clip: border-box;
      display: flex;
      flex-direction: column;
      height: 100%;
 }
 
-footer{
+footer {
      position: relative;
      font-size: 18px;
-     margin-top: 50px;
+     margin-top: auto;
      left: 0;
      bottom: 0;
      width: 100%;

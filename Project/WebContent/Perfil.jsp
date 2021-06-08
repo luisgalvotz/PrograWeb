@@ -194,66 +194,34 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 		</div>
 
 		<div class="row " style="margin-top: 10px;">
-			<div class="col-lg-2 col-sm-0"></div>
-			<div style="text-align: center;" class="col-lg-2 col-sm-3 opc_perfil">
-				<a href="#" class="opc">Preguntas</a>
+			<div style="text-align: center;" class="col-lg-2 col-sm-2 opc_perfil">
+				<a href="#" class="opc" id="preg_barra">Preguntas</a>
+                    <label for="preg_barra">0</label>
 			</div>
+
 			<div style="text-align: center;" class="col-lg-3 col-sm-3 opc_perfil">
-				<a href="#" class="opc">Respuestas</a>
-
+				<a href="#" class="opc" id="resp_barra">Respuestas</a>
+                    <label for="resp_barra">0</label>
 			</div>
-			<div style="text-align: center;" class="col-lg-2 col-sm-3 opc_perfil">
-				<a href="#" class="opc">Útiles</a>
 
+			<div style="text-align: center;" class="col-lg-2 col-sm-2 opc_perfil">
+				<a href="#" class="opc" id="util_barra">Útiles</a>
+                    <label for="util_barra">0</label>
 			</div>
-			<div style="text-align: center;" class="col-lg-3 col-sm-3 opc_perfil">
-				<a href="#" class="opc">Favoritos</a>
 
+               <div style="text-align: center;" class="col-lg-3 col-sm-3 opc_perfil">
+                    <a href="#" class="opc" id="noutil_barra">No útiles</a>
+                    <label for="noutil_barra">0</label>
+               </div>
+
+			<div style="text-align: center;" class="col-lg-2 col-sm-2 opc_perfil">
+				<a href="#" class="opc" id="fav_barra">Favoritos</a>
+                    <label for="fav_barra">0</label>
 			</div>
+
 		</div>
 	</div>
 
-
-	<!-- <div class="barra_perfil">
-
-      <div class="img_perfil"><img src="Imagenes/Perfil.png" alt="" style="width: 100%;"></div>
-      
-      <div class="info_perfil">
-        <div class="container">
-         <div class="row">
-           <div class="col-lg-11">
-           </div>
-           <div class="col-lg-1">
-           </div> -->
-	<!--div style="align-content: center;" class="col-lg-1">
-               <button class="botones_perfil">
-                 <img style="width: 30px; height: 30px;" src="Imagenes/Salir.png" alt="PuertaSalir">
-               </button>
-           </div-->
-	<!-- </div>
-        </div>
-       </div> -->
-
-	<!-- <div class="opc_perfil">
-        <div class="container">
-          <div class="row">
-            <div style="text-align: center;" class="col-lg-3">
-                <a href="#" class="opc">Preguntas</a>
-            </div>
-            <div style="text-align: center;" class="col-lg-3">
-                <a href="#" class="opc">Respuestas</a>
-            </div>
-            <div style="text-align: center;" class="col-lg-3">
-                <a href="#" class="opc">Útiles</a>
-            </div>
-            <div style="text-align: center;" class="col-lg-3">
-                <a href="#" class="opc">Favoritos</a>
-            </div>
-          </div>
-         </div>
-       </div> -->
-
-	<!-- </div> -->
 
 
 	<section class="formulario_perfil">
@@ -293,6 +261,16 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 
 						</div>
 					</div>
+					<!-- edad -->
+                         <div class="row">
+                              <div class="col-lg-3">
+							<p>Edad</p>
+						</div>
+						<div class="col-lg-3">
+							<input class="campos" type="text" name="EdadUsu" id="EdadUsu"
+								value="${usuarioElegido.getFechaNac()}">
+						</div>
+                         </div>
 					<!-- correo -->
 					<div class="row">
 						<div class="col-lg-3">
@@ -317,7 +295,7 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 							<p>Contraseña</p>
 						</div>
 						<div class="col-lg-3">
-							<input class="campos" type="text" name="Contraseña"
+							<input class="campos" type="password" name="Contraseña"
 								id="Contraseña" placeholder="********">
 						</div>
 					</div>
@@ -326,7 +304,7 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 							<p>Confirmar contraseña</p>
 						</div>
 						<div class="col-lg-3">
-							<input class="campos" type="text" name="ConfirmarCon"
+							<input class="campos" type="password" name="ConfirmarCon"
 								id="ConfirmarCon" placeholder="********">
 						</div>
 					</div>
@@ -357,6 +335,88 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 		</div>
 		</form>
 	</section>
+
+	<!-- PREGUNTA 1 -->
+	<c:forEach var="iPregunta" items="${lista10Preguntas}">
+		<div class="pregunta_inicio">
+			<div class="container main_pregunta_perfil text-center">
+				<div class="row">
+					<div class="col-12">
+						<!-- Pregunta 1 -->
+						<section>
+							<div class="container">
+								<a href="Perfil.jsp" class="imagen_nombre_usuario"> 
+								<p style="border-bottom: solid; margin: 0;">
+									<img class="imagen_usu_inicio" src="GeneralServlet?Imagen=Usuario&Id=${iPregunta.getIdUsuario()}"
+										alt="">${iPregunta.getNomUsuarioPregunta()}
+								</p>
+								</a>
+
+								<a href="PreguntaRespuesta?IdPregunta=${iPregunta.getId()}&numeroPagina=1" class="titulo_pregunta"> 
+								<p class="pregunta"
+									style="margin-bottom: 0; border-bottom: solid;">${iPregunta.getTitulo()}</p>
+								</a>
+							</div>
+						</section>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</c:forEach>
+
+	<!-- RESPUESTA -->
+	<div class="respuesta_perfil">
+			<div class="container main_respuesta_perfil text-center">
+				<div class="row">
+					<div class="col-12">
+						<!-- Pregunta 1 -->
+						<section>
+							<div class="container">
+								<a href="Perfil.jsp" class="imagen_nombre_usuario"> 
+								<p style="border-bottom: solid; margin: 0;">
+									<img class="imagen_usu_inicio" src="GeneralServlet?Imagen=Usuario&Id=${iPregunta.getIdUsuario()}"
+										alt="">${iPregunta.getNomUsuarioPregunta()}
+								</p>
+								</a>
+
+								<a href="PreguntaRespuesta?IdPregunta=${iPregunta.getId()}&numeroPagina=1" class="titulo_respuesta"> 
+								<p class="respuesta"
+									style="margin-bottom: 0; border-bottom: solid;">${iPregunta.getTitulo()}</p>
+								</a>
+							</div>
+						</section>
+					</div>
+
+				</div>
+			</div>
+	</div>
+
+	<!-- CONTAINER PARA LA PAGINACION -->
+	<div class="container paginacion_inicio">
+		<div class="row">
+			<div class="col-5"></div>
+			<div class="col-5">
+				<!-- PAGINACION -->
+				<div class="container-fluid">
+					<br> <br>
+					<nav>
+						<ul class="pagination ">
+							<li class="page-item disabled"><a class="page-link" href="#"><img
+									class="paginacionimg" src="Imagenes/pagina_anterior.png" alt=""></a></li>
+							<li class="page-item active"><a class="page-link"
+								id="numeropagina" href="">1</a></li>
+							<li class="page-item"><a class="page-link" id="adelante"
+								href="#"><img class="paginacionimg"
+									src="Imagenes/pagina_siguiente.png" alt=""></a></li>
+
+						</ul>
+					</nav>
+				</div>
+			</div>
+			<div class="col-2"></div>
+		</div>
+	</div>
 
 
 

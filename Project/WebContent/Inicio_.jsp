@@ -196,20 +196,24 @@ if (request.getAttribute("numeroPagina") != null) {
 
 	<%-- PREGUNTA 1 --%>
 	<c:forEach var="iPregunta" items="${lista10Preguntas}">
-		<a href="PreguntaRespuesta?IdPregunta=${iPregunta.getId()}&numeroPagina=1" class="pregunta_inicio">
+		<a class="pregunta_inicio">
 			<div class="container main text-center">
 				<div class="row">
 					<div class="col-12">
 						<!-- Pregunta 1 -->
 						<section>
 							<div class="container">
+								<a href="Perfil.jsp" class="imagen_nombre_usuario"> 
 								<p style="border-bottom: solid; margin: 0;">
 									<img class="imagen_usu_inicio" src="GeneralServlet?Imagen=Usuario&Id=${iPregunta.getIdUsuario()}"
 										alt="">${iPregunta.getNomUsuarioPregunta()}
 								</p>
+								</a>
 
+								<a href="PreguntaRespuesta?IdPregunta=${iPregunta.getId()}&numeroPagina=1" class="titulo_pregunta"> 
 								<p class="pregunta"
 									style="margin-bottom: 0; border-bottom: solid;">${iPregunta.getTitulo()}</p>
+								</a>
 							</div>
 						</section>
 					</div>
@@ -222,10 +226,10 @@ if (request.getAttribute("numeroPagina") != null) {
 
 
 	<!-- CONTAINER PARA LA PAGINACION -->
-	<div class="container">
+	<div class="container paginacion_inicio">
 		<div class="row">
-			<div class="col-4"></div>
-			<div class="col-4">
+			<div class="col-5"></div>
+			<div class="col-5">
 				<!-- PAGINACION -->
 				<div class="container-fluid">
 					<br> <br>
@@ -235,21 +239,17 @@ if (request.getAttribute("numeroPagina") != null) {
 									class="paginacionimg" src="Imagenes/pagina_anterior.png" alt=""></a></li>
 							<li class="page-item active"><a class="page-link"
 								id="numeropagina" href="">1</a></li>
-							<li class="page-item"><a class="page-link" id="numeropagina"
-								href="">2</a></li>
-							<li class="page-item"><a class="page-link" id="numeropagina"
-								href="">3</a></li>
 							<li class="page-item"><a class="page-link" id="adelante"
 								href="#"><img class="paginacionimg"
 									src="Imagenes/pagina_siguiente.png" alt=""></a></li>
-
 						</ul>
 					</nav>
 				</div>
 			</div>
-			<div class="col-4"></div>
+			<div class="col-2"></div>
 		</div>
 	</div>
+
 
 
 	<!-- Optional JavaScript -->

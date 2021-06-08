@@ -148,6 +148,150 @@
     color: white;
 }
 
+
+/* PREGUNTA EN PERFIL ----------------------------------------------*/
+.pregunta_inicio {
+    color: black;
+    margin-top: 30px;
+    margin-bottom: auto;
+
+}
+
+.pregunta_inicio:hover {
+    color: black;
+    text-decoration: none;
+    margin-bottom: auto;
+
+}
+
+.pregunta_inicio:hover .main_pregunta_perfil {
+    border-color: #c06611;
+}
+
+
+.imagen_nombre_usuario {
+    color: black;
+}
+
+.pregunta_inicio .main_pregunta_perfil .imagen_nombre_usuario:hover {
+    color: black;
+    text-decoration: none;
+    font-size: 20px;
+
+}
+
+
+.titulo_pregunta {
+    color: black;
+}
+
+.pregunta {
+    font-size: 28px;
+}
+
+.pregunta_inicio .main_pregunta_perfil .titulo_pregunta .pregunta:hover {
+    color: black;
+    text-decoration: none;
+    font-size: 32px;
+}
+
+
+.main_pregunta_perfil {
+    margin-top: 10px;
+    margin-bottom: auto;
+    border-style: solid;
+    padding-bottom: 20px;
+}
+
+
+.imagen_usu_inicio {
+    width: 50px;
+    height: 50px;
+}
+
+
+/* PAGINACION --------------------------------------------------*/
+.paginacion_inicio {
+    margin-top: auto;
+}
+
+#adelante {
+    background-color: white;
+}
+
+.page-item.active .page-link {
+    background-color: sandybrown;
+    border-color: #e0740e;
+}
+
+#numeropagina {
+    color: black;
+}
+
+.page-link {
+    background-color: transparent;
+}
+
+.paginacionimg {
+
+    width: 30px;
+    height: 30px;
+}
+
+/* TERMINA PAGINACION */
+
+
+/* RESPUESTA PERFIL --------------------------------------------*/
+.respuesta_perfil {
+    color: black;
+    margin-top: 30px;
+    margin-bottom: auto;
+}
+
+.main_respuesta_perfil {
+    margin-top: 10px;
+    margin-bottom: auto;
+    border-style: solid;
+    padding-bottom: 20px;
+}
+
+.respuesta_perfil:hover {
+    color: black;
+    text-decoration: none;
+    margin-bottom: auto;
+
+}
+
+.respuesta_perfil:hover .main_respuesta_perfil {
+    border-color: #c06611;
+}
+
+.imagen_nombre_usuario {
+    color: black;
+}
+
+.respuesta_perfil .main_respuesta_perfil .imagen_nombre_usuario:hover {
+    color: black;
+    text-decoration: none;
+    font-size: 20px;
+
+}
+
+.respuesta_perfil .main_respuesta_perfil .titulo_respuesta .respuesta:hover {
+    color: black;
+    text-decoration: none;
+    font-size: 32px;
+}
+
+.titulo_respuesta {
+    color: black;
+}
+
+.respuesta {
+    font-size: 28px;
+}
+
+/* -------------------------------------------------------------- */
 html {
     height: 100%;
 }

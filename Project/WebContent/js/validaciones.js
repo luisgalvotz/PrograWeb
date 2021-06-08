@@ -59,6 +59,41 @@ $(document).ready(function(){
           })
      });
 
+     $("#eliminar_respuesta_correcta").click(function(){
+          $.sweetModal({
+               content: '¿Desea eliminar la respuesta?',
+               theme: $.sweetModal.THEME_MIXED,
+               buttons: {
+                    Conservar:{
+                        label:'No eliminar',
+                        classes: 'greenB ' 
+                    },
+                    Eliminar:{
+                         label: 'Eliminar',
+                         classes: 'redB '
+                    }
+               }
+          })
+     });
+
+     
+     $("#eliminar_respuesta").click(function(){
+          $.sweetModal({
+               content: '¿Desea eliminar la respuesta?',
+               theme: $.sweetModal.THEME_MIXED,
+               buttons: {
+                    Conservar:{
+                        label:'No eliminar',
+                        classes: 'greenB ' 
+                    },
+                    Eliminar:{
+                         label: 'Eliminar',
+                         classes: 'redB '
+                    }
+               }
+          })
+     });
+     
 
      $("#form_inicio_sesion").validate({
           rules: {

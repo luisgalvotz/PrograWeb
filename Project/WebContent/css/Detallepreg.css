@@ -54,7 +54,7 @@
 }
 
 .main {
-     margin-top: 150px;
+     margin-top: 140px;
      margin-bottom: auto;
      border-style: solid;
 }
@@ -73,6 +73,10 @@
 
 .descripcion {
      font-size: 22px;
+}
+
+.paginacion_inicio {
+     margin-top: auto;
 }
 
 #adelante {
@@ -104,6 +108,8 @@
      height: 50px;
 }
 
+
+/* PREGUNTA DETALLE */
 .imagen_borrar {
      width: 15px;
      height: 15px;
@@ -124,6 +130,8 @@
 }
 .boton_editar{
      margin-top: 20px;
+     border-radius: 5px;
+
 }
 .boton_editar:hover{
      background-color: #f38c2b;
@@ -141,6 +149,61 @@
 .util_noutil_fav_btn:hover{
      background-color: #f38c2b;
 }
+
+/* RESPUESTA FORMULARIO */
+.formulario_respuesta {
+     margin-top: 15px;
+     border-style: solid;
+     padding-bottom: 10px;
+}
+
+.formulario_respuesta .RespuestaS {
+     margin-top: 10px;
+     resize: none;
+     width: 100%;
+
+}
+
+.Seleccionimagen {
+     color: transparent;
+}
+
+
+/* RESPUESTA CORRECTA */
+.main_correcta {
+     margin-top: 15px;
+     border-style: solid;
+     border-color: #e0740e;
+}
+
+.fecha_hora_respuesta {
+     font-size: 14px;
+}
+
+.respuesta_correcta {
+     font-size: 22px;
+}
+
+.imagenrespuesta {
+     margin-top: 15px;
+     margin-bottom: 15px;
+     width: 80px;
+     height: 90px;
+}
+
+
+/* RESPUESTA NORMAL */
+.main_respuesta_normal {
+     margin-top: 15px;
+     border-style: solid;
+}
+
+.respuesta_normal {
+     font-size: 22px;
+}
+
+
+
 
 html {
      height: 100%;

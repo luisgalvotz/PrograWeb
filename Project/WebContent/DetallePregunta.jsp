@@ -53,6 +53,7 @@ if (request.getAttribute("numeroPagina") != null){
 <script src="js/jquery.validate.min.js"></script>
 <script src="js/jquery.sweet-modal.min.js"></script>
 <script src="js/ImagenRegistro.js"></script>
+<script src="js/SelecImg.js"></script>
 <script src="js/validaciones.js"></script>
 
 </head>
@@ -201,7 +202,7 @@ if (request.getAttribute("numeroPagina") != null){
 					<div class="container">
 						<p style="border-bottom: solid; margin: 0;"><img class="imagen_usu_inicio" 
 							src="GeneralServlet?Imagen=Usuario&Id=${preguntaElegida.getIdUsuario()}" 
-							alt="">${preguntaElegida.getNomUsuarioPregunta()}</p>
+							alt="">${preguntaElegida.getNomUsuarioPregunta()} <p>Editada</p> </p>
 
                               <p class="fecha_hora_pregunta"> ${preguntaElegida.getFechaCreacionToString()} </p>
 
@@ -223,15 +224,182 @@ if (request.getAttribute("numeroPagina") != null){
                <div class="col-sm-1 col-lg-1">
                     <button  class="boton_borrar" id="eliminar_pregunta" type="button"><img src="Imagenes/eliminar.png" class="imagen_borrar"> </button>
 
-                    <button class="boton_editar" type="button"><img class="imagen_editar" src="Imagenes/editar.png"> </button>
+                    <button class="boton_editar" id="editar_pregunta" type="button"><img class="imagen_editar" src="Imagenes/editar.png"> </button>
                </div>
             </c:if>
 		</div>
           <div class="row" style="margin-left: 10px;">
-               <div class="col-1"> <p><button class="util_noutil_fav_btn"><img class="util_noutil_fav" src="Imagenes/Like.png"> </button> 0</p> </div>
-               <div class="col-1"> <p><button class="util_noutil_fav_btn"><img class="util_noutil_fav" src="Imagenes/Dislike.png"> </button> 0</p></div>
-               <div class="col-1"> <p><button class="util_noutil_fav_btn"><img class="util_noutil_fav" src="Imagenes/Favorita.png"> </button> 0</p></div>
+               <div class="col-1"> <p><button class="util_noutil_fav_btn" id="like_pregunta" name="like_pregunta"><img class="util_noutil_fav" src="Imagenes/Like.png"> </button> 0</p> </div>
+               <div class="col-1"> <p><button class="util_noutil_fav_btn" id="dislike_pregunta" name="dislike_pregunta"><img class="util_noutil_fav" src="Imagenes/Dislike.png"> </button> 0</p></div>
+               <div class="col-1"> <p><button class="util_noutil_fav_btn" id="fav_pregunta" name="fav_pregunta"><img class="util_noutil_fav" src="Imagenes/Favorita.png"> </button> 0</p></div>
           </div>
+	</div>
+
+	<%-- RESPUESTA FORMULARIO --%>
+	<div class="container">
+		<div class="row">
+			<div class="col-1"></div>
+			<div class="col-11">
+					<section class="formulario_respuesta">
+						<form id="form_hacer_respuesta" action="" method="post">
+
+							<c:if test="${empty preguntaElegida}">
+								<div class="container">
+									<div class="row">
+										<div class="col-12">
+											<textarea class="RespuestaS" rows="3" placeholder="Escribe aquí tu respuesta" 
+                                                       name="respuesta_texto"  id="respuesta_texto"></textarea>
+										</div>
+										
+										<div class="col-lg-2 col-sm-3">
+											<input class="Seleccionimagen" type='file' name="Imagen_respuesta"
+												id="Imagen_respuesta" onchange="readURL(this);" /> <img
+												id="Imagenseleccionada" src="#" alt="" />
+										</div>
+									</div>
+									<input class="botones" type="submit" form="form_hacer_respuesta" value="Publicar respuesta"> 
+									<input name="respuestaNueva" type="hidden" value="true">
+								</div>
+							</c:if>
+
+							<c:if test="${not empty preguntaElegida}">
+
+							</c:if>
+
+						</form>
+					</section>
+			</div>
+		</div>
+	</div>
+
+	<%-- RESPUESTA CORRECTA--%>
+	 <div class="container">
+		<div class="row">
+			<div class="col-1"></div>
+			<div class="col-11">
+					<div class="container main_correcta ">
+                              <div class="row">
+                                   <div class="col-9">
+                                        <section>
+                                             <div class="container">
+                                                  <p style="border-bottom: solid; margin: 0;">
+                                                      <img class="imagen_usu_inicio" 
+							src="GeneralServlet?Imagen=Usuario&Id=${preguntaElegida.getIdUsuario()}" 
+							alt="">${preguntaElegida.getNomUsuarioPregunta()} 
+                                                 <p style="font-size: 14px;">Editada</p> </p>
+
+                                                  <p class="fecha_hora_respuesta"> ${preguntaElegida.getFechaCreacionToString()} </p>
+
+                                                  <p class="respuesta_correcta"
+							style="margin-bottom: 0; margin-top: 0px; border-bottom: solid;"> ${preguntaElegida.getTitulo()} </p>
+
+                                             </div>
+
+                                        </section>
+                                   </div>
+
+                                   <div class="col-2">
+                                        <img class="imagenrespuesta" src="GeneralServlet?Imagen=Pregunta&Id=${preguntaElegida.getId()}" alt="">
+                                   </div>
+
+                                   <div class="col-1">
+                                        <button  class="boton_borrar" id="eliminar_respuesta_correcta" type="button"><img src="Imagenes/eliminar.png" class="imagen_borrar"></button>
+
+                                        <button class="boton_editar"
+                                        id="editar_respuesta" type="button"><img class="imagen_editar" src="Imagenes/editar.png"></button>
+                                   </div>
+
+                              </div>
+
+                              <div class="row" style="margin-left: 10px;">
+                                   <div class="col-1"> <p><button class="util_noutil_fav_btn" id="like_respuesta" name="like_respuesta"><img class="util_noutil_fav" src="Imagenes/Like.png"> </button> 0</p> </div>
+
+                                   <div class="col-1"> <p><button class="util_noutil_fav_btn" id="dislike_respuesta" name="dislike_respuesta"><img class="util_noutil_fav" src="Imagenes/Dislike.png"> </button> 0</p></div>
+
+                                   <div class="col-1"> <button class="util_noutil_fav_btn" id="correcta_respuesta" name="correcta_respuesta"><img class="util_noutil_fav" src="Imagenes/Favorita.png"> </button></div>
+                              </div>
+
+                         </div>
+			</div>
+		</div>
+	</div>
+
+	<%-- RESPUESTA NORMAL --%>
+	 <div class="container">
+		<div class="row">
+			<div class="col-1"></div>
+			<div class="col-11">
+					<div class="container main_respuesta_normal">
+                              <div class="row">
+                                   <div class="col-9">
+                                        <section>
+                                             <div class="container">
+                                                  <p style="border-bottom: solid; margin: 0;">
+                                                      <img class="imagen_usu_inicio" 
+							src="GeneralServlet?Imagen=Usuario&Id=${preguntaElegida.getIdUsuario()}" 
+							alt="">${preguntaElegida.getNomUsuarioPregunta()} 
+                                                 <p style="font-size: 14px;">Editada</p> </p>
+
+                                                  <p class="fecha_hora_respuesta"> ${preguntaElegida.getFechaCreacionToString()} </p>
+
+                                                  <p class="respuesta_normal"
+							style="margin-bottom: 0; margin-top: 0px; border-bottom: solid;"> ${preguntaElegida.getTitulo()} </p>
+
+                                             </div>
+
+                                        </section>
+                                   </div>
+
+                                   <div class="col-2">
+                                        <img class="imagenrespuesta" src="GeneralServlet?Imagen=Pregunta&Id=${preguntaElegida.getId()}" alt="">
+                                   </div>
+
+                                   <div class="col-1">
+                                        <button  class="boton_borrar" id="eliminar_respuesta" type="button"><img src="Imagenes/eliminar.png" class="imagen_borrar"></button>
+
+                                        <button class="boton_editar"
+                                        id="editar_respuesta" type="button"><img class="imagen_editar" src="Imagenes/editar.png"></button>
+                                   </div>
+
+                              </div>
+
+                              <div class="row" style="margin-left: 10px;">
+                                   <div class="col-1"> <p><button class="util_noutil_fav_btn" id="like_respuesta" name="like_respuesta"><img class="util_noutil_fav" src="Imagenes/Like.png"> </button> 0</p> </div>
+
+                                   <div class="col-1"> <p><button class="util_noutil_fav_btn" id="dislike_respuesta" name="dislike_respuesta"><img class="util_noutil_fav" src="Imagenes/Dislike.png"> </button> 0</p></div>
+
+                                   <div class="col-1"> <button class="util_noutil_fav_btn" id="correcta_respuesta" name="correcta_respuesta"><img class="util_noutil_fav" src="Imagenes/Favorita.png"> </button></div>
+                              </div>
+
+                         </div>
+			</div>
+		</div>
+	</div>
+
+	<!-- CONTAINER PARA LA PAGINACION -->
+	<div class="container paginacion_inicio">
+		<div class="row">
+			<div class="col-4"></div>
+			<div class="col-4">
+				<!-- PAGINACION -->
+				<div class="container-fluid">
+					<br> <br>
+					<nav>
+						<ul class="pagination ">
+							<li class="page-item disabled"><a class="page-link" href="#"><img
+									class="paginacionimg" src="Imagenes/pagina_anterior.png" alt=""></a></li>
+							<li class="page-item active"><a class="page-link"
+								id="numeropagina" href="">1</a></li>
+							<li class="page-item"><a class="page-link" id="adelante"
+								href="#"><img class="paginacionimg"
+									src="Imagenes/pagina_siguiente.png" alt=""></a></li>
+
+						</ul>
+					</nav>
+				</div>
+			</div>
+			<div class="col-4"></div>
+		</div>
 	</div>
 
 
