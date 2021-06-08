@@ -245,32 +245,54 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 
 </body>
 
-<footer class="text-lg-start" style="background-color: #f28825;">
+<footer class=" text-lg-start" style="background-color: #f28825;">
+	<!-- Grid container -->
 	<div class="container p-4">
+		<!--Grid row-->
 		<div class="row">
+			<!--Grid column-->
 			<div class="col-lg-6 col-sm-6">
-				<h5 class="text-center">
-					<img src="Imagenes/que.png" class="logopag" alt="">
+				<h5 class=" text-center" style="font-weight: bolder;">
+					<img src="Imagenes/que.png"
+						style="width: 70px; height: 50px; border-radius: 15px;" alt="">
 					Queuestions
 				</h5>
-				<p class="text-center">Foro para conversar sobre temas variados.</p>
 
+				<p class="text-center">Foro para conversar sobre temas variados.
+				</p>
+
+                    
 			</div>
+			<!--Grid column-->
+
+
+			<!--Grid column-->
 			<div class="col-lg-6 col-sm-6 text-center">
-				<h5 class="mb-0">Estamos en:</h5>
+				<h5 class=" mb-0">Estamos en:</h5>
+
 				<ul class="list-unstyled">
-					<a target="_blank"
+					<li><a target="_blank"
 						href="https://www.facebook.com/Queuestions-101688152055852"
-						class="text-dark">Facebook</a>
-
+						class="text-dark">Facebook</a></li>
 				</ul>
+
+                    
 			</div>
-
+			<!--Grid column-->
 		</div>
-
+		<!--Grid row-->
 		<div class="row">
-			<p class="col-12 text-center">© 2021 Copyright</p>
+			<p class="col-12 text-center">© 2021 Copyright</p>  
 		</div>
+          <div class="row">
+               <p class="col-2"></p>
+               <p class="col-4" id="Luis">Luis Alejandro Galvan Ortiz <label for="Luis">1813703</label></p>
+               <p class="col-4" id="Miguel">Miguel Angel Villanueva Infante <label for="Miguel">1841237</label></p>
+
+          </div>
 	</div>
+	<!-- Grid container -->
+
+
 </footer>
 </html>

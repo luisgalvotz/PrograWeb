@@ -277,4 +277,22 @@ $(document).ready(function(){
           }
      });
 
+     $("#form_hacer_respuesta").validate({
+          rules: {
+               respuesta_texto: {
+                    required: true,
+                
+               },
+               
+          },
+
+          messages: {
+               respuesta_texto:{
+                    required: "Ingrese su respuesta",
+                    
+               },
+              
+          }
+     });
+
 });

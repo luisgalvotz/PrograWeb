@@ -203,7 +203,20 @@
 }
 
 
+.botones {
+     background-color: #f28825;
+     width: 150px;
+     border: none;
+     margin-left: auto;
+     margin-right: auto;
+     font-family: Georgia, 'Times New Roman', Times, serif;
+}
 
+.botones:hover {
+     background-color: #e0740e;
+     color: white;
+
+}
 
 html {
      height: 100%;
