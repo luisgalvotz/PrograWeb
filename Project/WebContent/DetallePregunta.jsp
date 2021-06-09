@@ -305,10 +305,15 @@ if (request.getAttribute("numeroPagina") != null) {
 									</div>
 
 									<div class="col-lg-2 col-sm-3">
-										<input class="Seleccionimagen" type='file'
-											name="Imagen_respuesta" id="Imagen_respuesta"
-											onchange="readURL(this);" /> <img id="Imagenseleccionada"
-											src="#" alt="" />
+										<div id="img-container-respuesta"> 
+											<input class="Seleccionimagen" type='file'
+												name="Imagen_respuesta" id="Imagen_respuesta"
+												onchange="readURL(this);" /> <img id="Imagenseleccionada"
+												src="#" alt="" />
+												<button class="botones" style="margin-bottom: 8px;">
+													Eliminar Imagen
+												</button>
+										</div>
 									</div>
 								</div>
 								<input class="botones" type="submit" form="form_hacer_respuesta"

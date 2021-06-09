@@ -11,6 +11,31 @@ jQuery.validator.addMethod("formatocontrasenia", function(value, element){
 
 });
 
+var mifecha = $('#FechaNac_Usu');
+var hoy = new Date();
+var dd = hoy.getDate();
+var mm = hoy.getMonth() + 1;
+var yyyy = hoy.getFullYear();
+
+if(dd < 10)
+     dd = '0' + dd;
+
+if(mm < 10)
+     mm = '0' + mm;
+
+hoy = yyyy + '-' + mm + '-' + dd;
+mifecha.attr("max", hoy);
+
+function fechavalida(){
+     var fecha = mifecha.val();
+     if(Date.parse(fecha)){
+          if(fecha > hoy){
+               alert('la fecha no puede ser mayor a la actual');
+               mifecha.val("");
+          }
+     }
+}
+
 jQuery.validator.addMethod(
     "formatofecha",
     function(value, element) {
@@ -273,9 +298,7 @@ $(document).ready(function(){
                     required: true,
                 
                },
-               Descripcion_pregunta:{
-                    required: true,
-               }
+              
           },
 
           messages: {
@@ -283,9 +306,7 @@ $(document).ready(function(){
                     required: "Ingrese un título a la pregunta",
                     
                },
-               Descripcion_pregunta:{
-                    required: "Ingrese una descripción a la pregunta"
-               }
+              
           }
      });
 

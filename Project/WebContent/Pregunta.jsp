@@ -203,10 +203,14 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 						<div class="col-lg-2 col-sm-0"></div>
 						<div class="col-lg-2 col-sm-3">
 							<!-- <input type="image" src="" alt=""> -->
-
+							<div class="img-container"> 
 							<input class="Seleccionimagen" type='file' name="Imagen_pregunta"
 								id="Imagen_pregunta" onchange="readURL(this);" /> <img
 								id="Imagenseleccionada" src="#" alt="" />
+								<button class="botones" style="margin-bottom: 8px;">
+									Eliminar imagen
+								</button>
+							</div>
 						</div>
 					</div>
 					<input class="botones" type="submit" form="form_hacer_pregunta" value="Publicar pregunta"> 
