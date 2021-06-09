@@ -31,7 +31,7 @@ if(request.getAttribute("usernameEncontrado") != null)
 </head>
 <body>
 	<div class="BarraTopRegistro">
-		<a href="IndexPreguntas"> <img align="left"
+		<a href="IndexPreguntas?numeroPagina=1"> <img align="left"
 			style="height: 50px; width: 70px; border-radius: 15px; margin-left: 20px;"
 			src="Imagenes/que.png" alt="Logo">
 		</a>

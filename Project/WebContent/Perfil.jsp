@@ -59,7 +59,7 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 			<ul class="navbar-nav mx-auto ">
 
 				<!-- Boton de inicio -->
-				<li class="nav-item"><a href="IndexPreguntas" class="nav-link">Inicio</a></li>
+				<li class="nav-item"><a href="IndexPreguntas?numeroPagina=1" class="nav-link">Inicio</a></li>
 
 				<!-- Dropdown de categorias -->
 				<li class="nav-item dropdown"><a href="#"
@@ -268,7 +268,7 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 						</div>
 						<div class="col-lg-3">
 							<input class="campos" type="text" name="EdadUsu" id="EdadUsu"
-								value="${usuarioElegido.getFechaNac()}">
+								placeholder="Edad" value="${usuarioElegido.getEdad()}">
 						</div>
                          </div>
 					<!-- correo -->

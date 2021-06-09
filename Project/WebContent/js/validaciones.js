@@ -53,7 +53,11 @@ $(document).ready(function(){
                     },
                     Eliminar:{
                          label: 'Eliminar',
-                         classes: 'redB '
+                         classes: 'redB ', 
+                         action: function() {
+							var form = $("#form_borrar_preg");
+							$(form).submit();
+						}
                     }
                }
           })
@@ -70,7 +74,11 @@ $(document).ready(function(){
                     },
                     Eliminar:{
                          label: 'Eliminar',
-                         classes: 'redB '
+                         classes: 'redB ', 
+                         action: function() {
+							var form = $("#form_borrar_rc");
+							$(form).submit();
+						}
                     }
                }
           })
@@ -88,7 +96,11 @@ $(document).ready(function(){
                     },
                     Eliminar:{
                          label: 'Eliminar',
-                         classes: 'redB '
+                         classes: 'redB ',
+                         action: function() {
+							var form = $("#form_borrar_res");
+							$(form).submit();
+						}
                     }
                }
           })

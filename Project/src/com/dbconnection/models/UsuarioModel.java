@@ -17,6 +17,12 @@ public class UsuarioModel {
     private InputStream imagen;
     private Date fechaCreacion;
     private byte activo;
+    
+    private int cantPreguntasUsuario;
+    private int cantRespuestasUsuario;
+    private int cantPreguntasFavoritasUsuario;
+    private int cantPreguntasUtilesUsuario;
+    private int cantPreguntasNoUtilesUsuario;
 
     public UsuarioModel() {
     }
@@ -75,6 +81,33 @@ public class UsuarioModel {
     public Date getFechaNac() {
         return fechaNac;
     }
+    
+    public String getEdad() {
+    	String Edad = "";
+		
+		int yearNac = fechaNac.getYear();
+		int monthNac = fechaNac.getMonth();
+		int dayNac = fechaNac.getDay();
+		
+		int yearActual = new java.util.Date().getYear();
+		int monthActual = new java.util.Date().getMonth();
+		int dayActual = new java.util.Date().getDay();
+		
+		boolean futureBirthday = false;
+		int yearDifference = yearActual - yearNac;
+		
+		if(		(monthNac >  monthActual)		|| 		(monthNac ==  monthActual	&&		dayNac > dayActual)		) {
+			futureBirthday = true;
+		}
+		
+		if(futureBirthday == false) {
+			Edad = String.valueOf( yearDifference );
+		}
+		else {
+			Edad = String.valueOf( yearDifference - 1 );
+		}
+		return Edad;
+    }
 
     public void setFechaNac(Date fechaNac) {
         this.fechaNac = fechaNac;
@@ -107,6 +140,29 @@ public class UsuarioModel {
     public InputStream getImagen() {
         return imagen;
     }
+    
+    public InputStream isImagen() {
+    	if (imagen != null) {
+			PushbackInputStream pushbackInputStream = new PushbackInputStream(imagen);
+		    int bytes = 0;
+		    try {
+				bytes = pushbackInputStream.read();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		    if (bytes == -1) {
+		    	return null;
+		    }
+		    else {
+		    	return imagen;
+		    }
+			
+		}
+		else {
+		    return null;
+		}
+    }
 
     public void setImagen(InputStream imagen) {
         this.imagen = imagen;
@@ -127,5 +183,45 @@ public class UsuarioModel {
     public void setActivo(byte activo) {
     	this.activo = activo;
     }
+
+	public int getCantPreguntasUsuario() {
+		return cantPreguntasUsuario;
+	}
+
+	public void setCantPreguntasUsuario(int cantPreguntasUsuario) {
+		this.cantPreguntasUsuario = cantPreguntasUsuario;
+	}
+
+	public int getCantRespuestasUsuario() {
+		return cantRespuestasUsuario;
+	}
+
+	public void setCantRespuestasUsuario(int cantRespuestasUsuario) {
+		this.cantRespuestasUsuario = cantRespuestasUsuario;
+	}
+
+	public int getCantPreguntasFavoritasUsuario() {
+		return cantPreguntasFavoritasUsuario;
+	}
+
+	public void setCantPreguntasFavoritasUsuario(int cantPreguntasFavoritasUsuario) {
+		this.cantPreguntasFavoritasUsuario = cantPreguntasFavoritasUsuario;
+	}
+
+	public int getCantPreguntasUtilesUsuario() {
+		return cantPreguntasUtilesUsuario;
+	}
+
+	public void setCantPreguntasUtilesUsuario(int cantPreguntasUtilesUsuario) {
+		this.cantPreguntasUtilesUsuario = cantPreguntasUtilesUsuario;
+	}
+
+	public int getCantPreguntasNoUtilesUsuario() {
+		return cantPreguntasNoUtilesUsuario;
+	}
+
+	public void setCantPreguntasNoUtilesUsuario(int cantPreguntasNoUtilesUsuario) {
+		this.cantPreguntasNoUtilesUsuario = cantPreguntasNoUtilesUsuario;
+	}
 
 }

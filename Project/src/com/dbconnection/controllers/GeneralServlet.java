@@ -1,13 +1,13 @@
 package com.dbconnection.controllers;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import java.util.List;
 
 import com.dbconnection.dao.CategoriaDAO;
 import com.dbconnection.models.CategoriaModel;
@@ -15,6 +15,8 @@ import com.dbconnection.dao.UsuarioDAO;
 import com.dbconnection.models.UsuarioModel;
 import com.dbconnection.dao.PreguntaDAO;
 import com.dbconnection.models.PreguntaModel;
+import com.dbconnection.dao.RespuestaDAO;
+import com.dbconnection.models.RespuestaModel;
 
 /**
  * Servlet implementation class GeneralServlet
@@ -48,7 +50,7 @@ public class GeneralServlet extends HttpServlet {
 			break;
 			
 		case "Respuesta":
-			//getRespuestaImagen(request, response);
+			getRespuestaImagen(request, response);
 			
 			break;
 			
@@ -107,6 +109,33 @@ public class GeneralServlet extends HttpServlet {
 			} 
 
 		}
+	}
+	
+	private void getRespuestaImagen(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String imageName = "respuesta.png"; // Returns "foo.png".
+		
+		List<RespuestaModel> respuestaElegida = null;
+		
+		int IdRespuesta = Integer.parseInt(request.getParameter("Id"));
+		RespuestaModel respuestaAux = new RespuestaModel(IdRespuesta);
+		
+		try {
+			respuestaElegida = RespuestaDAO.getRespuesta("SEL", respuestaAux);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		if (respuestaElegida.size() != 0) {
+			if (respuestaElegida.get(0).getImagen() != null) {
+
+				byte[] content = respuestaElegida.get(0).getImagen().readAllBytes();
+
+				response.setContentType(getServletContext().getMimeType(imageName));
+				response.setContentLength(content.length);
+				response.getOutputStream().write(content);
+			}
+		}
+		
 	}
 
 	/**

@@ -237,13 +237,25 @@ if (request.getAttribute("numeroPagina") != null) {
 					<br> <br>
 					<nav>
 						<ul class="pagination ">
-							<li class="page-item disabled"><a class="page-link" href="#"><img
-									class="paginacionimg" src="Imagenes/pagina_anterior.png" alt=""></a></li>
+						
+							<c:if test="${numeroPagina - 1 == 0}">
+								<li class="page-item"><a class="page-link" id="atras"
+									href="IndexPreguntas?numeroPagina=1"><img class="paginacionimg" 
+									src="Imagenes/pagina_anterior.png" alt=""></a></li>
+							</c:if>
+							
+							<c:if test="${numeroPagina - 1 != 0}">
+								<li class="page-item"><a class="page-link" id="atras"
+									href="IndexPreguntas?numeroPagina=${numeroPagina - 1}"><img class="paginacionimg" 
+									src="Imagenes/pagina_anterior.png" alt=""></a></li>
+							</c:if>
+							
 							<li class="page-item active"><a class="page-link"
-								id="numeropagina" href="">1</a></li>
+								id="numeropagina" href="">${numeroPagina}</a></li>
+								
 							<li class="page-item"><a class="page-link" id="adelante"
-								href="#"><img class="paginacionimg"
-									src="Imagenes/pagina_siguiente.png" alt=""></a></li>
+								href="IndexPreguntas?numeroPagina=${numeroPagina + 1}"><img class="paginacionimg" 
+								src="Imagenes/pagina_siguiente.png" alt=""></a></li>
 						</ul>
 					</nav>
 				</div>

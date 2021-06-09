@@ -14,19 +14,25 @@ pageContext.setAttribute("usuarioElegido", usuarioElegido);
 List<CategoriaModel> listaCategorias = GeneralServlet.getCategorias();
 pageContext.setAttribute("listaCategorias", listaCategorias);
 
-userType usuarioActivo = (userType)request.getAttribute("usuarioActivo");
+userType usuarioActivo = (userType) request.getAttribute("usuarioActivo");
 pageContext.setAttribute("usuarioActivo", usuarioActivo);
 
-int IdUsuarioActivo = (int)request.getAttribute("IdUsuarioActivo");
+int IdUsuarioActivo = (int) request.getAttribute("IdUsuarioActivo");
 pageContext.setAttribute("IdUsuarioActivo", IdUsuarioActivo);
 
-PreguntaModel preguntaElegida = (PreguntaModel)request.getAttribute("preguntaElegida");
+PreguntaModel preguntaElegida = (PreguntaModel) request.getAttribute("preguntaElegida");
 pageContext.setAttribute("preguntaElegida", preguntaElegida);
+
+RespuestaModel respuestaCorrecta = (RespuestaModel) request.getAttribute("respuestaCorrecta");
+pageContext.setAttribute("respuestaCorrecta", respuestaCorrecta);
+
+List<RespuestaModel> lista10Respuestas = (List<RespuestaModel>) request.getAttribute("lista10Respuestas");
+pageContext.setAttribute("lista10Respuestas", lista10Respuestas);
 
 int numeroPagina = 1;
 
-if (request.getAttribute("numeroPagina") != null){
-	numeroPagina = (int)request.getAttribute("numeroPagina");
+if (request.getAttribute("numeroPagina") != null) {
+	numeroPagina = (int) request.getAttribute("numeroPagina");
 	pageContext.setAttribute("numeroPagina", numeroPagina);
 }
 %>
@@ -80,7 +86,8 @@ if (request.getAttribute("numeroPagina") != null){
 			<ul class="navbar-nav mx-auto ">
 
 				<!-- Boton de inicio -->
-				<li class="nav-item"><a href="IndexPreguntas" class="nav-link">Inicio</a></li>
+				<li class="nav-item"><a href="IndexPreguntas?numeroPagina=1"
+					class="nav-link">Inicio</a></li>
 
 				<!-- Dropdown de categorias -->
 				<li class="nav-item dropdown"><a href="#"
@@ -89,7 +96,8 @@ if (request.getAttribute("numeroPagina") != null){
 						Categorías </a>
 					<div class="dropdown-menu" aria-labelledby="Categoriasnavbar">
 						<c:forEach var="iCategoria" items="${listaCategorias}">
-							<a class="dropdown-item" href="#"> ${iCategoria.getNombre()} </a>
+							<a class="dropdown-item" href="#"> ${iCategoria.getNombre()}
+							</a>
 						</c:forEach>
 					</div></li>
 
@@ -155,21 +163,19 @@ if (request.getAttribute("numeroPagina") != null){
 							name="FechaFin" id="FechaFin">
 
 						<!-- Filtro personas que marcaron ï¿½til -->
-						<label style="margin-left: 10px;" for="NutilBusca">
-							Número de personas que les pareció útil </label> <input
-							type="checkbox" disabled="disabled" name="NutilBusca"
-							id="NutilBusca">
+						<label style="margin-left: 10px;" for="NutilBusca"> Número
+							de personas que les pareció útil </label> <input type="checkbox"
+							disabled="disabled" name="NutilBusca" id="NutilBusca">
 
 						<!-- Filtro personas que marcaron favorita -->
 						<label style="margin-left: 10px;" for="NfavoritaBusca">
-							Número de personas que marcaron favoritas </label> <input
-							type="checkbox" disabled="disabled" name="NfavoritaBusca"
-							id="NfavoritaBusca">
+							Número de personas que marcaron favoritas </label> <input type="checkbox"
+							disabled="disabled" name="NfavoritaBusca" id="NfavoritaBusca">
 
 
 					</div></li>
 
-				
+
 			</ul>
 		</div>
 
@@ -201,39 +207,84 @@ if (request.getAttribute("numeroPagina") != null){
 				<!-- Pregunta 1 -->
 				<section>
 					<div class="container">
-						<p style="border-bottom: solid; margin: 0;"><img class="imagen_usu_inicio" 
-							src="GeneralServlet?Imagen=Usuario&Id=${preguntaElegida.getIdUsuario()}" 
-							alt="">${preguntaElegida.getNomUsuarioPregunta()} <p>Editada</p> </p>
+						<p style="border-bottom: solid; margin: 0;">
+							<img class="imagen_usu_inicio"
+								src="GeneralServlet?Imagen=Usuario&Id=${preguntaElegida.getIdUsuario()}"
+								alt="">${preguntaElegida.getNomUsuarioPregunta()}
+							<c:if test="${preguntaElegida.getEditada() == 1}">
+								<p>Editada</p>
+						</p>
+						</c:if>
 
-                              <p class="fecha_hora_pregunta"> ${preguntaElegida.getFechaCreacionToString()} </p>
+						<p class="fecha_hora_pregunta">
+							${preguntaElegida.getFechaCreacionToString()}</p>
 
 						<p class="pregunta"
-							style="margin-bottom: 0; margin-top: 0px; border-bottom: solid;"> ${preguntaElegida.getTitulo()} </p>
-							<p id="categoriapreg"> ${preguntaElegida.getCategoriaPregunta()} </p>
+							style="margin-bottom: 0; margin-top: 0px; border-bottom: solid;">
+							${preguntaElegida.getTitulo()}</p>
+						<p id="categoriapreg">
+							${preguntaElegida.getCategoriaPregunta()}</p>
 						<c:if test="${preguntaElegida.getDescripcion() != ''}">
-							<p class="descripcion"> ${preguntaElegida.getDescripcion()} </p>
+							<p class="descripcion">${preguntaElegida.getDescripcion()}</p>
 						</c:if>
 					</div>
 				</section>
 			</div>
 			<c:if test="${preguntaElegida.isImagen() != null}">
 				<div class="col-sm-2 col-lg-2 text-center">
-					<img class="imagenpregunta" src="GeneralServlet?Imagen=Pregunta&Id=${preguntaElegida.getId()}" alt="">
+					<img class="imagenpregunta"
+						src="GeneralServlet?Imagen=Pregunta&Id=${preguntaElegida.getId()}"
+						alt="">
 				</div>
 			</c:if>
 			<c:if test="${usuarioActivo == userType.questionOwner}">
-               <div class="col-sm-1 col-lg-1">
-                    <button  class="boton_borrar" id="eliminar_pregunta" type="button"><img src="Imagenes/eliminar.png" class="imagen_borrar"> </button>
-
-                    <button class="boton_editar" id="editar_pregunta" type="button"><img class="imagen_editar" src="Imagenes/editar.png"> </button>
-               </div>
-            </c:if>
+				<div class="col-sm-1 col-lg-1">
+					<form id="form_borrar_preg" action="PreguntaRespuesta" method="post">
+						<input name="tipo" type="hidden" value="BorrarPregunta">
+						<input name="IdPregunta" type="hidden" value="${preguntaElegida.getId()}">
+						<button class="boton_borrar" id="eliminar_pregunta" type="button">
+							<img src="Imagenes/eliminar.png" class="imagen_borrar">
+						</button>
+					</form>
+					<form id="form_editar_preg${preguntaElegida.getId()}" action="SubirPregunta" method="post" enctype="multipart/form-data">
+						<input name="abrirPregunta" type="hidden" value="true">
+						<input name="IdPregunta" type="hidden" value="${preguntaElegida.getId()}">
+					</form>
+						<button form="form_editar_preg${preguntaElegida.getId()}" class="boton_editar" id="editar_pregunta" type="button">
+							<img class="imagen_editar" src="Imagenes/editar.png">
+						</button>
+					</div>
+			</c:if>
 		</div>
-          <div class="row" style="margin-left: 10px;">
-               <div class="col-1"> <p><button class="util_noutil_fav_btn" id="like_pregunta" name="like_pregunta"><img class="util_noutil_fav" src="Imagenes/Like.png"> </button> 0</p> </div>
-               <div class="col-1"> <p><button class="util_noutil_fav_btn" id="dislike_pregunta" name="dislike_pregunta"><img class="util_noutil_fav" src="Imagenes/Dislike.png"> </button> 0</p></div>
-               <div class="col-1"> <p><button class="util_noutil_fav_btn" id="fav_pregunta" name="fav_pregunta"><img class="util_noutil_fav" src="Imagenes/Favorita.png"> </button> 0</p></div>
-          </div>
+		<div class="row" style="margin-left: 10px;">
+			<div class="col-1">
+				<p>
+					<button class="util_noutil_fav_btn" id="like_pregunta"
+						name="like_pregunta">
+						<img class="util_noutil_fav" src="Imagenes/Like.png">
+					</button>
+					0
+				</p>
+			</div>
+			<div class="col-1">
+				<p>
+					<button class="util_noutil_fav_btn" id="dislike_pregunta"
+						name="dislike_pregunta">
+						<img class="util_noutil_fav" src="Imagenes/Dislike.png">
+					</button>
+					0
+				</p>
+			</div>
+			<div class="col-1">
+				<p>
+					<button class="util_noutil_fav_btn" id="fav_pregunta"
+						name="fav_pregunta">
+						<img class="util_noutil_fav" src="Imagenes/Favorita.png">
+					</button>
+					0
+				</p>
+			</div>
+		</div>
 	</div>
 
 	<%-- RESPUESTA FORMULARIO --%>
@@ -241,141 +292,220 @@ if (request.getAttribute("numeroPagina") != null){
 		<div class="row">
 			<div class="col-1"></div>
 			<div class="col-11">
-					<section class="formulario_respuesta">
-						<form id="form_hacer_respuesta" action="" method="post">
+				<section class="formulario_respuesta">
+					<form id="form_hacer_respuesta" action="" method="post">
 
-							<c:if test="${empty preguntaElegida}">
-								<div class="container">
-									<div class="row">
-										<div class="col-12">
-											<textarea class="RespuestaS" rows="3" placeholder="Escribe aquí tu respuesta" 
-                                                       name="respuesta_texto"  id="respuesta_texto"></textarea>
-										</div>
-										
-										<div class="col-lg-2 col-sm-3">
-											<input class="Seleccionimagen" type='file' name="Imagen_respuesta"
-												id="Imagen_respuesta" onchange="readURL(this);" /> <img
-												id="Imagenseleccionada" src="#" alt="" />
-										</div>
+						<c:if test="${empty preguntaElegida}">
+							<div class="container">
+								<div class="row">
+									<div class="col-12">
+										<textarea class="RespuestaS" rows="3"
+											placeholder="Escribe aquí tu respuesta"
+											name="respuesta_texto" id="respuesta_texto"></textarea>
 									</div>
-									<input class="botones" type="submit" form="form_hacer_respuesta" value="Publicar respuesta"> 
-									<input name="respuestaNueva" type="hidden" value="true">
+
+									<div class="col-lg-2 col-sm-3">
+										<input class="Seleccionimagen" type='file'
+											name="Imagen_respuesta" id="Imagen_respuesta"
+											onchange="readURL(this);" /> <img id="Imagenseleccionada"
+											src="#" alt="" />
+									</div>
 								</div>
-							</c:if>
+								<input class="botones" type="submit" form="form_hacer_respuesta"
+									value="Publicar respuesta"> <input
+									name="respuestaNueva" type="hidden" value="true">
+							</div>
+						</c:if>
 
-							<c:if test="${not empty preguntaElegida}">
+						<c:if test="${not empty preguntaElegida}">
 
-							</c:if>
+						</c:if>
 
-						</form>
-					</section>
+					</form>
+				</section>
 			</div>
 		</div>
 	</div>
 
 	<%-- RESPUESTA CORRECTA--%>
-	 <div class="container">
-		<div class="row">
-			<div class="col-1"></div>
-			<div class="col-11">
+	<c:if test="${not empty respuestaCorrecta}">
+		<div class="container">
+			<div class="row">
+				<div class="col-1"></div>
+				<div class="col-11">
 					<div class="container main_correcta ">
-                              <div class="row">
-                                   <div class="col-9">
-                                        <section>
-                                             <div class="container">
-                                                  <p style="border-bottom: solid; margin: 0;">
-                                                      <img class="imagen_usu_inicio" 
-							src="GeneralServlet?Imagen=Usuario&Id=${preguntaElegida.getIdUsuario()}" 
-							alt="">${preguntaElegida.getNomUsuarioPregunta()} 
-                                                 <p style="font-size: 14px;">Editada</p> </p>
+						<div class="row">
+							<div class="col-9">
+								<section>
+									<div class="container">
+										<p style="border-bottom: solid; margin: 0;">
+											<img class="imagen_usu_inicio"
+												src="GeneralServlet?Imagen=Usuario&Id=${respuestaCorrecta.getIdUsuario()}"
+												alt="">${respuestaCorrecta.getNomUsuarioRespuesta()}
+											<c:if test="${respuestaCorrecta.getEditada() == 1}">
+												<p style="font-size: 14px;">Editada</p>
+											</c:if>
+										</p>
 
-                                                  <p class="fecha_hora_respuesta"> ${preguntaElegida.getFechaCreacionToString()} </p>
+										<p class="fecha_hora_respuesta">
+											${respuestaCorrecta.getFechaCreacionString()}</p>
 
-                                                  <p class="respuesta_correcta"
-							style="margin-bottom: 0; margin-top: 0px; border-bottom: solid;"> ${preguntaElegida.getTitulo()} </p>
+										<p class="respuesta_correcta"
+											style="margin-bottom: 0; margin-top: 0px; border-bottom: solid;">
+											${respuestaCorrecta.getContenido()}</p>
 
-                                             </div>
+									</div>
 
-                                        </section>
-                                   </div>
+								</section>
+							</div>
 
-                                   <div class="col-2">
-                                        <img class="imagenrespuesta" src="GeneralServlet?Imagen=Pregunta&Id=${preguntaElegida.getId()}" alt="">
-                                   </div>
+							<c:if test="${respuestaCorrecta.isImagen() != null}">
+								<div class="col-2">
+									<img class="imagenrespuesta"
+										src="GeneralServlet?Imagen=Respuesta&Id=${respuestaCorrecta.getId()}"
+										alt="">
+								</div>
+							</c:if>
 
-                                   <div class="col-1">
-                                        <button  class="boton_borrar" id="eliminar_respuesta_correcta" type="button"><img src="Imagenes/eliminar.png" class="imagen_borrar"></button>
+							<div class="col-1">
+								<button class="boton_borrar" id="eliminar_respuesta_correcta"
+									type="button">
+									<img src="Imagenes/eliminar.png" class="imagen_borrar">
+								</button>
 
-                                        <button class="boton_editar"
-                                        id="editar_respuesta" type="button"><img class="imagen_editar" src="Imagenes/editar.png"></button>
-                                   </div>
+								<button class="boton_editar" id="editar_respuesta" type="button">
+									<img class="imagen_editar" src="Imagenes/editar.png">
+								</button>
+							</div>
 
-                              </div>
+						</div>
 
-                              <div class="row" style="margin-left: 10px;">
-                                   <div class="col-1"> <p><button class="util_noutil_fav_btn" id="like_respuesta" name="like_respuesta"><img class="util_noutil_fav" src="Imagenes/Like.png"> </button> 0</p> </div>
+						<div class="row" style="margin-left: 10px;">
+							<div class="col-1">
+								<p>
+									<button class="util_noutil_fav_btn" id="like_respuesta"
+										name="like_respuesta">
+										<img class="util_noutil_fav" src="Imagenes/Like.png">
+									</button>
+									0
+								</p>
+							</div>
 
-                                   <div class="col-1"> <p><button class="util_noutil_fav_btn" id="dislike_respuesta" name="dislike_respuesta"><img class="util_noutil_fav" src="Imagenes/Dislike.png"> </button> 0</p></div>
+							<div class="col-1">
+								<p>
+									<button class="util_noutil_fav_btn" id="dislike_respuesta"
+										name="dislike_respuesta">
+										<img class="util_noutil_fav" src="Imagenes/Dislike.png">
+									</button>
+									0
+								</p>
+							</div>
 
-                                   <div class="col-1"> <button class="util_noutil_fav_btn" id="correcta_respuesta" name="correcta_respuesta"><img class="util_noutil_fav" src="Imagenes/correcta.png"> </button></div>
-                              </div>
+							<div class="col-1">
+								<button class="util_noutil_fav_btn" id="correcta_respuesta"
+									name="correcta_respuesta">
+									<img class="util_noutil_fav" src="Imagenes/correcta.png">
+								</button>
+							</div>
+						</div>
 
-                         </div>
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
+	</c:if>
 
 	<%-- RESPUESTA NORMAL --%>
-	 <div class="container">
-		<div class="row">
-			<div class="col-1"></div>
-			<div class="col-11">
+	<c:forEach var="iRespuesta" items="${lista10Respuestas}">
+	<c:if test="${iRespuesta.getId() != preguntaElegida.getIdRespuesta()}">
+	<c:if test="${iRespuesta.getActivo() == 1}">
+		<div class="container">
+			<div class="row">
+				<div class="col-1"></div>
+				<div class="col-11">
 					<div class="container main_respuesta_normal">
-                              <div class="row">
-                                   <div class="col-9">
-                                        <section>
-                                             <div class="container">
-                                                  <p style="border-bottom: solid; margin: 0;">
-                                                      <img class="imagen_usu_inicio" 
-							src="GeneralServlet?Imagen=Usuario&Id=${preguntaElegida.getIdUsuario()}" 
-							alt="">${preguntaElegida.getNomUsuarioPregunta()} 
-                                                 <p style="font-size: 14px;">Editada</p> </p>
+						<div class="row">
+							<div class="col-9">
+								<section>
+									<div class="container">
+										<p style="border-bottom: solid; margin: 0;">
+											<img class="imagen_usu_inicio"
+												src="GeneralServlet?Imagen=Usuario&Id=${iRespuesta.getIdUsuario()}"
+												alt="">${iRespuesta.getNomUsuarioRespuesta()}
+											<c:if test="${iRespuesta.getEditada() == 1}">
+												<p style="font-size: 14px;">Editada</p>
+											</c:if>
+										</p>
 
-                                                  <p class="fecha_hora_respuesta"> ${preguntaElegida.getFechaCreacionToString()} </p>
+										<p class="fecha_hora_respuesta">
+											${iRespuesta.getFechaCreacionString()}</p>
 
-                                                  <p class="respuesta_normal"
-							style="margin-bottom: 0; margin-top: 0px; border-bottom: solid;"> ${preguntaElegida.getTitulo()} </p>
+										<p class="respuesta_normal"
+											style="margin-bottom: 0; margin-top: 0px; border-bottom: solid;">
+											${iRespuesta.getContenido()}</p>
 
-                                             </div>
+									</div>
 
-                                        </section>
-                                   </div>
+								</section>
+							</div>
 
-                                   <div class="col-2">
-                                        <img class="imagenrespuesta" src="GeneralServlet?Imagen=Pregunta&Id=${preguntaElegida.getId()}" alt="">
-                                   </div>
+							<c:if test="${iRespuesta.isImagen() != null}">
+								<div class="col-2">
+									<img class="imagenrespuesta"
+										src="GeneralServlet?Imagen=Respuesta&Id=${iRespuesta.getId()}"
+										alt="">
+								</div>
+							</c:if>
 
-                                   <div class="col-1">
-                                        <button  class="boton_borrar" id="eliminar_respuesta" type="button"><img src="Imagenes/eliminar.png" class="imagen_borrar"></button>
+							<div class="col-1">
+								<button class="boton_borrar" id="eliminar_respuesta"
+									type="button">
+									<img src="Imagenes/eliminar.png" class="imagen_borrar">
+								</button>
 
-                                        <button class="boton_editar"
-                                        id="editar_respuesta" type="button"><img class="imagen_editar" src="Imagenes/editar.png"></button>
-                                   </div>
+								<button class="boton_editar" id="editar_respuesta" type="button">
+									<img class="imagen_editar" src="Imagenes/editar.png">
+								</button>
+							</div>
 
-                              </div>
+						</div>
 
-                              <div class="row" style="margin-left: 10px;">
-                                   <div class="col-1"> <p><button class="util_noutil_fav_btn" id="like_respuesta" name="like_respuesta"><img class="util_noutil_fav" src="Imagenes/Like.png"> </button> 0</p> </div>
+						<div class="row" style="margin-left: 10px;">
+							<div class="col-1">
+								<p>
+									<button class="util_noutil_fav_btn" id="like_respuesta"
+										name="like_respuesta">
+										<img class="util_noutil_fav" src="Imagenes/Like.png">
+									</button>
+									0
+								</p>
+							</div>
 
-                                   <div class="col-1"> <p><button class="util_noutil_fav_btn" id="dislike_respuesta" name="dislike_respuesta"><img class="util_noutil_fav" src="Imagenes/Dislike.png"> </button> 0</p></div>
+							<div class="col-1">
+								<p>
+									<button class="util_noutil_fav_btn" id="dislike_respuesta"
+										name="dislike_respuesta">
+										<img class="util_noutil_fav" src="Imagenes/Dislike.png">
+									</button>
+									0
+								</p>
+							</div>
 
-                                   <div class="col-1"> <button class="util_noutil_fav_btn" id="correcta_respuesta" name="correcta_respuesta"><img class="util_noutil_fav" src="Imagenes/correcta.png"> </button></div>
-                              </div>
+							<div class="col-1">
+								<button class="util_noutil_fav_btn" id="correcta_respuesta"
+									name="correcta_respuesta">
+									<img class="util_noutil_fav" src="Imagenes/correcta.png">
+								</button>
+							</div>
+						</div>
 
-                         </div>
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
+	</c:if>
+	</c:if>
+	</c:forEach>
 
 	<!-- CONTAINER PARA LA PAGINACION -->
 	<div class="container paginacion_inicio">
@@ -387,14 +517,31 @@ if (request.getAttribute("numeroPagina") != null){
 					<br> <br>
 					<nav>
 						<ul class="pagination ">
-							<li class="page-item disabled"><a class="page-link" href="#"><img
-									class="paginacionimg" src="Imagenes/pagina_anterior.png" alt=""></a></li>
-							<li class="page-item active"><a class="page-link"
-								id="numeropagina" href="">1</a></li>
-							<li class="page-item"><a class="page-link" id="adelante"
-								href="#"><img class="paginacionimg"
-									src="Imagenes/pagina_siguiente.png" alt=""></a></li>
 
+							<c:if test="${numeroPagina - 1 == 0}">
+								<li class="page-item"><a class="page-link" id="atras"
+									href="PreguntaRespuesta?IdPregunta=${preguntaElegida.getId()}&numeroPagina=1">
+										<img class="paginacionimg" src="Imagenes/pagina_anterior.png"
+										alt="">
+								</a></li>
+							</c:if>
+
+							<c:if test="${numeroPagina - 1 != 0}">
+								<li class="page-item"><a class="page-link" id="atras"
+									href="PreguntaRespuesta?IdPregunta=${preguntaElegida.getId()}&numeroPagina=${numeroPagina - 1}">
+										<img class="paginacionimg" src="Imagenes/pagina_anterior.png"
+										alt="">
+								</a></li>
+							</c:if>
+
+							<li class="page-item active"><a class="page-link"
+								id="numeropagina" href="">${numeroPagina}</a></li>
+
+							<li class="page-item"><a class="page-link" id="adelante"
+								href="PreguntaRespuesta?IdPregunta=${preguntaElegida.getId()}&numeroPagina=${numeroPagina + 1}">
+									<img class="paginacionimg" src="Imagenes/pagina_siguiente.png"
+									alt="">
+							</a></li>
 						</ul>
 					</nav>
 				</div>
@@ -438,7 +585,7 @@ if (request.getAttribute("numeroPagina") != null){
 				<p class="text-center">Foro para conversar sobre temas variados.
 				</p>
 
-                    
+
 			</div>
 			<!--Grid column-->
 
@@ -453,20 +600,24 @@ if (request.getAttribute("numeroPagina") != null){
 						class="text-dark">Facebook</a></li>
 				</ul>
 
-                    
+
 			</div>
 			<!--Grid column-->
 		</div>
 		<!--Grid row-->
 		<div class="row">
-			<p class="col-12 text-center">© 2021 Copyright</p>  
+			<p class="col-12 text-center">© 2021 Copyright</p>
 		</div>
-          <div class="row">
-               <p class="col-2"></p>
-               <p class="col-4" id="Luis">Luis Alejandro Galvan Ortiz <label for="Luis">1813703</label></p>
-               <p class="col-4" id="Miguel">Miguel Angel Villanueva Infante <label for="Miguel">1841237</label></p>
+		<div class="row">
+			<p class="col-2"></p>
+			<p class="col-4" id="Luis">
+				Luis Alejandro Galvan Ortiz <label for="Luis">1813703</label>
+			</p>
+			<p class="col-4" id="Miguel">
+				Miguel Angel Villanueva Infante <label for="Miguel">1841237</label>
+			</p>
 
-          </div>
+		</div>
 	</div>
 	<!-- Grid container -->
 

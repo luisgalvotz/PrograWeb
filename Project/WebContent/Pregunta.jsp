@@ -62,7 +62,7 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 		<div class="collapse navbar-collapse" id="navbarmenu">
 			<ul class="navbar-nav mx-auto">
 
-				<li class="nav-item"><a href="IndexPreguntas" class="nav-link">Inicio</a>
+				<li class="nav-item"><a href="IndexPreguntas?numeroPagina=1" class="nav-link">Inicio</a>
 				</li>
 
 				<li class="nav-item dropdown"><a href="#"
@@ -215,7 +215,7 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 			</c:if>
 
 			<c:if test="${not empty preguntaElegida}">
-
+				
 			</c:if>
 
 		</form>

@@ -98,8 +98,8 @@ public class PreguntaRespuesta extends HttpServlet {
 		request.setAttribute("preguntaElegida", preguntaElegida);
 		
 		getTipoUsuario(preguntaElegida, request, response);
-		//getRespuestaCorrecta(preguntaElegida.getRespuesta_Correcta(), request, response);
-		//getRespuestas(preguntaElegida.getIdPregunta(), request, response);
+		getRespuestaCorrecta(preguntaElegida.getIdRespuesta(), request, response);
+		getRespuestas(preguntaElegida.getId(), request, response);
 		
 		return existePregunta;
 
@@ -133,12 +133,242 @@ public class PreguntaRespuesta extends HttpServlet {
 		request.setAttribute("IdUsuarioActivo", IdUsuarioActivo);
 	}
 	
+	private void getRespuestaCorrecta(int respuesta_Correcta, HttpServletRequest request, HttpServletResponse response) {
+		List<RespuestaModel> respuestaCorrecta = null;
+		
+		RespuestaModel respuestaAux = null;
+		
+		respuestaAux = new RespuestaModel(respuesta_Correcta);
+		
+		try {
+			respuestaCorrecta = RespuestaDAO.getRespuesta("VER", respuestaAux);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		if (respuestaCorrecta != null) {
+        	if (respuestaCorrecta.get(0).getId() != 0)
+        		request.setAttribute("respuestaCorrecta", respuestaCorrecta.get(0));
+        }
+		
+	}
+
+	private void getRespuestas(int IdPregunta, HttpServletRequest request, HttpServletResponse response) {
+		List<RespuestaModel> lista10Respuestas = null;
+		
+		RespuestaModel respuestaAux = null;
+		int numeroRespuesta = 0;
+		
+		if (request.getParameter("numeroPagina") != null) {
+			int numeroPagina = Integer.valueOf(request.getParameter("numeroPagina"));
+			if (numeroPagina <= 0)
+				numeroPagina = 1;
+				
+			request.setAttribute("numeroPagina", numeroPagina);
+			numeroRespuesta = 10 * (numeroPagina - 1);
+		}
+		
+		respuestaAux = new RespuestaModel(IdPregunta, numeroRespuesta);
+		
+		try {
+			lista10Respuestas = RespuestaDAO.getRespuesta("VER10", respuestaAux);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        
+        
+        request.setAttribute("lista10Respuestas", lista10Respuestas);
+		
+	}
+	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		request.setCharacterEncoding("UTF-8");
+		String tipo = "";
+		
+		if (request.getSession().getAttribute("IdUsuarioActivo") != null) {			
+			tipo = request.getParameter("tipo");
+			
+			switch(tipo) {
+			case "Pregunta":
+			{
+				String Voto = request.getParameter("Vote");
+
+				switch (Voto) {
+				case "Util":
+					ingresarEvPregunta(request, response, 1);
+					break;
+
+				case "NoUtil":
+					ingresarEvPregunta(request, response, 2);
+					break;
+
+				case "Fav":
+					ingresarEvPregunta(request, response, 3);
+					break;
+
+				default:
+//				404 Not Found
+				}
+				break;
+			}	
+			case "Respuesta":
+			{	
+				String Voto = request.getParameter("Vote");
+
+				switch (Voto) {
+				case "Util":
+					ingresarEvRespuesta(request, response, 1);
+					break;
+
+				case "NoUtil":
+					ingresarEvRespuesta(request, response, 2);
+					break;
+					
+				default:
+//				404 Not Found
+
+				}
+				
+				break;
+			}
+			case "RespuestaCorrecta": 
+				ingresarRespuestaCorrecta(request, response);
+				break;
+			case "BorrarPregunta": 
+				borrarPregunta(request, response);
+				break;
+			case "BorrarRespuesta": 
+				borrarRespuesta(request, response);
+				break;
+			default:
+			}
+			
+		}
+		
+		if (tipo.equals("BorrarPregunta") == false) {
+			int IdPregunta = 0;
+			if (request.getParameter("IdPregunta") != null) {
+				IdPregunta = Integer.parseInt(request.getParameter("IdPregunta"));
+			}
+			response.sendRedirect("PreguntaRespuesta?IdPregunta=" + IdPregunta + "&numeroPagina=1");
+		}
+		else {
+			response.sendRedirect("IndexPreguntas?numeroPagina=1");			
+		}
+		
 	}
 
+	private void ingresarRespuestaCorrecta(HttpServletRequest request, HttpServletResponse response) {
+		List<PreguntaModel> PreguntaElegida = null;
+		PreguntaModel PreguntaParametros = null;
+		
+		int IdPregunta = Integer.parseInt(request.getParameter("IdPregunta"));
+		int IdRespuesta = Integer.parseInt(request.getParameter("IdRespuesta"));
+		
+		PreguntaParametros = new PreguntaModel(IdPregunta, IdRespuesta);
+		
+		try {
+			PreguntaElegida = PreguntaDAO.getPregunta("SEL", PreguntaParametros);
+			
+			if (PreguntaElegida.size() == 1) {
+				if (PreguntaElegida.get(0).getIdRespuesta() != IdRespuesta) {
+					PreguntaDAO.iudPregunta("RC", PreguntaParametros);
+				}
+				else {
+					PreguntaDAO.iudPregunta("NRC", PreguntaParametros);
+				}
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private void ingresarEvPregunta(HttpServletRequest request, HttpServletResponse response, int EvPreguntaCalificada) {
+		PregEvaluadaModel evNuevoVoto = null;
+		
+		int IdUsuarioActivo = (int)request.getSession().getAttribute("IdUsuarioActivo");
+		int IdPregunta = Integer.parseInt(request.getParameter("IdPregunta"));
+		
+		if (true) {
+			evNuevoVoto = new PregEvaluadaModel(IdUsuarioActivo, IdPregunta);
+			
+			try {
+				if (EvPreguntaCalificada == 1) {
+					PregEvaluadaDAO.iudPregEv("UTIL", evNuevoVoto);
+				}
+				else if (EvPreguntaCalificada == 2) {
+					PregEvaluadaDAO.iudPregEv("NOUTIL", evNuevoVoto);
+				}
+				else if (EvPreguntaCalificada == 3) {
+					PregEvaluadaDAO.iudPregEv("FAV", evNuevoVoto);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+	}
+	
+	private void ingresarEvRespuesta(HttpServletRequest request, HttpServletResponse response, int EvRespuestaCalificada) {
+		ResEvaluadaModel evNuevoVoto = null;
+		
+		int IdUsuarioActivo = (int)request.getSession().getAttribute("IdUsuarioActivo");
+		int IdRespuesta = Integer.parseInt(request.getParameter("IdRespuesta"));
+		
+		if (true) {
+			evNuevoVoto = new ResEvaluadaModel(IdUsuarioActivo, IdRespuesta);
+			
+			try {
+				if (EvRespuestaCalificada == 1) {
+					ResEvaluadaDAO.iudResEv("UTIL", evNuevoVoto);
+				}
+				else if (EvRespuestaCalificada == 2) {
+					ResEvaluadaDAO.iudResEv("NOUTIL", evNuevoVoto);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
+	private int borrarPregunta(HttpServletRequest request, HttpServletResponse response) {
+		PreguntaModel PreguntaParametros = null;
+		
+		int IdPregunta = Integer.parseInt(request.getParameter("IdPregunta"));
+		
+		PreguntaParametros = new PreguntaModel(IdPregunta);
+		
+		try {
+			PreguntaDAO.iudPregunta("BORRAR", PreguntaParametros);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return IdPregunta;
+		
+	}
+	
+	private void borrarRespuesta(HttpServletRequest request, HttpServletResponse response) {
+		RespuestaModel RespuestaParametros = null;
+		
+		int IdRespuesta = Integer.parseInt(request.getParameter("IdRespuesta"));
+		
+		RespuestaParametros = new RespuestaModel(IdRespuesta);
+		
+		try {
+			RespuestaDAO.iudRespuesta("BORRAR", RespuestaParametros);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 }
