@@ -3,49 +3,28 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page import="com.dbconnection.models.*"%>
-<%@page import="com.dbconnection.utils.userType"%>
 <%@page import="java.util.*"%>
 <%@page import="com.dbconnection.controllers.GeneralServlet"%>
 
 <%
-UsuarioModel usuarioElegido = GeneralServlet.getUsuario(request, response);
+UsuarioModel usuarioElegido = (UsuarioModel) request.getAttribute("IdUsuarioActivo");
 pageContext.setAttribute("usuarioElegido", usuarioElegido);
-
-List<CategoriaModel> listaCategorias = GeneralServlet.getCategorias();
-pageContext.setAttribute("listaCategorias", listaCategorias);
-
-userType usuarioActivo = (userType) request.getAttribute("usuarioActivo");
-pageContext.setAttribute("usuarioActivo", usuarioActivo);
-
-int IdUsuarioActivo = (int) request.getAttribute("IdUsuarioActivo");
-pageContext.setAttribute("IdUsuarioActivo", IdUsuarioActivo);
 
 PreguntaModel preguntaElegida = (PreguntaModel) request.getAttribute("preguntaElegida");
 pageContext.setAttribute("preguntaElegida", preguntaElegida);
 
-RespuestaModel respuestaCorrecta = (RespuestaModel) request.getAttribute("respuestaCorrecta");
-pageContext.setAttribute("respuestaCorrecta", respuestaCorrecta);
-
-List<RespuestaModel> lista10Respuestas = (List<RespuestaModel>) request.getAttribute("lista10Respuestas");
-pageContext.setAttribute("lista10Respuestas", lista10Respuestas);
-
-int numeroPagina = 1;
-
-if (request.getAttribute("numeroPagina") != null) {
-	numeroPagina = (int) request.getAttribute("numeroPagina");
-	pageContext.setAttribute("numeroPagina", numeroPagina);
-}
+List<CategoriaModel> listaCategorias = (List<CategoriaModel>) request.getAttribute("listaCategorias");
+pageContext.setAttribute("listaCategorias", listaCategorias);
 %>
 
 <!doctype html>
 <html lang="en">
 <head>
-<title>Queuestions</title>
+<title>Añadir Pregunta</title>
 <!-- Required meta tags -->
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
 
 <!-- Bootstrap CSS -->
 <link rel="stylesheet"
@@ -53,43 +32,39 @@ if (request.getAttribute("numeroPagina") != null) {
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
 
-<link rel="stylesheet" href="css/Detallepreg.css">
-<link rel="stylesheet" href="css/jquery.sweet-modal.min.css">
+<link rel="stylesheet" href="css/respuesta.css">
 <link rel="stylesheet" href="css/validacion.css">
 <script src="js/jquery-3.5.1.min.js"></script>
 <script src="js/jquery.validate.min.js"></script>
 <script src="js/jquery.sweet-modal.min.js"></script>
-<script src="js/ImagenRegistro.js"></script>
-<script src="js/SelecImg.js"></script>
 <script src="js/validaciones.js"></script>
-
 </head>
+
 <body>
 
-	<%-- ojsdfksdljj --%>
-	<!-- BARRA DE NAVEGACIï¿½N -->
+	<!-- BARRA DE NAVEGACIÓN -->
+	<nav class="navbar navbar-expand-md navbar-light">
 
-	<nav class="navbar navbar-expand-md  navbar-light">
 		<ul class="navbar-nav mr-auto">
-			<img class="logopag" src="Imagenes/que.png" alt="Logo">
+
+			<img class="logopag " src="Imagenes/que.png" alt="Logo">
+
 		</ul>
 
-		<!-- Boton que aparece cuando colapsas la navbar en tamaï¿½o md es la "palanca" (toggle) que expande los elementos en el div con id:navbarmenu -->
+		<!-- Boton que aparece cuando colapsas la navbar en tamaño md es la "palanca" (toggle) que expande los elementos en el div con id:navbarmenu -->
 		<button class="navbar-toggler" data-toggle="collapse"
 			data-target="#navbarmenu" aria-controls="navbarmenu"
 			aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 
-		<!--navbarmenu: div que es colapsable y dentro tiene un navegador que se ajusto al centro con mx-auto  -->
+		<!-- Opciones de en medio -->
 		<div class="collapse navbar-collapse" id="navbarmenu">
-			<ul class="navbar-nav mx-auto ">
+			<ul class="navbar-nav mx-auto">
 
-				<!-- Boton de inicio -->
-				<li class="nav-item"><a href="IndexPreguntas?numeroPagina=1"
-					class="nav-link">Inicio</a></li>
+				<li class="nav-item"><a href="IndexPreguntas?numeroPagina=1" class="nav-link">Inicio</a>
+				</li>
 
-				<!-- Dropdown de categorias -->
 				<li class="nav-item dropdown"><a href="#"
 					class="nav-link dropdown-toggle" id="Categoriasnavbar"
 					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -105,7 +80,7 @@ if (request.getAttribute("numeroPagina") != null) {
 				<li class="nav-item dropdown"><a href="#"
 					class="nav-link dropdown-toggle" id="Busquedanavbar"
 					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Búsqueda</a>
-					<!-- dropdown del link Bï¿½squeda -->
+					<!-- dropdown del link Búsqueda -->
 					<div class="dropdown-menu" aria-labelledby="Busquedanavbar"
 						style="width: 370px;">
 						<div class="container">
@@ -128,7 +103,7 @@ if (request.getAttribute("numeroPagina") != null) {
 						<header>
 							<div class="text-center TituloBusquedaA">
 								<input type="checkbox" name="ConfirmaBusquedaA"
-									id="ConfirmaBusquedaA"> <label for="ConfirmaBusquedaA">Búsqueda
+									id="ConfirmaBusquedaA"> <label for="ConfirmaBusquedaA">Busqueda
 									Avanzada</label>
 							</div>
 						</header>
@@ -162,7 +137,7 @@ if (request.getAttribute("numeroPagina") != null) {
 							disabled="disabled" style="width: 150px;" type="date"
 							name="FechaFin" id="FechaFin">
 
-						<!-- Filtro personas que marcaron ï¿½til -->
+						<!-- Filtro personas que marcaron útil -->
 						<label style="margin-left: 10px;" for="NutilBusca"> Número
 							de personas que les pareció útil </label> <input type="checkbox"
 							disabled="disabled" name="NutilBusca" id="NutilBusca">
@@ -171,14 +146,13 @@ if (request.getAttribute("numeroPagina") != null) {
 						<label style="margin-left: 10px;" for="NfavoritaBusca">
 							Número de personas que marcaron favoritas </label> <input type="checkbox"
 							disabled="disabled" name="NfavoritaBusca" id="NfavoritaBusca">
-
-
 					</div></li>
 
 
 			</ul>
 		</div>
 
+		<!-- Inicio sesión (der) -->
 		<ul class="navbar-nav ml-auto">
 			<c:if test="${empty usuarioElegido}">
 				<li class="nav-item"><a href="Inicia_sesion.jsp"
@@ -195,13 +169,14 @@ if (request.getAttribute("numeroPagina") != null) {
 				</a></li>
 			</c:if>
 		</ul>
+
 	</nav>
-	<!-- TERMINA BARRA DE NAVEGACIï¿½N -->
+
+	<p class="tituloañadir">Publica tu respuesta</p>
 
 
-	<!-- CUERPO DE LA Pï¿½GINA -->
-
-	<div class="container main">
+     <%-- PREGUNTA --%>
+     <div class="container main">
 		<div class="row">
 			<div class="col-sm-9 col-lg-9">
 				<!-- Pregunta 1 -->
@@ -287,238 +262,55 @@ if (request.getAttribute("numeroPagina") != null) {
 		</div>
 	</div>
 
-	<!-- BOTON RESPONDER -->
+
+     <%-- RESPUESTA FORMULARIO --%>
 	<div class="container">
 		<div class="row">
-				<button class="botones" style="margin-top: 15px; width: 200px;">
-					Responder <img style="width: 60px; height: 40px;" src="Imagenes/respuesta.png" alt="responder_img">
-				</button>
+			<div class="col-1"></div>
+			<div class="col-11">
+				<section class="formulario_respuesta">
+					<form id="form_hacer_respuesta" action="" method="post">
+
+						<c:if test="${empty preguntaElegida}">
+							<div class="container">
+								<div class="row">
+									<div class="col-12">
+										<textarea class="RespuestaS" rows="3"
+											placeholder="Escribe aquí tu respuesta"
+											name="respuesta_texto" id="respuesta_texto"></textarea>
+									</div>
+
+									<div class="col-lg-2 col-sm-3">
+										<div id="img-container-respuesta"> 
+											<input class="Seleccionimagen" type='file'
+												name="Imagen_respuesta" id="Imagen_respuesta"
+												onchange="readURL(this);" /> <img id="Imagenseleccionada"
+												src="#" alt="" />
+												<button class="botones" style="margin-bottom: 8px;">
+													Eliminar Imagen
+												</button>
+										</div>
+									</div>
+								</div>
+								<input class="botones" type="submit" form="form_hacer_respuesta"
+									value="Publicar respuesta"> <input
+									name="respuestaNueva" type="hidden" value="true">
+							</div>
+						</c:if>
+
+						<c:if test="${not empty preguntaElegida}">
+
+						</c:if>
+
+					</form>
+				</section>
+			</div>
 		</div>
 	</div>
 
-	
-	<%-- RESPUESTA CORRECTA--%>
-	<c:if test="${not empty respuestaCorrecta}">
-		<div class="container">
-			<div class="row">
-				<div class="col-1"></div>
-				<div class="col-11">
-					<div class="container main_correcta ">
-						<div class="row">
-							<div class="col-9">
-								<section>
-									<div class="container">
-										<p style="border-bottom: solid; margin: 0;">
-											<img class="imagen_usu_inicio"
-												src="GeneralServlet?Imagen=Usuario&Id=${respuestaCorrecta.getIdUsuario()}"
-												alt="">${respuestaCorrecta.getNomUsuarioRespuesta()}
-											<c:if test="${respuestaCorrecta.getEditada() == 1}">
-												<p style="font-size: 14px;">Editada</p>
-											</c:if>
-										</p>
 
-										<p class="fecha_hora_respuesta">
-											${respuestaCorrecta.getFechaCreacionString()}</p>
+	<div style="margin-top: 30px;"></div>
 
-										<p class="respuesta_correcta"
-											style="margin-bottom: 0; margin-top: 0px; border-bottom: solid;">
-											${respuestaCorrecta.getContenido()}</p>
-
-									</div>
-
-								</section>
-							</div>
-
-							<c:if test="${respuestaCorrecta.isImagen() != null}">
-								<div class="col-2">
-									<img class="imagenrespuesta"
-										src="GeneralServlet?Imagen=Respuesta&Id=${respuestaCorrecta.getId()}"
-										alt="">
-								</div>
-							</c:if>
-
-							<div class="col-1">
-								<button class="boton_borrar" id="eliminar_respuesta_correcta"
-									type="button">
-									<img src="Imagenes/eliminar.png" class="imagen_borrar">
-								</button>
-
-								<button class="boton_editar" id="editar_respuesta" type="button">
-									<img class="imagen_editar" src="Imagenes/editar.png">
-								</button>
-							</div>
-
-						</div>
-
-						<div class="row" style="margin-left: 10px;">
-							<div class="col-1">
-								<p>
-									<button class="util_noutil_fav_btn" id="like_respuesta"
-										name="like_respuesta">
-										<img class="util_noutil_fav" src="Imagenes/Like.png">
-									</button>
-									0
-								</p>
-							</div>
-
-							<div class="col-1">
-								<p>
-									<button class="util_noutil_fav_btn" id="dislike_respuesta"
-										name="dislike_respuesta">
-										<img class="util_noutil_fav" src="Imagenes/Dislike.png">
-									</button>
-									0
-								</p>
-							</div>
-
-							<div class="col-1">
-								<button class="util_noutil_fav_btn" id="correcta_respuesta"
-									name="correcta_respuesta">
-									<img class="util_noutil_fav" src="Imagenes/correcta.png">
-								</button>
-							</div>
-						</div>
-
-					</div>
-				</div>
-			</div>
-		</div>
-	</c:if>
-
-	<%-- RESPUESTA NORMAL --%>
-	<c:forEach var="iRespuesta" items="${lista10Respuestas}">
-	<c:if test="${iRespuesta.getId() != preguntaElegida.getIdRespuesta()}">
-	<c:if test="${iRespuesta.getActivo() == 1}">
-		<div class="container">
-			<div class="row">
-				<div class="col-1"></div>
-				<div class="col-11">
-					<div class="container main_respuesta_normal">
-						<div class="row">
-							<div class="col-9">
-								<section>
-									<div class="container">
-										<p style="border-bottom: solid; margin: 0;">
-											<img class="imagen_usu_inicio"
-												src="GeneralServlet?Imagen=Usuario&Id=${iRespuesta.getIdUsuario()}"
-												alt="">${iRespuesta.getNomUsuarioRespuesta()}
-											<c:if test="${iRespuesta.getEditada() == 1}">
-												<p style="font-size: 14px;">Editada</p>
-											</c:if>
-										</p>
-
-										<p class="fecha_hora_respuesta">
-											${iRespuesta.getFechaCreacionString()}</p>
-
-										<p class="respuesta_normal"
-											style="margin-bottom: 0; margin-top: 0px; border-bottom: solid;">
-											${iRespuesta.getContenido()}</p>
-
-									</div>
-
-								</section>
-							</div>
-
-							<c:if test="${iRespuesta.isImagen() != null}">
-								<div class="col-2">
-									<img class="imagenrespuesta"
-										src="GeneralServlet?Imagen=Respuesta&Id=${iRespuesta.getId()}"
-										alt="">
-								</div>
-							</c:if>
-
-							<div class="col-1">
-								<button class="boton_borrar" id="eliminar_respuesta"
-									type="button">
-									<img src="Imagenes/eliminar.png" class="imagen_borrar">
-								</button>
-
-								<button class="boton_editar" id="editar_respuesta" type="button">
-									<img class="imagen_editar" src="Imagenes/editar.png">
-								</button>
-							</div>
-
-						</div>
-
-						<div class="row" style="margin-left: 10px;">
-							<div class="col-1">
-								<p>
-									<button class="util_noutil_fav_btn" id="like_respuesta"
-										name="like_respuesta">
-										<img class="util_noutil_fav" src="Imagenes/Like.png">
-									</button>
-									0
-								</p>
-							</div>
-
-							<div class="col-1">
-								<p>
-									<button class="util_noutil_fav_btn" id="dislike_respuesta"
-										name="dislike_respuesta">
-										<img class="util_noutil_fav" src="Imagenes/Dislike.png">
-									</button>
-									0
-								</p>
-							</div>
-
-							<div class="col-1">
-								<button class="util_noutil_fav_btn" id="correcta_respuesta"
-									name="correcta_respuesta">
-									<img class="util_noutil_fav" src="Imagenes/correcta.png">
-								</button>
-							</div>
-						</div>
-
-					</div>
-				</div>
-			</div>
-		</div>
-	</c:if>
-	</c:if>
-	</c:forEach>
-
-	<!-- CONTAINER PARA LA PAGINACION -->
-	<div class="container paginacion_inicio">
-		<div class="row">
-			<div class="col-4"></div>
-			<div class="col-4">
-				<!-- PAGINACION -->
-				<div class="container-fluid">
-					<br> <br>
-					<nav>
-						<ul class="pagination ">
-
-							<c:if test="${numeroPagina - 1 == 0}">
-								<li class="page-item"><a class="page-link" id="atras"
-									href="PreguntaRespuesta?IdPregunta=${preguntaElegida.getId()}&numeroPagina=1">
-										<img class="paginacionimg" src="Imagenes/pagina_anterior.png"
-										alt="">
-								</a></li>
-							</c:if>
-
-							<c:if test="${numeroPagina - 1 != 0}">
-								<li class="page-item"><a class="page-link" id="atras"
-									href="PreguntaRespuesta?IdPregunta=${preguntaElegida.getId()}&numeroPagina=${numeroPagina - 1}">
-										<img class="paginacionimg" src="Imagenes/pagina_anterior.png"
-										alt="">
-								</a></li>
-							</c:if>
-
-							<li class="page-item active"><a class="page-link"
-								id="numeropagina" href="">${numeroPagina}</a></li>
-
-							<li class="page-item"><a class="page-link" id="adelante"
-								href="PreguntaRespuesta?IdPregunta=${preguntaElegida.getId()}&numeroPagina=${numeroPagina + 1}">
-									<img class="paginacionimg" src="Imagenes/pagina_siguiente.png"
-									alt="">
-							</a></li>
-						</ul>
-					</nav>
-				</div>
-			</div>
-			<div class="col-4"></div>
-		</div>
-	</div>
 
 
 
@@ -536,9 +328,10 @@ if (request.getAttribute("numeroPagina") != null) {
 		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 		crossorigin="anonymous"></script>
 	<script src="js/inicio_.js"></script>
+	<script src="js/SelecImg.js"></script>
+
 </body>
 
-<!-- FOOTER DE LA Pï¿½GINA -->
 <footer class=" text-lg-start" style="background-color: #f28825;">
 	<!-- Grid container -->
 	<div class="container p-4">
@@ -555,7 +348,7 @@ if (request.getAttribute("numeroPagina") != null) {
 				<p class="text-center">Foro para conversar sobre temas variados.
 				</p>
 
-
+                    
 			</div>
 			<!--Grid column-->
 
@@ -570,30 +363,23 @@ if (request.getAttribute("numeroPagina") != null) {
 						class="text-dark">Facebook</a></li>
 				</ul>
 
-
+                    
 			</div>
 			<!--Grid column-->
 		</div>
 		<!--Grid row-->
 		<div class="row">
-			<p class="col-12 text-center">© 2021 Copyright</p>
+			<p class="col-12 text-center">© 2021 Copyright</p>  
 		</div>
-		<div class="row">
-			<p class="col-2"></p>
-			<p class="col-4" id="Luis">
-				Luis Alejandro Galvan Ortiz <label for="Luis">1813703</label>
-			</p>
-			<p class="col-4" id="Miguel">
-				Miguel Angel Villanueva Infante <label for="Miguel">1841237</label>
-			</p>
+          <div class="row">
+               <p class="col-2"></p>
+               <p class="col-4" id="Luis">Luis Alejandro Galvan Ortiz <label for="Luis">1813703</label></p>
+               <p class="col-4" id="Miguel">Miguel Angel Villanueva Infante <label for="Miguel">1841237</label></p>
 
-		</div>
+          </div>
 	</div>
 	<!-- Grid container -->
 
 
 </footer>
-
-
-<!-- TERMINA FOOTER DE LA Pï¿½GINA -->
 </html>

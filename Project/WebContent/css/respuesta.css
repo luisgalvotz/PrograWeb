@@ -15,6 +15,12 @@
      /* El ancho entero de la pantalla */
 }
 
+.logopag {
+     height: 50px;
+     width: 70px;
+     border-radius: 15px;
+}
+
 .navbar .navbar-brand:hover {
      color: red;
 }
@@ -27,34 +33,17 @@
      color: blue;
 }
 
-.logopag {
-     height: 50px;
-     width: 70px;
-     border-radius: 15px;
-}
 
-.dropdown {
-     font-family: Georgia, 'Times New Roman', Times, serif;
-}
-
-.BuscarLupa:hover {
-     background-color: #afafaf;
-}
-
-.TituloBusquedaA {
-     margin-top: 10px;
-     border-top: solid;
-     border-bottom: solid;
-     border-color: #bbbec2;
-     padding-top: 5px;
-}
-
-.categoriasbusca {
-     margin-left: auto;
+.tituloañadir {
+     color: #e0740e;
+     transition: color 1s linear;
+     margin-top: 125px;
+     margin-left: 100px;
+     font-size: 30px;
 }
 
 .main {
-     margin-top: 140px;
+     margin-top: 10px;
      margin-bottom: auto;
      border-style: solid;
 }
@@ -75,33 +64,6 @@
      font-size: 22px;
 }
 
-.paginacion_inicio {
-     margin-top: auto;
-}
-
-#adelante {
-     background-color: white;
-}
-
-.page-item.active .page-link {
-     background-color: sandybrown;
-     border-color: #e0740e;
-}
-
-#numeropagina {
-     color: black;
-}
-
-.page-link {
-     background-color: transparent;
-}
-
-
-.paginacionimg {
-
-     width: 30px;
-     height: 30px;
-}
 
 .imagen_usu_inicio {
      width: 50px;
@@ -115,77 +77,70 @@
      height: 15px;
      padding: 0%;
 }
-.boton_borrar{
+
+.boton_borrar {
      padding-top: 0px;
      margin-top: 8px;
      border-radius: 5px;
 }
-.boton_borrar:hover{
+
+.boton_borrar:hover {
      background-color: #f38c2b;
 }
 
-.imagen_editar{
+.imagen_editar {
      width: 15px;
      height: 15px;
 }
-.boton_editar{
+
+.boton_editar {
      margin-top: 20px;
      border-radius: 5px;
 
 }
-.boton_editar:hover{
+
+.boton_editar:hover {
      background-color: #f38c2b;
 }
 
-.fecha_hora_pregunta{
+.fecha_hora_pregunta {
      font-size: 14px;
 }
 
-.util_noutil_fav{
+.util_noutil_fav {
      width: 22px;
      height: 22px;
 }
 
-.util_noutil_fav_btn:hover{
+.util_noutil_fav_btn:hover {
      background-color: #f38c2b;
 }
 
 
 
 
-/* RESPUESTA CORRECTA */
-.main_correcta {
+/* RESPUESTA FORMULARIO */
+.formulario_respuesta {
      margin-top: 15px;
      border-style: solid;
-     border-color: #e0740e;
+     padding-bottom: 10px;
 }
 
-.fecha_hora_respuesta {
-     font-size: 14px;
+.formulario_respuesta .RespuestaS {
+     margin-top: 10px;
+     resize: none;
+     width: 100%;
+
 }
 
-.respuesta_correcta {
-     font-size: 22px;
-}
-
-.imagenrespuesta {
-     margin-top: 15px;
-     margin-bottom: 15px;
-     width: 80px;
-     height: 90px;
+.Seleccionimagen {
+     color: transparent;
 }
 
 
-/* RESPUESTA NORMAL */
-.main_respuesta_normal {
-     margin-top: 15px;
-     border-style: solid;
+.Seleccionimagen {
+     color: transparent;
 }
-
-.respuesta_normal {
-     font-size: 22px;
-}
-
 
 .botones {
      background-color: #f28825;
@@ -201,6 +156,7 @@
      color: white;
 
 }
+
 
 html {
      height: 100%;
@@ -219,13 +175,11 @@ body {
 }
 
 footer {
-     position: relative;
      font-size: 18px;
      margin-top: 50px;
+     position: relative;
      left: 0;
      bottom: 0;
      width: 100%;
+
 }
-
-
-
