@@ -15,12 +15,15 @@ pageContext.setAttribute("preguntaElegida", preguntaElegida);
 
 List<CategoriaModel> listaCategorias = (List<CategoriaModel>) request.getAttribute("listaCategorias");
 pageContext.setAttribute("listaCategorias", listaCategorias);
+
+RespuestaModel respuestaElegida = (RespuestaModel) request.getAttribute("respuestaElegida");
+pageContext.setAttribute("respuestaElegida", respuestaElegida);
 %>
 
 <!doctype html>
 <html lang="en">
 <head>
-<title>Añadir Pregunta</title>
+<title>Respuesta</title>
 <!-- Required meta tags -->
 <meta charset="utf-8">
 <meta name="viewport"
@@ -47,7 +50,7 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 
 		<ul class="navbar-nav mr-auto">
 
-			<img class="logopag " src="Imagenes/que.png" alt="Logo">
+			<img class="logopag " src="Imagenes/que_.png" alt="Logo">
 
 		</ul>
 
@@ -62,8 +65,8 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 		<div class="collapse navbar-collapse" id="navbarmenu">
 			<ul class="navbar-nav mx-auto">
 
-				<li class="nav-item"><a href="IndexPreguntas?numeroPagina=1" class="nav-link">Inicio</a>
-				</li>
+				<li class="nav-item"><a href="IndexPreguntas?numeroPagina=1"
+					class="nav-link">Inicio</a></li>
 
 				<li class="nav-item dropdown"><a href="#"
 					class="nav-link dropdown-toggle" id="Categoriasnavbar"
@@ -71,7 +74,8 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 						Categorías </a>
 					<div class="dropdown-menu" aria-labelledby="Categoriasnavbar">
 						<c:forEach var="iCategoria" items="${listaCategorias}">
-							<a class="dropdown-item" href="#"> ${iCategoria.getNombre()}
+							<a class="dropdown-item" href="BuscarPreguntas?Busqueda=Preguntas&numeroPagina=1&categories=${iCategoria.getId()}"> 
+								${iCategoria.getNombre()}
 							</a>
 						</c:forEach>
 					</div></li>
@@ -83,23 +87,22 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 					<!-- dropdown del link Búsqueda -->
 					<div class="dropdown-menu" aria-labelledby="Busquedanavbar"
 						style="width: 370px;">
-						<div class="container">
-							<div class="row">
-								<div class="col-10">
-									<input style="width: 295px;" type="text" name="BusquedaN"
-										id="BuscarNormal">
-								</div>
-								<div class="col-2">
-									<a href="#">
+						<form id="form_busqueda" action="BuscarPreguntas">
+							<div class="container">
+								<div class="row">
+									<input name="Busqueda" type="hidden" value="Preguntas">
+									<input name="numeroPagina" type="hidden" value="1">
+									<div class="col-10">
+										<input style="width: 295px;" type="text" name="BusquedaN" id="BuscarNormal">
+									</div>
+									<div class="col-2">
 										<button class="BuscarLupa">
-											<img style="width: 20px; height: 20px;"
-												src="Imagenes/Lupa.png" alt="LupaBuscar">
+											<img style="width: 20px; height: 20px;" src="Imagenes/Lupa.png" alt="LupaBuscar">
 										</button>
-
-									</a>
+									</div>
 								</div>
 							</div>
-						</div>
+						</form>
 						<header>
 							<div class="text-center TituloBusquedaA">
 								<input type="checkbox" name="ConfirmaBusquedaA"
@@ -162,7 +165,7 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 			</c:if>
 
 			<c:if test="${not empty usuarioElegido}">
-				<li class="nav-item"><a href="Perfil.jsp" class="nav-link">
+				<li class="nav-item"><a href="PerfilUsuario?IdUsuario=${usuarioElegido.getId()}" class="nav-link">
 						<img style="height: 40px; width: 40px;"
 						src="GeneralServlet?Imagen=Usuario&Id=${usuarioElegido.getId()}">
 						<c:out value="${usuarioElegido.getNomUsuario()}"></c:out>
@@ -175,8 +178,8 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 	<p class="tituloañadir">Publica tu respuesta</p>
 
 
-     <%-- PREGUNTA --%>
-     <div class="container main">
+	<%-- PREGUNTA --%>
+	<div class="container main">
 		<div class="row">
 			<div class="col-sm-9 col-lg-9">
 				<!-- Pregunta 1 -->
@@ -212,24 +215,6 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 						alt="">
 				</div>
 			</c:if>
-			<c:if test="${usuarioActivo == userType.questionOwner}">
-				<div class="col-sm-1 col-lg-1">
-					<form id="form_borrar_preg" action="PreguntaRespuesta" method="post">
-						<input name="tipo" type="hidden" value="BorrarPregunta">
-						<input name="IdPregunta" type="hidden" value="${preguntaElegida.getId()}">
-						<button class="boton_borrar" id="eliminar_pregunta" type="button">
-							<img src="Imagenes/eliminar.png" class="imagen_borrar">
-						</button>
-					</form>
-					<form id="form_editar_preg${preguntaElegida.getId()}" action="SubirPregunta" method="post" enctype="multipart/form-data">
-						<input name="abrirPregunta" type="hidden" value="true">
-						<input name="IdPregunta" type="hidden" value="${preguntaElegida.getId()}">
-					</form>
-						<button form="form_editar_preg${preguntaElegida.getId()}" class="boton_editar" id="editar_pregunta" type="button">
-							<img class="imagen_editar" src="Imagenes/editar.png">
-						</button>
-					</div>
-			</c:if>
 		</div>
 		<div class="row" style="margin-left: 10px;">
 			<div class="col-1">
@@ -238,7 +223,7 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 						name="like_pregunta">
 						<img class="util_noutil_fav" src="Imagenes/Like.png">
 					</button>
-					0
+					${preguntaElegida.getVotosUtil()}
 				</p>
 			</div>
 			<div class="col-1">
@@ -247,7 +232,7 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 						name="dislike_pregunta">
 						<img class="util_noutil_fav" src="Imagenes/Dislike.png">
 					</button>
-					0
+
 				</p>
 			</div>
 			<div class="col-1">
@@ -256,22 +241,22 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 						name="fav_pregunta">
 						<img class="util_noutil_fav" src="Imagenes/Favorita.png">
 					</button>
-					0
+					${preguntaElegida.getVotosFavorito()}
 				</p>
 			</div>
 		</div>
 	</div>
 
 
-     <%-- RESPUESTA FORMULARIO --%>
+	<%-- RESPUESTA FORMULARIO --%>
 	<div class="container">
 		<div class="row">
 			<div class="col-1"></div>
 			<div class="col-11">
 				<section class="formulario_respuesta">
-					<form id="form_hacer_respuesta" action="" method="post">
+					<form id="form_hacer_respuesta" action="SubirRespuesta" method="post" enctype="multipart/form-data">
 
-						<c:if test="${empty preguntaElegida}">
+						<c:if test="${empty respuestaElegida}">
 							<div class="container">
 								<div class="row">
 									<div class="col-12">
@@ -280,30 +265,55 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 											name="respuesta_texto" id="respuesta_texto"></textarea>
 									</div>
 
-									<div class="col-lg-2 col-sm-3">
-										<div id="img-container-respuesta"> 
-											<input class="Seleccionimagen" type='file'
-												name="Imagen_respuesta" id="Imagen_respuesta"
-												onchange="readURL(this);" /> <img id="Imagenseleccionada"
-												src="#" alt="" />
-												<button class="botones" style="margin-bottom: 8px;">
-													Eliminar Imagen
-												</button>
-										</div>
+									<div id="img-container-respuesta">
+										<input class="Seleccionimagen" type='file'
+											name="Imagen_PR" id="Imagen_PR"
+											onchange="readURL(this);" /> <img id="Imagenseleccionada"
+											src="#" alt="" />
 									</div>
+									<%-- <button type="button" class="botones" style="margin-bottom: 8px;"> Eliminar Imagen </button> --%>
 								</div>
-								<input class="botones" type="submit" form="form_hacer_respuesta"
-									value="Publicar respuesta"> <input
-									name="respuestaNueva" type="hidden" value="true">
-							</div>
+								<input class="botones" type="submit" form="form_hacer_respuesta" value="Publicar respuesta">
+								<input name="respuestaNueva" type="hidden" value="true">
+								<input name="IdPregunta" type="hidden" value="${preguntaElegida.getId()}">
+							</div>			
 						</c:if>
 
-						<c:if test="${not empty preguntaElegida}">
+						<c:if test="${not empty respuestaElegida}">
+							<div class="container">
+								<div class="row">
+									<div class="col-12">
+										<textarea class="RespuestaS" rows="3"
+											placeholder="Escribe aquí tu respuesta"
+											name="respuesta_texto" id="respuesta_texto">${respuestaElegida.getContenido()}</textarea>
+									</div>
 
+									<div id="img-container-respuesta">
+										<input class="Seleccionimagen" type='file' name="Imagen_PR" id="Imagen_PR" onchange="readURL(this);" /> 
+											<c:if test="${respuestaElegida.isImagen() != null}">
+												<div id="img-container-respuesta">
+													<img id="Imagenseleccionada" src="GeneralServlet?Imagen=Respuesta&Id=${respuestaElegida.getId()}" style=" margin-top: 15px; margin-bottom: 15px; width: 100px; height: 110px; " alt="" />
+												</div>
+											</c:if>
+											<c:if test="${respuestaElegida.isImagen() == null}">
+												<div id="img-container-respuesta">
+													<img id="Imagenseleccionada" src="" alt="" />
+												</div>
+											</c:if>
+									</div>
+									<button id="btn_eliminar_img" type="button" class="botones" style="margin-bottom: 8px;"> Eliminar Imagen </button>
+								</div>
+								<input class="botones" type="submit" form="form_hacer_respuesta" value="Publicar respuesta">
+								<input name="respuestaNueva" type="hidden" value="false">
+								<input name="IdPregunta" type="hidden" value="${preguntaElegida.getId()}">
+					 			<input name="IdRespuesta" type="hidden" value="${respuestaElegida.getId()}">
+					 			<input name="eliminarImagen" type="hidden" id="delete-image" value="0">
+							</div>
 						</c:if>
 
 					</form>
 				</section>
+				
 			</div>
 		</div>
 	</div>
@@ -340,15 +350,15 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 			<!--Grid column-->
 			<div class="col-lg-6 col-sm-6">
 				<h5 class=" text-center" style="font-weight: bolder;">
-					<img src="Imagenes/que.png"
-						style="width: 70px; height: 50px; border-radius: 15px;" alt="">
+					<img src="Imagenes/que_.png"
+						style="width: 100px; height: 50px; border-radius: 15px;" alt="">
 					Queuestions
 				</h5>
 
 				<p class="text-center">Foro para conversar sobre temas variados.
 				</p>
 
-                    
+
 			</div>
 			<!--Grid column-->
 
@@ -363,20 +373,24 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 						class="text-dark">Facebook</a></li>
 				</ul>
 
-                    
+
 			</div>
 			<!--Grid column-->
 		</div>
 		<!--Grid row-->
 		<div class="row">
-			<p class="col-12 text-center">© 2021 Copyright</p>  
+			<p class="col-12 text-center">© 2021 Copyright</p>
 		</div>
-          <div class="row">
-               <p class="col-2"></p>
-               <p class="col-4" id="Luis">Luis Alejandro Galvan Ortiz <label for="Luis">1813703</label></p>
-               <p class="col-4" id="Miguel">Miguel Angel Villanueva Infante <label for="Miguel">1841237</label></p>
+		<div class="row">
+			<p class="col-2"></p>
+			<p class="col-4" id="Luis">
+				Luis Alejandro Galvan Ortiz <label for="Luis">1813703</label>
+			</p>
+			<p class="col-4" id="Miguel">
+				Miguel Angel Villanueva Infante <label for="Miguel">1841237</label>
+			</p>
 
-          </div>
+		</div>
 	</div>
 	<!-- Grid container -->
 

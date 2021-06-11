@@ -71,7 +71,7 @@ if (request.getAttribute("numeroPagina") != null) {
 
 	<nav class="navbar navbar-expand-md  navbar-light">
 		<ul class="navbar-nav mr-auto">
-			<img class="logopag" src="Imagenes/que.png" alt="Logo">
+			<img class="logopag" src="Imagenes/que_.png" alt="Logo">
 		</ul>
 
 		<!-- Boton que aparece cuando colapsas la navbar en tamaï¿½o md es la "palanca" (toggle) que expande los elementos en el div con id:navbarmenu -->
@@ -96,7 +96,8 @@ if (request.getAttribute("numeroPagina") != null) {
 						Categorías </a>
 					<div class="dropdown-menu" aria-labelledby="Categoriasnavbar">
 						<c:forEach var="iCategoria" items="${listaCategorias}">
-							<a class="dropdown-item" href="#"> ${iCategoria.getNombre()}
+							<a class="dropdown-item" href="BuscarPreguntas?Busqueda=Preguntas&numeroPagina=1&categories=${iCategoria.getId()}"> 
+								${iCategoria.getNombre()}
 							</a>
 						</c:forEach>
 					</div></li>
@@ -108,23 +109,22 @@ if (request.getAttribute("numeroPagina") != null) {
 					<!-- dropdown del link Bï¿½squeda -->
 					<div class="dropdown-menu" aria-labelledby="Busquedanavbar"
 						style="width: 370px;">
-						<div class="container">
-							<div class="row">
-								<div class="col-10">
-									<input style="width: 295px;" type="text" name="BusquedaN"
-										id="BuscarNormal">
-								</div>
-								<div class="col-2">
-									<a href="#">
+						<form id="form_busqueda" action="BuscarPreguntas">
+							<div class="container">
+								<div class="row">
+									<input name="Busqueda" type="hidden" value="Preguntas">
+									<input name="numeroPagina" type="hidden" value="1">
+									<div class="col-10">
+										<input style="width: 295px;" type="text" name="BusquedaN" id="BuscarNormal">
+									</div>
+									<div class="col-2">
 										<button class="BuscarLupa">
-											<img style="width: 20px; height: 20px;"
-												src="Imagenes/Lupa.png" alt="LupaBuscar">
+											<img style="width: 20px; height: 20px;" src="Imagenes/Lupa.png" alt="LupaBuscar">
 										</button>
-
-									</a>
+									</div>
 								</div>
 							</div>
-						</div>
+						</form>
 						<header>
 							<div class="text-center TituloBusquedaA">
 								<input type="checkbox" name="ConfirmaBusquedaA"
@@ -188,7 +188,7 @@ if (request.getAttribute("numeroPagina") != null) {
 			</c:if>
 
 			<c:if test="${not empty usuarioElegido}">
-				<li class="nav-item"><a href="Perfil.jsp" class="nav-link">
+				<li class="nav-item"><a href="PerfilUsuario?IdUsuario=${usuarioElegido.getId()}" class="nav-link">
 						<img style="height: 40px; width: 40px;"
 						src="GeneralServlet?Imagen=Usuario&Id=${usuarioElegido.getId()}">
 						<c:out value="${usuarioElegido.getNomUsuario()}"></c:out>
@@ -208,14 +208,15 @@ if (request.getAttribute("numeroPagina") != null) {
 				<section>
 					<div class="container">
 						<p style="border-bottom: solid; margin: 0;">
-							<img class="imagen_usu_inicio"
-								src="GeneralServlet?Imagen=Usuario&Id=${preguntaElegida.getIdUsuario()}"
-								alt="">${preguntaElegida.getNomUsuarioPregunta()}
+							<a href="PerfilUsuario?IdUsuario=${preguntaElegida.getIdUsuario()}" class="imagen_nombre_usuario">
+								<img class="imagen_usu_inicio"
+									src="GeneralServlet?Imagen=Usuario&Id=${preguntaElegida.getIdUsuario()}"
+									alt="">${preguntaElegida.getNomUsuarioPregunta()}
+							</a>
 							<c:if test="${preguntaElegida.getEditada() == 1}">
 								<p>Editada</p>
+							</c:if>
 						</p>
-						</c:if>
-
 						<p class="fecha_hora_pregunta">
 							${preguntaElegida.getFechaCreacionToString()}</p>
 
@@ -239,49 +240,86 @@ if (request.getAttribute("numeroPagina") != null) {
 			</c:if>
 			<c:if test="${usuarioActivo == userType.questionOwner}">
 				<div class="col-sm-1 col-lg-1">
-					<form id="form_borrar_preg" action="PreguntaRespuesta" method="post">
-						<input name="tipo" type="hidden" value="BorrarPregunta">
-						<input name="IdPregunta" type="hidden" value="${preguntaElegida.getId()}">
+					<form id="form_borrar_preg" action="PreguntaRespuesta"
+						method="post">
+						<input name="tipo" type="hidden" value="BorrarPregunta"> <input
+							name="IdPregunta" type="hidden"
+							value="${preguntaElegida.getId()}">
 						<button class="boton_borrar" id="eliminar_pregunta" type="button">
 							<img src="Imagenes/eliminar.png" class="imagen_borrar">
 						</button>
 					</form>
-					<form id="form_editar_preg${preguntaElegida.getId()}" action="SubirPregunta" method="post" enctype="multipart/form-data">
-						<input name="abrirPregunta" type="hidden" value="true">
-						<input name="IdPregunta" type="hidden" value="${preguntaElegida.getId()}">
+					<form id="form_editar_preg${preguntaElegida.getId()}"
+						action="SubirPregunta" method="post" enctype="multipart/form-data">
+						<input name="abrirPregunta" type="hidden" value="true"> <input
+							name="IdPregunta" type="hidden"
+							value="${preguntaElegida.getId()}">
 					</form>
-						<button form="form_editar_preg${preguntaElegida.getId()}" class="boton_editar" id="editar_pregunta" type="button">
-							<img class="imagen_editar" src="Imagenes/editar.png">
-						</button>
-					</div>
+					<button form="form_editar_preg${preguntaElegida.getId()}"
+						class="boton_editar" id="editar_pregunta">
+						<img class="imagen_editar" src="Imagenes/editar.png">
+					</button>
+				</div>
 			</c:if>
 		</div>
 		<div class="row" style="margin-left: 10px;">
 			<div class="col-1">
 				<p>
-					<button class="util_noutil_fav_btn" id="like_pregunta"
-						name="like_pregunta">
+					<c:if test="${usuarioActivo == userType.normalUser}">
+						<form id="form_util_pregunta${preguntaElegida.getId()}"
+							method="post" action="PreguntaRespuesta">
+							<input name="tipo" type="hidden" value="Pregunta"> <input
+								name="IdPregunta" type="hidden"
+								value="${preguntaElegida.getId()}"> <input name="Vote"
+								type="hidden" value="Util">
+						</form>
+					</c:if>
+					<button class="util_noutil_fav_btn"
+						form="form_util_pregunta${preguntaElegida.getId()}"
+						id="like_pregunta" name="like_pregunta">
 						<img class="util_noutil_fav" src="Imagenes/Like.png">
 					</button>
-					0
+					${preguntaElegida.getVotosUtil()}
 				</p>
 			</div>
 			<div class="col-1">
 				<p>
-					<button class="util_noutil_fav_btn" id="dislike_pregunta"
-						name="dislike_pregunta">
+					<c:if test="${usuarioActivo == userType.normalUser}">
+						<form id="form_noutil_pregunta${preguntaElegida.getId()}"
+							method="post" action="PreguntaRespuesta">
+							<input name="tipo" type="hidden" value="Pregunta"> <input
+								name="IdPregunta" type="hidden"
+								value="${preguntaElegida.getId()}"> <input name="Vote"
+								type="hidden" value="NoUtil">
+						</form>
+					</c:if>
+					<button class="util_noutil_fav_btn"
+						form="form_noutil_pregunta${preguntaElegida.getId()}"
+						id="dislike_pregunta" name="dislike_pregunta">
 						<img class="util_noutil_fav" src="Imagenes/Dislike.png">
 					</button>
-					0
+					<c:if test="${usuarioActivo == userType.questionOwner}">
+						${preguntaElegida.getVotosNoUtil()}
+					</c:if>
 				</p>
 			</div>
 			<div class="col-1">
 				<p>
-					<button class="util_noutil_fav_btn" id="fav_pregunta"
-						name="fav_pregunta">
+					<c:if test="${usuarioActivo == userType.normalUser}">
+						<form id="form_fav_pregunta${preguntaElegida.getId()}"
+							method="post" action="PreguntaRespuesta">
+							<input name="tipo" type="hidden" value="Pregunta"> <input
+								name="IdPregunta" type="hidden"
+								value="${preguntaElegida.getId()}"> <input name="Vote"
+								type="hidden" value="Fav">
+						</form>
+					</c:if>
+					<button class="util_noutil_fav_btn"
+						form="form_fav_pregunta${preguntaElegida.getId()}"
+						id="fav_pregunta" name="fav_pregunta">
 						<img class="util_noutil_fav" src="Imagenes/Favorita.png">
 					</button>
-					0
+					${preguntaElegida.getVotosFavorito()}
 				</p>
 			</div>
 		</div>
@@ -290,15 +328,28 @@ if (request.getAttribute("numeroPagina") != null) {
 	<!-- BOTON RESPONDER -->
 	<div class="container">
 		<div class="row">
-				<button class="botones" style="margin-top: 15px; width: 200px;">
-					Responder <img style="width: 60px; height: 40px;" src="Imagenes/respuesta.png" alt="responder_img">
-				</button>
+			<c:if test="${usuarioActivo == userType.normalUser}">
+				<form id="form_responder_pregunta${preguntaElegida.getId()}"
+					method="post" action="SubirRespuesta" enctype="multipart/form-data">
+					<button class="botones" style="margin-top: 15px; width: 200px;">
+						Responder <img style="width: 60px; height: 40px;"
+							src="Imagenes/respuesta.png" alt="responder_img">
+					</button>
+					<input name="IdPregunta" type="hidden"
+						value="${preguntaElegida.getId()}"> <input
+						name="abrirRespuesta" type="hidden" value="true">
+				</form>
+			</c:if>
 		</div>
 	</div>
 
-	
+
 	<%-- RESPUESTA CORRECTA--%>
 	<c:if test="${not empty respuestaCorrecta}">
+		<c:if
+			test="${IdUsuarioActivo == respuestaCorrecta.getIdUsuario()  && usuarioActivo != userType.Invited}">
+			<c:set var="usuarioActivo" value="${userType.answerOwner}"></c:set>
+		</c:if>
 		<div class="container">
 			<div class="row">
 				<div class="col-1"></div>
@@ -309,9 +360,11 @@ if (request.getAttribute("numeroPagina") != null) {
 								<section>
 									<div class="container">
 										<p style="border-bottom: solid; margin: 0;">
-											<img class="imagen_usu_inicio"
-												src="GeneralServlet?Imagen=Usuario&Id=${respuestaCorrecta.getIdUsuario()}"
-												alt="">${respuestaCorrecta.getNomUsuarioRespuesta()}
+											<a href="PerfilUsuario?IdUsuario=${respuestaCorrecta.getIdUsuario()}" class="imagen_nombre_usuario">
+												<img class="imagen_usu_inicio"
+													src="GeneralServlet?Imagen=Usuario&Id=${respuestaCorrecta.getIdUsuario()}"
+													alt="">${respuestaCorrecta.getNomUsuarioRespuesta()}
+											</a>
 											<c:if test="${respuestaCorrecta.getEditada() == 1}">
 												<p style="font-size: 14px;">Editada</p>
 											</c:if>
@@ -323,9 +376,7 @@ if (request.getAttribute("numeroPagina") != null) {
 										<p class="respuesta_correcta"
 											style="margin-bottom: 0; margin-top: 0px; border-bottom: solid;">
 											${respuestaCorrecta.getContenido()}</p>
-
 									</div>
-
 								</section>
 							</div>
 
@@ -336,46 +387,100 @@ if (request.getAttribute("numeroPagina") != null) {
 										alt="">
 								</div>
 							</c:if>
-
-							<div class="col-1">
-								<button class="boton_borrar" id="eliminar_respuesta_correcta"
-									type="button">
-									<img src="Imagenes/eliminar.png" class="imagen_borrar">
-								</button>
-
-								<button class="boton_editar" id="editar_respuesta" type="button">
-									<img class="imagen_editar" src="Imagenes/editar.png">
-								</button>
-							</div>
-
+							<c:if test="${usuarioActivo == userType.answerOwner}">
+								<div class="col-1">
+									<form id="form_borrar_rc" action="PreguntaRespuesta"
+										method="post">
+										<input name="IdPregunta" type="hidden"
+											value="${preguntaElegida.getId()}"> <input
+											name="tipo" type="hidden" value="BorrarRespuesta"> <input
+											name="IdRespuesta" type="hidden"
+											value="${respuestaCorrecta.getId()}">
+										<button class="boton_borrar" id="eliminar_respuesta_correcta"
+											type="button">
+											<img src="Imagenes/eliminar.png" class="imagen_borrar">
+										</button>
+									</form>
+									<form id="form_editar_rc${respuestaCorrecta.getId()}"
+										action="SubirRespuesta" method="post"
+										enctype="multipart/form-data">
+										<input name="abrirRespuesta" type="hidden" value="true">
+										<input name="IdPregunta" type="hidden"
+											value="${preguntaElegida.getId()}"> <input
+											name="IdRespuesta" type="hidden"
+											value="${respuestaCorrecta.getId()}">
+									</form>
+									<button form="form_editar_rc${respuestaCorrecta.getId()}"
+										class="boton_editar" id="editar_respuesta">
+										<img class="imagen_editar" src="Imagenes/editar.png">
+									</button>
+								</div>
+							</c:if>
 						</div>
-
 						<div class="row" style="margin-left: 10px;">
 							<div class="col-1">
 								<p>
-									<button class="util_noutil_fav_btn" id="like_respuesta"
-										name="like_respuesta">
+									<c:if
+										test="${usuarioActivo == userType.normalUser || usuarioActivo == userType.questionOwner}">
+										<form id="form_util_rc${respuestaCorrecta.getId()}"
+											method="post" action="PreguntaRespuesta">
+											<input name="tipo" type="hidden" value="Respuesta"> <input
+												name="IdRespuesta" type="hidden"
+												value="${respuestaCorrecta.getId()}"> <input
+												name="IdPregunta" type="hidden"
+												value="${preguntaElegida.getId()}"> <input
+												name="Vote" type="hidden" value="Util">
+										</form>
+									</c:if>
+									<button class="util_noutil_fav_btn"
+										form="form_util_rc${respuestaCorrecta.getId()}"
+										id="like_respuesta" name="like_respuesta">
 										<img class="util_noutil_fav" src="Imagenes/Like.png">
 									</button>
-									0
+									${respuestaCorrecta.getVotosUtil()}
 								</p>
 							</div>
 
 							<div class="col-1">
 								<p>
-									<button class="util_noutil_fav_btn" id="dislike_respuesta"
-										name="dislike_respuesta">
+									<c:if
+										test="${usuarioActivo == userType.normalUser || usuarioActivo == userType.questionOwner}">
+										<form id="form_noutil_rc${respuestaCorrecta.getId()}"
+											method="post" action="PreguntaRespuesta">
+											<input name="tipo" type="hidden" value="Respuesta"> <input
+												name="IdRespuesta" type="hidden"
+												value="${respuestaCorrecta.getId()}"> <input
+												name="IdPregunta" type="hidden"
+												value="${preguntaElegida.getId()}"> <input
+												name="Vote" type="hidden" value="NoUtil">
+										</form>
+									</c:if>
+									<button class="util_noutil_fav_btn"
+										form="form_noutil_rc${respuestaCorrecta.getId()}"
+										id="dislike_respuesta" name="dislike_respuesta">
 										<img class="util_noutil_fav" src="Imagenes/Dislike.png">
 									</button>
-									0
+									<c:if test="${usuarioActivo == userType.answerOwner}">
+										${respuestaCorrecta.getVotosNoUtil()}
+									</c:if>
 								</p>
 							</div>
 
 							<div class="col-1">
-								<button class="util_noutil_fav_btn" id="correcta_respuesta"
-									name="correcta_respuesta">
-									<img class="util_noutil_fav" src="Imagenes/correcta.png">
-								</button>
+								<c:if test="${usuarioActivo == userType.questionOwner}">
+									<form id="form_res_cor${respuestaCorrecta.getId()}"
+										method="post" action="PreguntaRespuesta">
+										<input name="IdPregunta" type="hidden"
+											value="${preguntaElegida.getId()}"> <input
+											name="tipo" type="hidden" value="RespuestaCorrecta">
+										<input name="IdRespuesta" type="hidden"
+											value="${respuestaCorrecta.getId()}">
+										<button class="util_noutil_fav_btn_cor" id="correcta_respuesta"
+											name="correcta_respuesta">
+											<img class="util_noutil_fav" src="Imagenes/correcta.png">
+										</button>
+									</form>
+								</c:if>
 							</div>
 						</div>
 
@@ -383,98 +488,174 @@ if (request.getAttribute("numeroPagina") != null) {
 				</div>
 			</div>
 		</div>
+		<c:if test="${usuarioActivo == userType.answerOwner}">
+			<c:set var="usuarioActivo" value="${userType.normalUser}"></c:set>
+		</c:if>
 	</c:if>
 
 	<%-- RESPUESTA NORMAL --%>
 	<c:forEach var="iRespuesta" items="${lista10Respuestas}">
-	<c:if test="${iRespuesta.getId() != preguntaElegida.getIdRespuesta()}">
-	<c:if test="${iRespuesta.getActivo() == 1}">
-		<div class="container">
-			<div class="row">
-				<div class="col-1"></div>
-				<div class="col-11">
-					<div class="container main_respuesta_normal">
-						<div class="row">
-							<div class="col-9">
-								<section>
-									<div class="container">
-										<p style="border-bottom: solid; margin: 0;">
-											<img class="imagen_usu_inicio"
-												src="GeneralServlet?Imagen=Usuario&Id=${iRespuesta.getIdUsuario()}"
-												alt="">${iRespuesta.getNomUsuarioRespuesta()}
-											<c:if test="${iRespuesta.getEditada() == 1}">
-												<p style="font-size: 14px;">Editada</p>
-											</c:if>
-										</p>
+		<c:if test="${iRespuesta.getId() != preguntaElegida.getIdRespuesta()}">
+			<c:if test="${iRespuesta.getActivo() == 1}">
+				<c:if test="${IdUsuarioActivo == iRespuesta.getIdUsuario() && usuarioActivo != userType.Invited}">
+					<c:set var="usuarioActivo" value="${userType.answerOwner}"></c:set>
+				</c:if>
+				<div class="container">
+					<div class="row">
+						<div class="col-1"></div>
+						<div class="col-11">
+							<div class="container main_respuesta_normal">
+								<div class="row">
+									<div class="col-9">
+										<section>
+											<div class="container">
+												<p style="border-bottom: solid; margin: 0;">
+													<a href="PerfilUsuario?IdUsuario=${iRespuesta.getIdUsuario()}" class="imagen_nombre_usuario">
+														<img class="imagen_usu_inicio"
+															src="GeneralServlet?Imagen=Usuario&Id=${iRespuesta.getIdUsuario()}"
+															alt="">${iRespuesta.getNomUsuarioRespuesta()}
+													</a>
+													<c:if test="${iRespuesta.getEditada() == 1}">
+														<p style="font-size: 14px;">Editada</p>
+													</c:if>
+												</p>
 
-										<p class="fecha_hora_respuesta">
-											${iRespuesta.getFechaCreacionString()}</p>
+												<p class="fecha_hora_respuesta">
+													${iRespuesta.getFechaCreacionString()}</p>
 
-										<p class="respuesta_normal"
-											style="margin-bottom: 0; margin-top: 0px; border-bottom: solid;">
-											${iRespuesta.getContenido()}</p>
+												<p class="respuesta_normal"
+													style="margin-bottom: 0; margin-top: 0px; border-bottom: solid;">
+													${iRespuesta.getContenido()}</p>
 
+											</div>
+
+										</section>
 									</div>
 
-								</section>
-							</div>
-
-							<c:if test="${iRespuesta.isImagen() != null}">
-								<div class="col-2">
-									<img class="imagenrespuesta"
-										src="GeneralServlet?Imagen=Respuesta&Id=${iRespuesta.getId()}"
-										alt="">
+									<c:if test="${iRespuesta.isImagen() != null}">
+										<div class="col-2">
+											<img class="imagenrespuesta"
+												src="GeneralServlet?Imagen=Respuesta&Id=${iRespuesta.getId()}"
+												alt="">
+										</div>
+									</c:if>
+									<c:if test="${usuarioActivo == userType.answerOwner}">
+										<div class="col-1">
+											<form id="form_borrar_res" action="PreguntaRespuesta"
+												method="post">
+												<input name="IdPregunta" type="hidden"
+													value="${preguntaElegida.getId()}"> <input
+													name="tipo" type="hidden" value="BorrarRespuesta">
+												<input name="IdRespuesta" type="hidden"
+													value="${iRespuesta.getId()}">
+												<button class="boton_borrar" id="eliminar_respuesta"
+													type="button">
+													<img src="Imagenes/eliminar.png" class="imagen_borrar">
+												</button>
+											</form>
+											<form id="form_editar_res${iRespuesta.getId()}"
+												action="SubirRespuesta" method="post"
+												enctype="multipart/form-data">
+												<input name="abrirRespuesta" type="hidden" value="true">
+												<input name="IdPregunta" type="hidden"
+													value="${preguntaElegida.getId()}"> <input
+													name="IdRespuesta" type="hidden"
+													value="${iRespuesta.getId()}">
+											</form>
+											<button form="form_editar_res${iRespuesta.getId()}"
+												class="boton_editar" id="editar_respuesta">
+												<img class="imagen_editar" src="Imagenes/editar.png">
+											</button>
+										</div>
+									</c:if>
 								</div>
-							</c:if>
 
-							<div class="col-1">
-								<button class="boton_borrar" id="eliminar_respuesta"
-									type="button">
-									<img src="Imagenes/eliminar.png" class="imagen_borrar">
-								</button>
+								<div class="row" style="margin-left: 10px;">
+									<div class="col-1">
+										<p>
+											<c:if
+												test="${usuarioActivo == userType.normalUser || usuarioActivo == userType.questionOwner}">
+												<form id="form_util_res${iRespuesta.getId()}" method="post"
+													action="PreguntaRespuesta">
+													<input name="tipo" type="hidden" value="Respuesta">
+													<input name="IdRespuesta" type="hidden"
+														value="${iRespuesta.getId()}"> <input
+														name="IdPregunta" type="hidden"
+														value="${preguntaElegida.getId()}"> <input
+														name="Vote" type="hidden" value="Util">
+												</form>
+											</c:if>
+											<button class="util_noutil_fav_btn" id="like_respuesta"
+												name="like_respuesta">
+												<img class="util_noutil_fav" src="Imagenes/Like.png">
+											</button>
+											${iRespuesta.getVotosUtil()}
+										</p>
+									</div>
 
-								<button class="boton_editar" id="editar_respuesta" type="button">
-									<img class="imagen_editar" src="Imagenes/editar.png">
-								</button>
+									<div class="col-1">
+										<p>
+											<c:if
+												test="${usuarioActivo == userType.normalUser || usuarioActivo == userType.questionOwner}">
+												<form id="form_noutil_res${iRespuesta.getId()}"
+													method="post" action="PreguntaRespuesta">
+													<input name="tipo" type="hidden" value="Respuesta">
+													<input name="IdRespuesta" type="hidden"
+														value="${iRespuesta.getId()}"> <input
+														name="IdPregunta" type="hidden"
+														value="${preguntaElegida.getId()}"> <input
+														name="Vote" type="hidden" value="NoUtil">
+												</form>
+											</c:if>
+											<button class="util_noutil_fav_btn" id="dislike_respuesta"
+												name="dislike_respuesta">
+												<img class="util_noutil_fav" src="Imagenes/Dislike.png">
+											</button>
+											<c:if test="${usuarioActivo == userType.answerOwner}">
+										${iRespuesta.getVotosNoUtil()}
+									</c:if>
+										</p>
+									</div>
+
+									<div class="col-1">
+										<c:if test="${usuarioActivo == userType.questionOwner}">
+											<form id="form_res_cor${iRespuesta.getId()}" method="post"
+												action="PreguntaRespuesta">
+												<input name="IdPregunta" type="hidden"
+													value="${preguntaElegida.getId()}"> <input
+													name="tipo" type="hidden" value="RespuestaCorrecta">
+												<input name="IdRespuesta" type="hidden"
+													value="${iRespuesta.getId()}">
+												<button class="util_noutil_fav_btn_cor" id="correcta_respuesta"
+													name="correcta_respuesta">
+													<img class="util_noutil_fav" src="Imagenes/correcta.png">
+												</button>
+											</form>
+										</c:if>
+									</div>
+								</div>
+
 							</div>
-
 						</div>
-
-						<div class="row" style="margin-left: 10px;">
-							<div class="col-1">
-								<p>
-									<button class="util_noutil_fav_btn" id="like_respuesta"
-										name="like_respuesta">
-										<img class="util_noutil_fav" src="Imagenes/Like.png">
-									</button>
-									0
-								</p>
-							</div>
-
-							<div class="col-1">
-								<p>
-									<button class="util_noutil_fav_btn" id="dislike_respuesta"
-										name="dislike_respuesta">
-										<img class="util_noutil_fav" src="Imagenes/Dislike.png">
-									</button>
-									0
-								</p>
-							</div>
-
-							<div class="col-1">
-								<button class="util_noutil_fav_btn" id="correcta_respuesta"
-									name="correcta_respuesta">
-									<img class="util_noutil_fav" src="Imagenes/correcta.png">
-								</button>
-							</div>
-						</div>
-
 					</div>
 				</div>
-			</div>
-		</div>
-	</c:if>
-	</c:if>
+				<c:if test="${usuarioActivo == userType.answerOwner}">
+					<c:set var="usuarioActivo" value="${userType.normalUser}"></c:set>
+				</c:if>
+			</c:if>
+			<c:if test="${iRespuesta.getActivo() == 0}">
+				<div class="container">
+					<div class="row">
+						<div class="col-1"></div>
+                			<div class="col-11">
+                				<div class="container main_respuesta_normal">
+									<p class="text">La respuesta ha sido eliminada</p>
+								</div>
+							</div>
+					</div>
+				</div>
+			</c:if>
+		</c:if>
 	</c:forEach>
 
 	<!-- CONTAINER PARA LA PAGINACION -->
@@ -547,8 +728,8 @@ if (request.getAttribute("numeroPagina") != null) {
 			<!--Grid column-->
 			<div class="col-lg-6 col-sm-6">
 				<h5 class=" text-center" style="font-weight: bolder;">
-					<img src="Imagenes/que.png"
-						style="width: 70px; height: 50px; border-radius: 15px;" alt="">
+					<img src="Imagenes/que_.png"
+						style="width: 100px; height: 50px; border-radius: 15px;" alt="">
 					Queuestions
 				</h5>
 

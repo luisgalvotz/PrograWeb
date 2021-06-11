@@ -119,6 +119,12 @@ public class PreguntaModel {
 		this.activoUsuarioPregunta = activoUsuarioPregunta;
 		this.categoriaPregunta = categoriaPregunta;
 	}
+	
+	public PreguntaModel(int numPreguntaPag, String titulo, int idCategoria) {
+		this.numPreguntaPag = numPreguntaPag;
+		this.titulo = titulo;
+		this.idCategoria = idCategoria;
+	}
 
 	public int getId() {
 		return id;

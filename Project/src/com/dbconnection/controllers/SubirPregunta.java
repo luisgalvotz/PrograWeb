@@ -151,7 +151,7 @@ public class SubirPregunta extends HttpServlet {
 
 		// obtains the upload file part in this multipart request
 
-		Part filePart = request.getPart("Imagen_pregunta");
+		Part filePart = request.getPart("Imagen_PR");
 
 		if (filePart.getSize() != 0) {
 
@@ -186,9 +186,9 @@ public class SubirPregunta extends HttpServlet {
 			
 			try {
 				if (eliminarImagen == 0) {
-					////////////////////////////////////
+					PreguntaDAO.iudPregunta("EDITAR", preguntaNueva);
 				} else if (eliminarImagen == 1) {
-					////////////////////////////////////
+					PreguntaDAO.iudPregunta("EDITARN", preguntaNueva);
 				}
 					
 			} catch (Exception e) {

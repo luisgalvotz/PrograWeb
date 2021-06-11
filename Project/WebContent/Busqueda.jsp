@@ -7,24 +7,49 @@
 <%@page import="com.dbconnection.controllers.GeneralServlet"%>
 
 <%
-UsuarioModel usuarioElegido = (UsuarioModel) request.getAttribute("IdUsuarioActivo");
+UsuarioModel usuarioElegido = GeneralServlet.getUsuario(request, response);
 pageContext.setAttribute("usuarioElegido", usuarioElegido);
 
-PreguntaModel preguntaElegida = (PreguntaModel) request.getAttribute("preguntaElegida");
-pageContext.setAttribute("preguntaElegida", preguntaElegida);
-
-List<CategoriaModel> listaCategorias = (List<CategoriaModel>) request.getAttribute("listaCategorias");
+List<CategoriaModel> listaCategorias = GeneralServlet.getCategorias();
 pageContext.setAttribute("listaCategorias", listaCategorias);
+
+List<PreguntaModel> lista10Preguntas = (List<PreguntaModel>) request.getAttribute("lista10Preguntas");
+pageContext.setAttribute("lista10Preguntas", lista10Preguntas);
+
+int IdUsuarioActivo = -1;
+if (request.getAttribute("IdUsuarioActivo") != null) {
+	IdUsuarioActivo = (int) request.getAttribute("IdUsuarioActivo");
+	pageContext.setAttribute("IdUsuarioActivo", IdUsuarioActivo);
+}
+
+byte EstadoUsuario = 0;
+if (request.getAttribute("EstadoUsuario") != null) {
+	EstadoUsuario = (byte) request.getAttribute("EstadoUsuario");
+	pageContext.setAttribute("EstadoUsuario", EstadoUsuario);
+}
+
+String Busqueda = (String) request.getAttribute("Busqueda");
+pageContext.setAttribute("Busqueda", Busqueda);
+
+PreguntaModel parametrosPregunta = (PreguntaModel) request.getAttribute("parametrosPregunta");
+pageContext.setAttribute("parametrosPregunta", parametrosPregunta);
+
+int numeroPagina = 1;
+if (request.getAttribute("numeroPagina") != null) {
+	numeroPagina = (int) request.getAttribute("numeroPagina");
+	pageContext.setAttribute("numeroPagina", numeroPagina);
+}
 %>
 
 <!doctype html>
 <html lang="en">
 <head>
-<title>Pregunta</title>
+<title>Busqueda</title>
 <!-- Required meta tags -->
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
 
 <!-- Bootstrap CSS -->
 <link rel="stylesheet"
@@ -32,39 +57,35 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
 
-<link rel="stylesheet" href="css/pregunta.css">
-<link rel="stylesheet" href="css/validacion.css">
-<script src="js/jquery-3.5.1.min.js"></script>
-<script src="js/jquery.validate.min.js"></script>
-<script src="js/jquery.sweet-modal.min.js"></script>
-<script src="js/validaciones.js"></script>
-</head>
+<link rel="stylesheet" href="css/styles_.css">
 
+</head>
 <body>
 
-	<!-- BARRA DE NAVEGACIÓN -->
-	<nav class="navbar navbar-expand-md navbar-light">
+	<%-- ojsdfksdljj --%>
+	<!-- BARRA DE NAVEGACIï¿½N -->
 
+	<nav class="navbar navbar-expand-md  navbar-light">
 		<ul class="navbar-nav mr-auto">
-
-			<img class="logopag " src="Imagenes/que_.png" alt="Logo">
-
+			<img class="logopag" src="Imagenes/que_.png" alt="Logo">
 		</ul>
 
-		<!-- Boton que aparece cuando colapsas la navbar en tamaño md es la "palanca" (toggle) que expande los elementos en el div con id:navbarmenu -->
+		<!-- Boton que aparece cuando colapsas la navbar en tamaï¿½o md es la "palanca" (toggle) que expande los elementos en el div con id:navbarmenu -->
 		<button class="navbar-toggler" data-toggle="collapse"
 			data-target="#navbarmenu" aria-controls="navbarmenu"
 			aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 
-		<!-- Opciones de en medio -->
+		<!--navbarmenu: div que es colapsable y dentro tiene un navegador que se ajusto al centro con mx-auto  -->
 		<div class="collapse navbar-collapse" id="navbarmenu">
-			<ul class="navbar-nav mx-auto">
+			<ul class="navbar-nav mx-auto ">
 
-				<li class="nav-item"><a href="IndexPreguntas?numeroPagina=1" class="nav-link">Inicio</a>
-				</li>
+				<!-- Boton de inicio -->
+				<li class="nav-item"><a href="IndexPreguntas?numeroPagina=1"
+					class="nav-link">Inicio</a></li>
 
+				<!-- Dropdown de categorias -->
 				<li class="nav-item dropdown"><a href="#"
 					class="nav-link dropdown-toggle" id="Categoriasnavbar"
 					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -81,7 +102,7 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 				<li class="nav-item dropdown"><a href="#"
 					class="nav-link dropdown-toggle" id="Busquedanavbar"
 					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Búsqueda</a>
-					<!-- dropdown del link Búsqueda -->
+					<!-- dropdown del link Bï¿½squeda -->
 					<div class="dropdown-menu" aria-labelledby="Busquedanavbar"
 						style="width: 370px;">
 						<form id="form_busqueda" action="BuscarPreguntas">
@@ -103,7 +124,7 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 						<header>
 							<div class="text-center TituloBusquedaA">
 								<input type="checkbox" name="ConfirmaBusquedaA"
-									id="ConfirmaBusquedaA"> <label for="ConfirmaBusquedaA">Busqueda
+									id="ConfirmaBusquedaA"> <label for="ConfirmaBusquedaA">Búsqueda
 									Avanzada</label>
 							</div>
 						</header>
@@ -137,7 +158,7 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 							disabled="disabled" style="width: 150px;" type="date"
 							name="FechaFin" id="FechaFin">
 
-						<!-- Filtro personas que marcaron útil -->
+						<!-- Filtro personas que marcaron ï¿½til -->
 						<label style="margin-left: 10px;" for="NutilBusca"> Número
 							de personas que les pareció útil </label> <input type="checkbox"
 							disabled="disabled" name="NutilBusca" id="NutilBusca">
@@ -146,13 +167,18 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 						<label style="margin-left: 10px;" for="NfavoritaBusca">
 							Número de personas que marcaron favoritas </label> <input type="checkbox"
 							disabled="disabled" name="NfavoritaBusca" id="NfavoritaBusca">
+
+
 					</div></li>
 
-
+				<!--Aï¿½ade pregunta  -->
+				<c:if test="${IdUsuarioActivo != -1 && EstadoUsuario != 0}">
+					<li class="nav-item"><a href="SubirPregunta" class="nav-link">Añadir
+							Pregunta</a></li>
+				</c:if>
 			</ul>
 		</div>
 
-		<!-- Inicio sesión (der) -->
 		<ul class="navbar-nav ml-auto">
 			<c:if test="${empty usuarioElegido}">
 				<li class="nav-item"><a href="Inicia_sesion.jsp"
@@ -169,118 +195,88 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 				</a></li>
 			</c:if>
 		</ul>
-
 	</nav>
+	<!-- TERMINA BARRA DE NAVEGACIï¿½N -->
 
-	<p class="tituloañadir">Haz tu pregunta</p>
 
+	<!-- CUERPO DE LA Pï¿½GINA -->
 
-	<!-- FORMULARIO DE PREGUNTA -->
-	<section class="formulario_pregunta">
-		<form id="form_hacer_pregunta" action="SubirPregunta" method="post" enctype="multipart/form-data">
-
-			<c:if test="${empty preguntaElegida}">
-				<div class="container">
-					<div class="row">
-						<div class="col-7">
-							<input class="PreguntaS" id="Titulo_pregunta"
-								name="Titulo_pregunta" type="text"
-								placeholder="Escribe aquí tu pregunta">
-
-							<form class="CategoriaS" action="">
-								<label for="SelCategoria">Categoría:</label> 
-								<select name="SelCategoria" id="SelCategoria">
-									<c:forEach var="iCategoria" items="${listaCategorias}">
-										<option value="${iCategoria.getId()}">${iCategoria.getNombre()}</option>
-									</c:forEach>
-								</select>
-							</form>
-
-							<textarea class="DescripcionS" rows="5" placeholder="Descripción"
-								name="Descripcion_pregunta" id="Descripcion_pregunta"></textarea>
-
-						</div>
-						<div class="col-lg-2 col-sm-0"></div>
-						<div class="col-lg-2 col-sm-3">
-							<!-- <input type="image" src="" alt=""> -->
-							<div class="img-container"> 
-							<input class="Seleccionimagen" type='file' name="Imagen_PR"
-								id="Imagen_PR" onchange="readURL(this);" /> <img
-								id="Imagenseleccionada" src="#" alt="" />
-								<%-- <button class="botones" style="margin-bottom: 8px;">
-									Eliminar imagen
-								</button> --%>
+	<%-- PREGUNTA 1 --%>
+	<a class="pregunta_inicio"> 
+		<c:forEach var="iPregunta" items="${lista10Preguntas}">
+			<div class="container main text-center">
+				<div class="row">
+					<div class="col-12">
+						<!-- Pregunta 1 -->
+						<section>
+							<div class="container">
+								<a href="PerfilUsuario?IdUsuario=${iPregunta.getIdUsuario()}" class="imagen_nombre_usuario">
+									<p style="border-bottom: solid; margin: 0;">
+										<img class="imagen_usu_inicio"
+											src="GeneralServlet?Imagen=Usuario&Id=${iPregunta.getIdUsuario()}"
+											alt="">${iPregunta.getNomUsuarioPregunta()}
+									</p>
+								</a> <a
+									href="PreguntaRespuesta?IdPregunta=${iPregunta.getId()}&numeroPagina=1"
+									class="titulo_pregunta">
+									<p class="pregunta"
+										style="margin-bottom: 0; border-bottom: solid;">${iPregunta.getTitulo()}</p>
+								</a>
 							</div>
-						</div>
+						</section>
 					</div>
-					<input class="botones" type="submit" form="form_hacer_pregunta" value="Publicar pregunta"> 
-					<input name="preguntaNueva" type="hidden" value="true">
+
 				</div>
-			</c:if>
+			</div>
+		</c:forEach>
+	</a>
 
-			<c:if test="${not empty preguntaElegida}">
-				<div class="container">
-					<div class="row">
-						<div class="col-7">
-							<input class="PreguntaS" id="Titulo_pregunta"
-								name="Titulo_pregunta" type="text"
-								placeholder="Escribe aquí tu pregunta" value="${preguntaElegida.getTitulo()}">
 
-							<form class="CategoriaS" action="">
-								<label for="SelCategoria">Categoría:</label> 
-								<select name="SelCategoria" id="SelCategoria">
-									<c:forEach var="iCategoria" items="${listaCategorias}">
-										<option value="${iCategoria.getId()}"
-											<c:if test="${iCategoria.getId() eq preguntaElegida.getIdCategoria()}">
-												selected="selected"
-											</c:if>
-										>${iCategoria.getNombre()}</option>
-									</c:forEach>
-								</select>
-							</form>
 
-							<textarea class="DescripcionS" rows="5" placeholder="Descripción"
-								name="Descripcion_pregunta" id="Descripcion_pregunta">${preguntaElegida.getDescripcion()}</textarea>
-
-						</div>
-						<div class="col-lg-2 col-sm-0"></div>
-						<div class="col-lg-2 col-sm-3">
-							<!-- <input type="image" src="" alt=""> -->
-							<input class="Seleccionimagen" type='file' name="Imagen_PR" id="Imagen_PR" onchange="readURL(this);" /> 
-							<c:if test="${preguntaElegida.isImagen() != null}">
-								<div id="img-container-pregunta"> 
-                                	<img id="Imagenseleccionada" src="GeneralServlet?Imagen=Pregunta&Id=${preguntaElegida.getId()}" style=" margin-top: 15px; margin-bottom: 15px; width: 100px; height: 110px; " alt=""/>
-                                </div>
+	<!-- CONTAINER PARA LA PAGINACION -->
+	<div class="container paginacion_inicio">
+		<div class="row">
+			<div class="col-5"></div>
+			<div class="col-5">
+				<!-- PAGINACION -->
+				<div class="container-fluid">
+					<br> <br>
+					<nav>
+						<ul class="pagination ">
+						
+							<c:if test="${numeroPagina - 1 == 0}">
+								<li class="page-item"><a class="page-link" id="atras"
+									href="BuscarPreguntas?Busqueda=Preguntas&numeroPagina=1&BusquedaN=${parametrosPregunta.getTitulo()}&categories=${parametrosPregunta.getIdCategoria()}">
+										<img class="paginacionimg" src="Imagenes/pagina_anterior.png" alt=""></a></li>
 							</c:if>
-							<c:if test="${preguntaElegida.isImagen() == null}">
-								<div id="img-container-pregunta">
-                                	<img id="Imagenseleccionada" src="" alt=""/>
-                                </div>
+							
+							<c:if test="${numeroPagina - 1 != 0}">
+								<li class="page-item"><a class="page-link" id="atras"
+									href="BuscarPreguntas?Busqueda=Preguntas&numeroPagina=${numeroPagina - 1}&BusquedaN=${parametrosPregunta.getTitulo()}&categories=${parametrosPregunta.getIdCategoria()}">
+									<img class="paginacionimg" src="Imagenes/pagina_anterior.png" alt=""></a></li>
 							</c:if>
-							<button id="btn_eliminar_img" type="button" class="botones" style="margin-bottom: 8px;"> Eliminar Imagen </button>
-						</div>
-					</div>
-					<input class="botones" type="submit" form="form_hacer_pregunta" value="Publicar pregunta"> 
-					<input name="preguntaNueva" type="hidden" value="false">
-					<input name="IdPregunta" type="hidden" value="${preguntaElegida.getId()}">
-					<input name="eliminarImagen" type="hidden" id="delete-image" value="0">
+							
+							<li class="page-item active"><a class="page-link"
+								id="numeropagina" href="">${numeroPagina}</a></li>
+								
+							<li class="page-item"><a class="page-link" id="adelante"
+								href="BuscarPreguntas?Busqueda=Preguntas&numeroPagina=${numeroPagina + 1}&BusquedaN=${parametrosPregunta.getTitulo()}&categories=${parametrosPregunta.getIdCategoria()}">
+								<img class="paginacionimg" src="Imagenes/pagina_siguiente.png" alt=""></a></li>
+						</ul>
+					</nav>
 				</div>
-			</c:if>
-
-		</form>
-	</section>
-
-
-	<div style="margin-top: 30px;"></div>
-
+			</div>
+			<div class="col-2"></div>
+		</div>
+	</div>
 
 
 
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-	<%-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-		crossorigin="anonymous"></script> --%>
+		crossorigin="anonymous"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
 		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
@@ -290,10 +286,9 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 		crossorigin="anonymous"></script>
 	<script src="js/inicio_.js"></script>
-	<script src="js/SelecImg.js"></script>
-
 </body>
 
+<!-- FOOTER DE LA Pï¿½GINA -->
 <footer class=" text-lg-start" style="background-color: #f28825;">
 	<!-- Grid container -->
 	<div class="container p-4">
@@ -344,4 +339,6 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 
 
 </footer>
+
+<!-- TERMINA FOOTER DE LA Pï¿½GINA -->
 </html>

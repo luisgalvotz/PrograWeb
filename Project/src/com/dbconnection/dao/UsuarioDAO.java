@@ -121,9 +121,31 @@ public class UsuarioDAO {
 				InputStream Img_Perfil = resultSet.getBinaryStream("Img_Perfil");
 				java.util.Date Fecha_Creacion = resultSet.getDate("Fecha_Creacion");
 				byte Activo = resultSet.getByte("Activo");
+				
+				int cantPreguntasUsuario = 0;
+                int cantRespuestasUsuario = 0;
+                int cantPreguntasFavoritasUsuario = 0;
+                int cantPreguntasUtilesUsuario = 0;
+                int cantPreguntasNoUtilesUsuario = 0;
+                
+                if (DbConnection.hasColumn(resultSet, "CantPreguntasUsuario"))
+                	cantPreguntasUsuario = resultSet.getInt("CantPreguntasUsuario");
+                
+                if (DbConnection.hasColumn(resultSet, "CantRespuestasUsuario"))
+                	cantRespuestasUsuario = resultSet.getInt("CantRespuestasUsuario");
+                
+                if (DbConnection.hasColumn(resultSet, "CantPreguntasFavoritasUsuario"))
+                	cantPreguntasFavoritasUsuario = resultSet.getInt("CantPreguntasFavoritasUsuario");
+                
+                if (DbConnection.hasColumn(resultSet, "CantPreguntasUtilesUsuario"))
+                	cantPreguntasUtilesUsuario = resultSet.getInt("CantPreguntasUtilesUsuario");
+                
+                if (DbConnection.hasColumn(resultSet, "CantPreguntasNoUtilesUsuario"))
+                	cantPreguntasNoUtilesUsuario = resultSet.getInt("CantPreguntasNoUtilesUsuario");
 
 				listaUsuarios.add(new UsuarioModel(Id_Usuario, Nombres, Apellidos, Fecha_Nac, Correo, Nombre_Usuario,
-						Contrasena, Img_Perfil, Fecha_Creacion, Activo));
+						Contrasena, Img_Perfil, Fecha_Creacion, Activo, cantPreguntasUsuario, cantRespuestasUsuario,
+						cantPreguntasFavoritasUsuario, cantPreguntasUtilesUsuario, cantPreguntasNoUtilesUsuario));
 			}
 
 		} catch (SQLException ex) {

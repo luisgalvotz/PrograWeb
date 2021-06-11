@@ -28,9 +28,9 @@
 }
 
 .logopag {
-    height: 50px;
-    width: 70px;
-    border-radius: 15px;
+     height: 50px;
+     width: 100px;
+     border-radius: 15px;
 }
 
 .dropdown{
@@ -185,16 +185,29 @@
     color: black;
 }
 
+.titulo_pregunta:hover {
+     color: black;
+     text-decoration: none;
+     font-size: 32px;
+}
+
 .pregunta {
     font-size: 28px;
 }
 
-.pregunta_inicio .main_pregunta_perfil .titulo_pregunta .pregunta:hover {
+.pregunta:hover {
+     color: black;
+     text-decoration: none;
+     font-size: 32px;
+}
+
+/*
+.pregunta_inicio:hover {
     color: black;
     text-decoration: none;
     font-size: 32px;
 }
-
+*/
 
 .main_pregunta_perfil {
     margin-top: 10px;
@@ -277,18 +290,33 @@
 
 }
 
-.respuesta_perfil .main_respuesta_perfil .titulo_respuesta .respuesta:hover {
+/*
+.respuesta_perfil .main_respuesta_perfil:hover {
     color: black;
     text-decoration: none;
     font-size: 32px;
 }
+*/
 
 .titulo_respuesta {
     color: black;
 }
 
+.titulo_respuesta:hover {
+    color: black;
+    text-decoration: none;
+    font-size: 32px;
+}
+
+
 .respuesta {
     font-size: 28px;
+}
+
+.respuesta:hover {
+     color: black;
+     text-decoration: none;
+     font-size: 32px;
 }
 
 /* -------------------------------------------------------------- */
@@ -312,7 +340,7 @@ body {
 
 
 footer{
-    /* margin-top: 50px; */
+    margin-top: auto;
     font-size: 18px;
     position: relative;
     left: 0;

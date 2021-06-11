@@ -7,11 +7,41 @@
 <%@page import="com.dbconnection.controllers.GeneralServlet"%>
 
 <%
-UsuarioModel usuarioElegido = GeneralServlet.getUsuario(request, response); //el usuario que hizo login
-pageContext.setAttribute("usuarioElegido", usuarioElegido);
+UsuarioModel usuarioActual = GeneralServlet.getUsuario(request, response); //login
+pageContext.setAttribute("usuarioActual", usuarioActual);
 
 List<CategoriaModel> listaCategorias = GeneralServlet.getCategorias();
 pageContext.setAttribute("listaCategorias", listaCategorias);
+
+UsuarioModel usuarioElegido = (UsuarioModel)request.getAttribute("usuarioElegido");
+pageContext.setAttribute("usuarioElegido", usuarioElegido);
+
+int IdUsuarioActivo = (int)request.getAttribute("IdUsuarioActivo");
+pageContext.setAttribute("IdUsuarioActivo", IdUsuarioActivo);
+
+List<PreguntaModel> listaPreguntasUsuario = (List<PreguntaModel>) request.getAttribute("preguntasUsuarioElegido");
+pageContext.setAttribute("listaPreguntasUsuario", listaPreguntasUsuario);
+
+List<RespuestaModel> listaRespuestasUsuario = (List<RespuestaModel>) request.getAttribute("respuestasUsuarioElegido");
+pageContext.setAttribute("listaRespuestasUsuario", listaRespuestasUsuario);
+
+List<PreguntaModel> listaPreguntasFavoritasUsuario = (List<PreguntaModel>) request.getAttribute("preguntasUsuarioElegidoFavoritas");
+pageContext.setAttribute("listaPreguntasFavoritasUsuario", listaPreguntasFavoritasUsuario);
+
+List<PreguntaModel> listaPreguntasUtilesUsuario = (List<PreguntaModel>) request.getAttribute("preguntasUtilesUsuarioElegido");
+pageContext.setAttribute("listaPreguntasUtilesUsuario", listaPreguntasUtilesUsuario);
+
+List<PreguntaModel> listaPreguntasNoUtilesUsuario = (List<PreguntaModel>) request.getAttribute("preguntasNoUtilesUsuarioElegido");
+pageContext.setAttribute("listaPreguntasNoUtilesUsuario", listaPreguntasNoUtilesUsuario);
+
+int numeroPagina = 1;
+if (request.getAttribute("numeroPagina") != null){
+	numeroPagina = (int)request.getAttribute("numeroPagina");
+	pageContext.setAttribute("numeroPagina", numeroPagina);
+}
+
+String pagina = (String)request.getAttribute("pagina");
+pageContext.setAttribute("pagina", pagina);
 %>
 
 <!doctype html>
@@ -44,7 +74,7 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 
 	<nav class="navbar navbar-expand-md  navbar-light">
 		<ul class="navbar-nav mr-auto">
-			<img class="logopag" src="Imagenes/que.png" alt="Logo">
+			<img class="logopag" src="Imagenes/que_.png" alt="Logo">
 		</ul>
 
 		<!-- Boton que aparece cuando colapsas la navbar en tamaño md es la "palanca" (toggle) que expande los elementos en el div con id:navbarmenu -->
@@ -68,7 +98,9 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 						Categorías </a>
 					<div class="dropdown-menu" aria-labelledby="Categoriasnavbar">
 						<c:forEach var="iCategoria" items="${listaCategorias}">
-							<a class="dropdown-item" href="#"> ${iCategoria.getNombre()} </a>
+							<a class="dropdown-item" href="BuscarPreguntas?Busqueda=Preguntas&numeroPagina=1&categories=${iCategoria.getId()}"> 
+								${iCategoria.getNombre()}
+							</a>
 						</c:forEach>
 					</div></li>
 
@@ -79,23 +111,22 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 					<!-- dropdown del link Búsqueda -->
 					<div class="dropdown-menu" aria-labelledby="Busquedanavbar"
 						style="width: 370px;">
-						<div class="container">
-							<div class="row">
-								<div class="col-10">
-									<input style="width: 295px;" type="text" name="BusquedaN"
-										id="BuscarNormal">
-								</div>
-								<div class="col-2">
-									<a href="#">
-
+						<form id="form_busqueda" action="BuscarPreguntas">
+							<div class="container">
+								<div class="row">
+									<input name="Busqueda" type="hidden" value="Preguntas">
+									<input name="numeroPagina" type="hidden" value="1">
+									<div class="col-10">
+										<input style="width: 295px;" type="text" name="BusquedaN" id="BuscarNormal">
+									</div>
+									<div class="col-2">
 										<button class="BuscarLupa">
-											<img style="width: 20px; height: 20px;"
-												src="Imagenes/Lupa.png" alt="LupaBuscar">
+											<img style="width: 20px; height: 20px;" src="Imagenes/Lupa.png" alt="LupaBuscar">
 										</button>
-									</a>
+									</div>
 								</div>
 							</div>
-						</div>
+						</form>
 						<header>
 							<div class="text-center TituloBusquedaA">
 								<input type="checkbox" name="ConfirmaBusquedaA"
@@ -151,18 +182,18 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 		</div>
 
 		<ul class="navbar-nav ml-auto">
-			<c:if test="${empty usuarioElegido}">
+			<c:if test="${empty usuarioActual}">
 				<li class="nav-item"><a href="Inicia_sesion.jsp"
 					class="nav-link"> <img style="height: 40px; width: 40px;"
 						src="Imagenes/Perfil.png" alt=""> Iniciar sesión
 				</a></li>
 			</c:if>
 
-			<c:if test="${not empty usuarioElegido}">
-				<li class="nav-item"><a href="Perfil.jsp" class="nav-link">
+			<c:if test="${not empty usuarioActual}">
+				<li class="nav-item"><a href="PerfilUsuario?IdUsuario=${usuarioActual.getId()}" class="nav-link">
 						<img style="height: 40px; width: 40px;"
-						src="GeneralServlet?Imagen=Usuario&Id=${usuarioElegido.getId()}">
-						<c:out value="${usuarioElegido.getNomUsuario()}"></c:out>
+						src="GeneralServlet?Imagen=Usuario&Id=${usuarioActual.getId()}">
+						<c:out value="${usuarioActual.getNomUsuario()}"></c:out>
 				</a></li>
 			</c:if>
 		</ul>
@@ -178,54 +209,91 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 			<div class="col-lg-5 col-md-5 col-sm-5 info_perfil">
 				<p style="margin-top: 8px;" class="mr-auto"> <c:out value="${usuarioElegido.getNomUsuario()}"></c:out> </p>
 			</div>
+			
 			<div class="col-lg-5 col-md-4 col-sm-4 info_perfil">
 				<div style="text-align: right; padding-bottom: 8px;">
-					<button style="margin-top: 8px;" class="botones_perfil">
-						<img style="width: 20px; height: 20px;" src="Imagenes/Ver.png"
-							alt="OjoVer">
-					</button>
-					<br>
-					<button style="margin-top: 8px;" class="botones_perfil">
-						<a href="Login"><img style="width: 20px; height: 20px;"
-							src="Imagenes/Salir.png" alt="PuertaSalir"></a>
-					</button>
+					<c:if test="${IdUsuarioActivo == usuarioElegido.getId()}">
+						<button style="margin-top: 8px;" class="botones_perfil">
+							<a href="PerfilUsuario?IdUsuario=${usuarioElegido.getId()}"><img style="width: 20px; height: 20px;" 
+								src="Imagenes/Ver.png" alt="OjoVer"></a>
+						</button>
+						<br>
+						<button style="margin-top: 8px;" class="botones_perfil">
+							<a href="Login"><img style="width: 20px; height: 20px;"
+								src="Imagenes/Salir.png" alt="PuertaSalir"></a>
+						</button>
+					</c:if>
 				</div>
 			</div>
+			
 		</div>
 
+		<c:if test="${IdUsuarioActivo == usuarioElegido.getId()}">
+		
 		<div class="row " style="margin-top: 10px;">
 			<div style="text-align: center;" class="col-lg-2 col-sm-2 opc_perfil">
-				<a href="#" class="opc" id="preg_barra">Preguntas</a>
-                    <label for="preg_barra">0</label>
+				<a href="PerfilUsuario?IdUsuario=${usuarioElegido.getId()}&pagina=preguntas&numeroPagina=1" class="opc" id="preg_barra">Preguntas</a>
+                    <label for="preg_barra">${usuarioElegido.getCantPreguntasUsuario()}</label>
 			</div>
 
 			<div style="text-align: center;" class="col-lg-3 col-sm-3 opc_perfil">
-				<a href="#" class="opc" id="resp_barra">Respuestas</a>
-                    <label for="resp_barra">0</label>
+				<a href="PerfilUsuario?IdUsuario=${usuarioElegido.getId()}&pagina=respuestas&numeroPagina=1" class="opc" id="resp_barra">Respuestas</a>
+                    <label for="resp_barra">${usuarioElegido.getCantRespuestasUsuario()}</label>
+			</div>
+			
+			<div style="text-align: center;" class="col-lg-2 col-sm-2 opc_perfil">
+				<a href="PerfilUsuario?IdUsuario=${usuarioElegido.getId()}&pagina=preguntasFavoritas&numeroPagina=1" class="opc" id="fav_barra">Favoritos</a>
+                    <label for="fav_barra">${usuarioElegido.getCantPreguntasFavoritasUsuario()}</label>
 			</div>
 
-			<div style="text-align: center;" class="col-lg-2 col-sm-2 opc_perfil">
-				<a href="#" class="opc" id="util_barra">Útiles</a>
-                    <label for="util_barra">0</label>
+			<div style="text-align: center;" class="col-lg-3 col-sm-3 opc_perfil">
+				<a href="PerfilUsuario?IdUsuario=${usuarioElegido.getId()}&pagina=preguntasUtiles&numeroPagina=1" class="opc" id="util_barra">Útiles</a>
+                    <label for="util_barra">${usuarioElegido.getCantPreguntasUtilesUsuario()}</label>
 			</div>
 
-               <div style="text-align: center;" class="col-lg-3 col-sm-3 opc_perfil">
-                    <a href="#" class="opc" id="noutil_barra">No útiles</a>
-                    <label for="noutil_barra">0</label>
-               </div>
+            <div style="text-align: center;" class="col-lg-2 col-sm-2 opc_perfil">
+            	<a href="PerfilUsuario?IdUsuario=${usuarioElegido.getId()}&pagina=preguntasNoUtiles&numeroPagina=1" class="opc" id="noutil_barra">No útiles</a>
+            	    <label for="noutil_barra">${usuarioElegido.getCantPreguntasNoUtilesUsuario()}</label>
+            </div>
 
-			<div style="text-align: center;" class="col-lg-2 col-sm-2 opc_perfil">
-				<a href="#" class="opc" id="fav_barra">Favoritos</a>
-                    <label for="fav_barra">0</label>
+		</div>
+		
+		</c:if>
+		
+		<c:if test="${IdUsuarioActivo != usuarioElegido.getId()}">
+		
+			<div class="row " style="margin-top: 10px;">
+			<div style="text-align: center;" class="col-lg-3 col-sm-3 opc_perfil">
+				<a href="PerfilUsuario?IdUsuario=${usuarioElegido.getId()}&pagina=preguntas&numeroPagina=1" class="opc" id="preg_barra">Preguntas</a>
+                    <label for="preg_barra">${usuarioElegido.getCantPreguntasUsuario()}</label>
+			</div>
+
+			<div style="text-align: center;" class="col-lg-3 col-sm-3 opc_perfil">
+				<a href="PerfilUsuario?IdUsuario=${usuarioElegido.getId()}&pagina=respuestas&numeroPagina=1" class="opc" id="resp_barra">Respuestas</a>
+                    <label for="resp_barra">${usuarioElegido.getCantRespuestasUsuario()}</label>
+			</div>
+			
+			<div style="text-align: center;" class="col-lg-3 col-sm-3 opc_perfil">
+				<a href="PerfilUsuario?IdUsuario=${usuarioElegido.getId()}&pagina=preguntasFavoritas&numeroPagina=1" class="opc" id="fav_barra">Favoritos</a>
+                    <label for="fav_barra">${usuarioElegido.getCantPreguntasFavoritasUsuario()}</label>
+			</div>
+
+			<div style="text-align: center;" class="col-lg-3 col-sm-3 opc_perfil">
+				<a href="PerfilUsuario?IdUsuario=${usuarioElegido.getId()}&pagina=preguntasUtiles&numeroPagina=1" class="opc" id="util_barra">Útiles</a>
+                    <label for="util_barra">${usuarioElegido.getCantPreguntasUtilesUsuario()}</label>
 			</div>
 
 		</div>
+		
+		</c:if>
+		
 	</div>
 
-
+	<c:if test="${empty pagina}">
+	<c:if test="${IdUsuarioActivo == usuarioElegido.getId()}">
 
 	<section class="formulario_perfil">
-		<form id="form_editar_perfil" action="" method="POST"> 
+		<form id="form_editar_perfil" action="EditarPerfilUsuario" method="post" enctype="multipart/form-data"> 
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-1 col-md-0"></div>
@@ -308,6 +376,22 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 								id="ConfirmarCon" placeholder="********">
 						</div>
 					</div>
+					
+					<div class="row">
+						<div class="col-lg-3">
+							<p>Estado</p>
+						</div>
+						<div class="col-lg-3">
+							<c:if test="${usuarioElegido.getActivo() == 0}">
+								<input class="campos" type="text" name="estadoUs"
+									id="estadoUs" placeholder="Estado" value="Suspendido">
+							</c:if>
+							<c:if test="${usuarioElegido.getActivo() == 1}">
+								<input class="campos" type="text" name="estadoUs"
+									id="estadoUs" placeholder="Estado" value="Activo">
+							</c:if>
+						</div>
+					</div>
 
 				</div>
 				<div class="col-lg-3 col-md-3 col-sm-12">
@@ -317,8 +401,7 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 							<p>Seleccione la imagen de perfil:</p>
 							<div style="text-align: justify;" class="col-lg-7">
 								<input type="file" onchange="readURL(this);" name="ImagenUs" id="ImagenUs">
-								<img id="Imagenseleccionada" src="#"
-						alt="" />
+								<img id="Imagenseleccionada" src="#" alt="" />
 							</div>
 						</div>
 					</div>
@@ -335,89 +418,210 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 		</div>
 		</form>
 	</section>
+	
+	</c:if>
+	</c:if>
 
-	<!-- PREGUNTA 1 -->
-	<c:forEach var="iPregunta" items="${lista10Preguntas}">
-		<div class="pregunta_inicio">
-			<div class="container main_pregunta_perfil text-center">
-				<div class="row">
-					<div class="col-12">
-						<!-- Pregunta 1 -->
-						<section>
-							<div class="container">
-								<a href="Perfil.jsp" class="imagen_nombre_usuario"> 
-								<p style="border-bottom: solid; margin: 0;">
-									<img class="imagen_usu_inicio" src="GeneralServlet?Imagen=Usuario&Id=${iPregunta.getIdUsuario()}"
-										alt="">${iPregunta.getNomUsuarioPregunta()}
-								</p>
-								</a>
+	<c:choose>
+		<c:when test="${pagina == 'preguntas'}">
+			<c:forEach var="iPregunta" items="${listaPreguntasUsuario}">
+				<div class="pregunta_inicio">
+					<div class="container main_pregunta_perfil text-center">
+						<div class="row">
+							<div class="col-12">
+								<!-- Pregunta 1 -->
+								<section>
+									<div class="container">
+										<a href="PerfilUsuario?IdUsuario=${iPregunta.getIdUsuario()}" class="imagen_nombre_usuario"> 
+										<p style="border-bottom: solid; margin: 0;">
+											<img class="imagen_usu_inicio" src="GeneralServlet?Imagen=Usuario&Id=${iPregunta.getIdUsuario()}"
+												alt="">${iPregunta.getNomUsuarioPregunta()}
+										</p>
+										</a>
 
-								<a href="PreguntaRespuesta?IdPregunta=${iPregunta.getId()}&numeroPagina=1" class="titulo_pregunta"> 
-								<p class="pregunta"
-									style="margin-bottom: 0; border-bottom: solid;">${iPregunta.getTitulo()}</p>
-								</a>
+										<a href="PreguntaRespuesta?IdPregunta=${iPregunta.getId()}&numeroPagina=1" class="titulo_pregunta"> 
+										<p class="pregunta"
+											style="margin-bottom: 0; border-bottom: solid;">${iPregunta.getTitulo()}</p>
+										</a>
+									</div>
+								</section>
 							</div>
-						</section>
+
+						</div>
 					</div>
-
 				</div>
-			</div>
-		</div>
-	</c:forEach>
+			</c:forEach>
+		</c:when>
+		
+		<c:when test="${pagina == 'respuestas'}">
+			<c:forEach var="iRespuesta" items="${listaRespuestasUsuario}">
+				<div class="respuesta_perfil">
+					<div class="container main_respuesta_perfil text-center">
+						<div class="row">
+							<div class="col-12">
+								<!-- Respuesta 1 -->
+								<section>
+									<div class="container">
+										<a href="PerfilUsuario?IdUsuario=${iRespuesta.getIdUsuario()}" class="imagen_nombre_usuario"> 
+										<p style="border-bottom: solid; margin: 0;">
+											<img class="imagen_usu_inicio" src="GeneralServlet?Imagen=Usuario&Id=${iRespuesta.getIdUsuario()}"
+												alt="">${iRespuesta.getNomUsuarioRespuesta()}
+										</p>
+										</a>
 
-	<!-- RESPUESTA -->
-	<div class="respuesta_perfil">
-			<div class="container main_respuesta_perfil text-center">
-				<div class="row">
-					<div class="col-12">
-						<!-- Pregunta 1 -->
-						<section>
-							<div class="container">
-								<a href="Perfil.jsp" class="imagen_nombre_usuario"> 
-								<p style="border-bottom: solid; margin: 0;">
-									<img class="imagen_usu_inicio" src="GeneralServlet?Imagen=Usuario&Id=${iPregunta.getIdUsuario()}"
-										alt="">${iPregunta.getNomUsuarioPregunta()}
-								</p>
-								</a>
-
-								<a href="PreguntaRespuesta?IdPregunta=${iPregunta.getId()}&numeroPagina=1" class="titulo_respuesta"> 
-								<p class="respuesta"
-									style="margin-bottom: 0; border-bottom: solid;">${iPregunta.getTitulo()}</p>
-								</a>
+										<a href="PreguntaRespuesta?IdPregunta=${iRespuesta.getIdPregunta()}&numeroPagina=1" class="titulo_respuesta"> 
+										<p class="respuesta"
+											style="margin-bottom: 0; border-bottom: solid;">${iRespuesta.getContenido()}</p>
+										</a>
+									</div>
+								</section>
 							</div>
-						</section>
-					</div>
 
+						</div>
+					</div>
 				</div>
-			</div>
-	</div>
+			</c:forEach>
+		</c:when>
+		
+		<c:when test="${pagina == 'preguntasUtiles'}">
+			<c:forEach var="iPregunta" items="${listaPreguntasUtilesUsuario}">
+				<div class="pregunta_inicio">
+					<div class="container main_pregunta_perfil text-center">
+						<div class="row">
+							<div class="col-12">
+								<!-- Pregunta 1 -->
+								<section>
+									<div class="container">
+										<a href="PerfilUsuario?IdUsuario=${iPregunta.getIdUsuario()}" class="imagen_nombre_usuario"> 
+										<p style="border-bottom: solid; margin: 0;">
+											<img class="imagen_usu_inicio" src="GeneralServlet?Imagen=Usuario&Id=${iPregunta.getIdUsuario()}"
+												alt="">${iPregunta.getNomUsuarioPregunta()}
+										</p>
+										</a>
+
+										<a href="PreguntaRespuesta?IdPregunta=${iPregunta.getId()}&numeroPagina=1" class="titulo_pregunta"> 
+										<p class="pregunta"
+											style="margin-bottom: 0; border-bottom: solid;">${iPregunta.getTitulo()}</p>
+										</a>
+									</div>
+								</section>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</c:forEach>
+		</c:when>
+		
+		<c:when test="${pagina == 'preguntasNoUtiles'}">
+			<c:if test="${IdUsuarioActivo == usuarioElegido.getId()}"> 
+				<c:forEach var="iPregunta" items="${listaPreguntasNoUtilesUsuario}">
+					<div class="pregunta_inicio">
+					<div class="container main_pregunta_perfil text-center">
+						<div class="row">
+							<div class="col-12">
+								<!-- Pregunta 1 -->
+								<section>
+									<div class="container">
+										<a href="PerfilUsuario?IdUsuario=${iPregunta.getIdUsuario()}" class="imagen_nombre_usuario"> 
+										<p style="border-bottom: solid; margin: 0;">
+											<img class="imagen_usu_inicio" src="GeneralServlet?Imagen=Usuario&Id=${iPregunta.getIdUsuario()}"
+												alt="">${iPregunta.getNomUsuarioPregunta()}
+										</p>
+										</a>
+
+										<a href="PreguntaRespuesta?IdPregunta=${iPregunta.getId()}&numeroPagina=1" class="titulo_pregunta"> 
+										<p class="pregunta"
+											style="margin-bottom: 0; border-bottom: solid;">${iPregunta.getTitulo()}</p>
+										</a>
+									</div>
+								</section>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				</c:forEach>
+			</c:if>
+		</c:when>
+		
+		<c:when test="${pagina == 'preguntasFavoritas'}"> 
+			<c:forEach var="iPregunta" items="${listaPreguntasFavoritasUsuario}">
+				<div class="pregunta_inicio">
+					<div class="container main_pregunta_perfil text-center">
+						<div class="row">
+							<div class="col-12">
+								<!-- Pregunta 1 -->
+								<section>
+									<div class="container">
+										<a href="PerfilUsuario?IdUsuario=${iPregunta.getIdUsuario()}" class="imagen_nombre_usuario"> 
+										<p style="border-bottom: solid; margin: 0;">
+											<img class="imagen_usu_inicio" src="GeneralServlet?Imagen=Usuario&Id=${iPregunta.getIdUsuario()}"
+												alt="">${iPregunta.getNomUsuarioPregunta()}
+										</p>
+										</a>
+
+										<a href="PreguntaRespuesta?IdPregunta=${iPregunta.getId()}&numeroPagina=1" class="titulo_pregunta"> 
+										<p class="pregunta"
+											style="margin-bottom: 0; border-bottom: solid;">${iPregunta.getTitulo()}</p>
+										</a>
+									</div>
+								</section>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</c:forEach>
+		</c:when>
+		
+		<c:otherwise> 
+						
+		</c:otherwise>
+		
+	</c:choose>
+
+	
 
 	<!-- CONTAINER PARA LA PAGINACION -->
-	<div class="container paginacion_inicio">
-		<div class="row">
-			<div class="col-5"></div>
-			<div class="col-5">
-				<!-- PAGINACION -->
-				<div class="container-fluid">
-					<br> <br>
-					<nav>
-						<ul class="pagination ">
-							<li class="page-item disabled"><a class="page-link" href="#"><img
-									class="paginacionimg" src="Imagenes/pagina_anterior.png" alt=""></a></li>
-							<li class="page-item active"><a class="page-link"
-								id="numeropagina" href="">1</a></li>
-							<li class="page-item"><a class="page-link" id="adelante"
-								href="#"><img class="paginacionimg"
-									src="Imagenes/pagina_siguiente.png" alt=""></a></li>
+	<c:if test="${not empty pagina}">
+		<div class="container paginacion_inicio">
+			<div class="row">
+				<div class="col-5"></div>
+				<div class="col-5">
+					<!-- PAGINACION -->
+					<div class="container-fluid">
+						<br> <br>
+						<nav>
+							<ul class="pagination ">
+							
+								<c:if test="${numeroPagina - 1 == 0}">
+									<li class="page-item"><a class="page-link" id="atras" 
+										href="PerfilUsuario?IdUsuario=${usuarioElegido.getId()}&pagina=${pagina}&numeroPagina=1">
+										<img class="paginacionimg" src="Imagenes/pagina_anterior.png" alt=""></a></li>
+								</c:if>
+								
+								<c:if test="${numeroPagina - 1 != 0}">
+									<li class="page-item"><a class="page-link" id="atras" 
+										href="PerfilUsuario?IdUsuario=${usuarioElegido.getId()}&pagina=${pagina}&numeroPagina=${numeroPagina - 1}">
+										<img class="paginacionimg" src="Imagenes/pagina_anterior.png" alt=""></a></li>
+								</c:if>
+										
+								<li class="page-item active"><a class="page-link"
+									id="numeropagina" href="">${numeroPagina}</a></li>
+									
+								<li class="page-item"><a class="page-link" id="adelante"
+									href="PerfilUsuario?IdUsuario=${usuarioElegido.getId()}&pagina=${pagina}&numeroPagina=${numeroPagina + 1}">
+									<img class="paginacionimg" src="Imagenes/pagina_siguiente.png" alt=""></a></li>
 
-						</ul>
-					</nav>
+							</ul>
+						</nav>
+					</div>
 				</div>
+				<div class="col-2"></div>
 			</div>
-			<div class="col-2"></div>
 		</div>
-	</div>
-
+	</c:if>
 
 
 	<!-- Optional JavaScript -->
@@ -448,8 +652,8 @@ pageContext.setAttribute("listaCategorias", listaCategorias);
 			<!--Grid column-->
 			<div class="col-lg-6 col-sm-6">
 				<h5 class=" text-center" style="font-weight: bolder;">
-					<img src="Imagenes/que.png"
-						style="width: 70px; height: 50px; border-radius: 15px;" alt="">
+					<img src="Imagenes/que_.png"
+						style="width: 100px; height: 50px; border-radius: 15px;" alt="">
 					Queuestions
 				</h5>
 

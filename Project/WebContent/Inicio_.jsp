@@ -61,7 +61,7 @@ if (request.getAttribute("numeroPagina") != null) {
 
 	<nav class="navbar navbar-expand-md  navbar-light">
 		<ul class="navbar-nav mr-auto">
-			<img class="logopag" src="Imagenes/que.png" alt="Logo">
+			<img class="logopag" src="Imagenes/que_.png" alt="Logo">
 		</ul>
 
 		<!-- Boton que aparece cuando colapsas la navbar en tamaï¿½o md es la "palanca" (toggle) que expande los elementos en el div con id:navbarmenu -->
@@ -86,7 +86,8 @@ if (request.getAttribute("numeroPagina") != null) {
 						Categorías </a>
 					<div class="dropdown-menu" aria-labelledby="Categoriasnavbar">
 						<c:forEach var="iCategoria" items="${listaCategorias}">
-							<a class="dropdown-item" href="#"> ${iCategoria.getNombre()}
+							<a class="dropdown-item" href="BuscarPreguntas?Busqueda=Preguntas&numeroPagina=1&categories=${iCategoria.getId()}"> 
+								${iCategoria.getNombre()}
 							</a>
 						</c:forEach>
 					</div></li>
@@ -98,23 +99,22 @@ if (request.getAttribute("numeroPagina") != null) {
 					<!-- dropdown del link Bï¿½squeda -->
 					<div class="dropdown-menu" aria-labelledby="Busquedanavbar"
 						style="width: 370px;">
-						<div class="container">
-							<div class="row">
-								<div class="col-10">
-									<input style="width: 295px;" type="text" name="BusquedaN"
-										id="BuscarNormal">
-								</div>
-								<div class="col-2">
-									<a href="#">
+						<form id="form_busqueda" action="BuscarPreguntas">
+							<div class="container">
+								<div class="row">
+									<input name="Busqueda" type="hidden" value="Preguntas">
+									<input name="numeroPagina" type="hidden" value="1">
+									<div class="col-10">
+										<input style="width: 295px;" type="text" name="BusquedaN" id="BuscarNormal">
+									</div>
+									<div class="col-2">
 										<button class="BuscarLupa">
-											<img style="width: 20px; height: 20px;"
-												src="Imagenes/Lupa.png" alt="LupaBuscar">
+											<img style="width: 20px; height: 20px;" src="Imagenes/Lupa.png" alt="LupaBuscar">
 										</button>
-
-									</a>
+									</div>
 								</div>
 							</div>
-						</div>
+						</form>
 						<header>
 							<div class="text-center TituloBusquedaA">
 								<input type="checkbox" name="ConfirmaBusquedaA"
@@ -182,7 +182,7 @@ if (request.getAttribute("numeroPagina") != null) {
 			</c:if>
 
 			<c:if test="${not empty usuarioElegido}">
-				<li class="nav-item"><a href="Perfil.jsp" class="nav-link">
+				<li class="nav-item"><a href="PerfilUsuario?IdUsuario=${usuarioElegido.getId()}" class="nav-link">
 						<img style="height: 40px; width: 40px;"
 						src="GeneralServlet?Imagen=Usuario&Id=${usuarioElegido.getId()}">
 						<c:out value="${usuarioElegido.getNomUsuario()}"></c:out>
@@ -204,7 +204,7 @@ if (request.getAttribute("numeroPagina") != null) {
 						<!-- Pregunta 1 -->
 						<section>
 							<div class="container">
-								<a href="Perfil.jsp" class="imagen_nombre_usuario">
+								<a href="PerfilUsuario?IdUsuario=${iPregunta.getIdUsuario()}" class="imagen_nombre_usuario">
 									<p style="border-bottom: solid; margin: 0;">
 										<img class="imagen_usu_inicio"
 											src="GeneralServlet?Imagen=Usuario&Id=${iPregunta.getIdUsuario()}"
@@ -291,8 +291,8 @@ if (request.getAttribute("numeroPagina") != null) {
 			<!--Grid column-->
 			<div class="col-lg-6 col-sm-6">
 				<h5 class=" text-center" style="font-weight: bolder;">
-					<img src="Imagenes/que.png"
-						style="width: 70px; height: 50px; border-radius: 15px;" alt="">
+					<img src="Imagenes/que_.png"
+						style="width: 100px; height: 50px; border-radius: 15px;" alt="">
 					Queuestions
 				</h5>
 

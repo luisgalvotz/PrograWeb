@@ -29,7 +29,7 @@
 
 .logopag {
      height: 50px;
-     width: 70px;
+     width: 100px;
      border-radius: 15px;
 }
 
@@ -85,7 +85,14 @@
      color: black;
 }
 
-.pregunta_inicio .main .imagen_nombre_usuario:hover {
+.imagen_nombre_usuario:hover {
+     color: black;
+     text-decoration: none;
+     font-size: 20px;
+
+}
+
+.pregunta_inicio .main:hover {
      color: black;
      text-decoration: none;
      font-size: 20px;
@@ -97,11 +104,23 @@
      color: black;
 }
 
+.titulo_pregunta:hover {
+     color: black;
+     text-decoration: none;
+     font-size: 32px;
+}
+
 .pregunta {
      font-size: 28px;
 }
 
-.pregunta_inicio .main .titulo_pregunta .pregunta:hover {
+.pregunta:hover {
+     color: black;
+     text-decoration: none;
+     font-size: 32px;
+}
+
+.pregunta_inicio .main:hover {
      color: black;
      text-decoration: none;
      font-size: 32px;
@@ -115,9 +134,10 @@
      padding-bottom: 20px;
 }
 
-/* .main:hover {
+ .main:hover {
      border-color: #c06611;
 }
+/*
 .main:hover .pregunta{
      font-size: 32px;
 } */

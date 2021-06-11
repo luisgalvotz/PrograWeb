@@ -11,6 +11,7 @@ jQuery.validator.addMethod("formatocontrasenia", function(value, element){
 
 });
 
+/*
 var mifecha = $('#FechaNac_Usu');
 var hoy = new Date();
 var dd = hoy.getDate();
@@ -35,6 +36,7 @@ function fechavalida(){
           }
      }
 }
+*/
 
 jQuery.validator.addMethod(
     "formatofecha",
@@ -65,7 +67,14 @@ jQuery.validator.addMethod(
 
 $(document).ready(function(){
     
-
+	 $("#btn_eliminar_img").click(function(){
+          $("#Imagenseleccionada").hide();
+          $("#delete-image").val("1");
+     });
+      
+     $("#Imagen_PR").click(function(){
+          $("#delete-image").val("0");
+     });
 
      $("#eliminar_pregunta").click(function(){
           $.sweetModal({
@@ -251,10 +260,7 @@ $(document).ready(function(){
                },
                ConfirmarCon:{
                     required: true,
-                    equalTo: "#Contra_Usu"
-               },
-               ImagenUs:{
-                    required: true
+                    equalTo: "#Contraseña"
                }
 
 
@@ -285,9 +291,6 @@ $(document).ready(function(){
                ConfirmarCon:{
                     required: "Porfavor confirme su contraseña",
                     equalTo: "La contraseña no coincide"
-               },
-               ImagenUs:{
-                    required: "Seleccione una imagen de perfil"
                }
           }
      });

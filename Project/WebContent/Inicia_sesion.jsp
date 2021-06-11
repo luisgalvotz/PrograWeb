@@ -39,8 +39,8 @@ pageContext.setAttribute("usuarioIncorrecto", usuarioIncorrecto);
 	<div
 		style="padding-top: 15px; padding-bottom: 15px; width: 100%; background: #e0740e;">
 		<a href="IndexPreguntas?numeroPagina=1"> <img align="left"
-			style="height: 50px; width: 70px; border-radius: 15px; margin-left: 20px;"
-			src="Imagenes/que.png" alt="Logo">
+			style="height: 50px; width: 100px; border-radius: 15px; margin-left: 20px;"
+			src="Imagenes/que_.png" alt="Logo">
 		</a>
 		<h1 style="text-align: center; font-size: 30px;">Iniciar sesión</h1>
 	</div>
@@ -126,8 +126,8 @@ pageContext.setAttribute("usuarioIncorrecto", usuarioIncorrecto);
 			<!--Grid column-->
 			<div class="col-lg-6 col-sm-6">
 				<h5 class=" text-center" style="font-weight: bolder;">
-					<img src="Imagenes/que.png"
-						style="width: 70px; height: 50px; border-radius: 15px;" alt="">
+					<img src="Imagenes/que_.png"
+						style="width: 100px; height: 50px; border-radius: 15px;" alt="">
 					Queuestions
 				</h5>
 

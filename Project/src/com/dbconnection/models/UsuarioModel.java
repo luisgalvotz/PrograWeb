@@ -50,8 +50,38 @@ public class UsuarioModel {
     	this.imagen = imagen;
     }
     
+    public UsuarioModel(int id, String nombre, String apellidos, Date fechaNac, String correo, String nomUsuario, String contra, InputStream imagen) {
+    	this.id = id;
+    	this.nombre = nombre;
+    	this.apellidos = apellidos;
+    	this.fechaNac = fechaNac;
+    	this.correo = correo;
+    	this.nomUsuario = nomUsuario;
+    	this.contra = contra;
+    	this.imagen = imagen;
+    }
+    
     public UsuarioModel(int id) {
     	this.id = id;
+    }
+    
+    public UsuarioModel(int id, String nombre, String apellidos, Date fechaNac, String correo, String nomUsuario, String contra, InputStream imagen, Date fechaCreacion, byte activo, 
+    		int cantPreguntasUsuario, int cantRespuestasUsuario, int cantPreguntasFavoritasUsuario, int cantPreguntasUtilesUsuario, int cantPreguntasNoUtilesUsuario) {
+    	this.id = id;
+    	this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.fechaNac = fechaNac;
+        this.correo = correo;
+        this.nomUsuario = nomUsuario;
+        this.contra = contra;
+        this.imagen = imagen;
+        this.fechaCreacion = fechaCreacion;
+        this.activo = activo;
+        this.cantPreguntasUsuario = cantPreguntasUsuario;
+		this.cantRespuestasUsuario = cantRespuestasUsuario;
+		this.cantPreguntasFavoritasUsuario = cantPreguntasFavoritasUsuario;
+		this.cantPreguntasUtilesUsuario = cantPreguntasUtilesUsuario;
+		this.cantPreguntasNoUtilesUsuario = cantPreguntasNoUtilesUsuario;
     }
 
     public int getId() {
